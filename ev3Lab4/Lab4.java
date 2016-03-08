@@ -15,7 +15,7 @@ import lejos.robotics.SampleProvider;
 public class Lab4 {
 
 	// Static Resources:
-	// Left motor connected to output A
+	// Left motor connected to outputA
 	// Right motor connected to output D
 	// Ultrasonic sensor port connected to input S1
 	// Color sensor port connected to input S2
