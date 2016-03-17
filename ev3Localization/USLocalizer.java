@@ -2,11 +2,14 @@ package ev3Localization;
 import lejos.hardware.Sound;
 import lejos.robotics.SampleProvider;
 import ev3Odometer.Odometer;
-
 import java.util.Arrays;
-
 import ev3Navigation.Navigation;
 
+/** This object gives the EV3 the ability to localize using the Ultrasonic Sensor
+* @author Nick Purdie
+* @version 1.0
+* @since   2016-03-16
+*/
 public class USLocalizer {
 	public enum LocalizationType { FALLING_EDGE, RISING_EDGE };
 	private static int TURN_SPEED = 80;
@@ -21,6 +24,16 @@ public class USLocalizer {
 	private LocalizationType locType;
 	private Navigation navigator;
 	
+	/**
+	 * The Ultrasonic localizer stores a reference to the Odometer, the ultrasonic sensor sample provider, a float array of ultrasonic data,
+	 * the Navigator and the type of localization to be performed.
+	 *
+	 * @param odometer The Odometer
+	 * @param navigator The Navigator
+	 * @param usSensor The SampleProvider
+	 * @param usData The ultrasonic sensor data array
+	 * @param locType The type of localization to be performed
+	 */
 	public USLocalizer(Odometer odo,  SampleProvider usSensor, float[] usData, LocalizationType locType, Navigation navigator) {
 		this.odo = odo;
 		this.usSensor = usSensor;
@@ -29,6 +42,10 @@ public class USLocalizer {
 		this.navigator = navigator;
 	}
 	
+	/**
+	* Perform the localization. The EV3 will either perform falling edge localization or rising edge localization
+	* by rotating in the corner of the grid, using the walls to determine it's heading and approximate location.
+	*/
 	public void doLocalization() {
 		double latchA, latchB;	//angle of wall A and Wall B
 
@@ -105,7 +122,15 @@ public class USLocalizer {
 		odo.setY(getFilteredData(30) - tile + sensorPosition);	//calculate position in y relative to wall
 		navigator.turnTo(0); //turn to face 0 for demo
 	}
-	private double calcAngle(double a, double b)	{	//this method applies the equations from the tutorial to calculate angles
+	
+	/**
+	* Returns value that must be added to the EV3's heading to be accurately oriented.
+	*
+	* @param a The first angle detected while performing the US localization
+	* @param b The second angle detected while performing the us localization
+	* @return A double that represents the correction required to the heading
+	*/
+	private double calcAngle(double a, double b)	{
 		if (a <= b){
 			return Math.toRadians(40) - (a + b)/2;	//40 was changed based on experimentation
 		}
@@ -114,6 +139,12 @@ public class USLocalizer {
 		}
 	}
 	
+	/**
+	* Returns value that must be added to the EV3's heading to be accurately oriented.
+	*
+	* @param f The sample size of the filtered data to collect
+	* @return A float that represents the filtered average reading of the ultrasonic sensor
+	*/
 	private float getFilteredData(int f) {	//functions returns average distance of filter size f
 		float data[] = new float[f];
 		for (int i=0; i<f ; i++)	{	//fill an array of size f with US distances

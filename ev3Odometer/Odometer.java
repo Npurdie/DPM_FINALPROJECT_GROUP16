@@ -1,11 +1,14 @@
-/*
- * Odometer.java
- */
-
 package ev3Odometer;
-
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
+/** 
+* This object keeps tracks of the rotation of both wheels to perpetualy keep track of x and y
+* coordinates as well as heading.
+*
+* @author Nick Purdie
+* @version 1.0
+* @since 2016-03-16
+*/
 public class Odometer extends Thread {
 	// robot position
 	private double x, y, theta, totalDistance;
@@ -25,7 +28,14 @@ public class Odometer extends Thread {
 	private double wheelBase;  //wheelbase
 	private double wheelRadius; // wheel radius
 	
-	// default constructor
+	/**
+	 * The Navigator stores a reference to the left motor, right motor, wheelRadius, chassis width, odometer and collision avoidance
+	 *
+	 * @param leftMotor The left motor object
+	 * @param rightMotor The right motor object
+	 * @param wheelRadius The radius of the EV3's wheels
+	 * @param wheelBase The width of the EV3's chassis
+	 */
 	public Odometer(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor, double wheelRadius, double wheelBase) {
 		x = 0.0;
 		y = 0.0;
@@ -38,7 +48,7 @@ public class Odometer extends Thread {
 		totalDistance = 0.0;
 	}
 
-	// run method (required for Thread)
+	/** Run the odometer */
 	@Override
 	public void run() {
 		long updateStart, updateEnd;
@@ -94,10 +104,14 @@ public class Odometer extends Thread {
 		}
 	}
 
-	// accessors
+	/**
+	* Obtain the current position of the EV3
+	*
+	* @param position Passes the position array to the method.
+	* @param update Array indicates which parameters to update (x=[0],y=[1],theta=[2])
+	*/
 	public void getPosition(double[] position, boolean[] update) {
-		// ensure that the values don't change while the odometer is running
-		synchronized (lock) {
+		synchronized (lock) {	// ensure that the values don't change while the odometer is running
 			if (update[0])
 				position[0] = x;
 			if (update[1])
@@ -107,6 +121,11 @@ public class Odometer extends Thread {
 		}
 	}
 
+	/**
+	* Obtain the current x coordinate
+	*
+	* @return A double that represents the EV3's current x coordinate
+	*/
 	public double getX() {
 		double result;
 
@@ -117,6 +136,11 @@ public class Odometer extends Thread {
 		return result;
 	}
 
+	/**
+	* Obtain the current y coordinate
+	*
+	* @return A double that represents the EV3's current y coordinate
+	*/
 	public double getY() {
 		double result;
 
@@ -127,6 +151,11 @@ public class Odometer extends Thread {
 		return result;
 	}
 
+	/**
+	* Obtain the current heading
+	*
+	* @return A double that represents the EV3's current theta(heading)
+	*/
 	public double getTheta() {
 		double result;
 
@@ -137,7 +166,12 @@ public class Odometer extends Thread {
 		return result;
 	}
 
-	// mutators
+	/**
+	* Set the current position of the EV3
+	*
+	* @param position Array containing the x,y and theta values to be updated
+	* @param update Array indicates which parameters to update (x=[0],y=[1],theta=[2])
+	*/
 	public void setPosition(double[] position, boolean[] update) {
 		// ensure that the values don't change while the odometer is running
 		synchronized (lock) {
@@ -150,18 +184,33 @@ public class Odometer extends Thread {
 		}
 	}
 
+	/**
+	* Set the EV3's x coordinate
+	*
+	* @param x1 The value to which to set the EV3's current x coordinate
+	*/
 	public void setX(double x1) {
 		synchronized (lock) {
 			this.x = x1;
 		}
 	}
 
+	/**
+	* Set the EV3's y coordinate
+	*
+	* @param y1 The value to which to set the EV3's current y coordinate
+	*/
 	public void setY(double y1) {
 		synchronized (lock) {
 			this.y = y1;
 		}
 	}
 
+	/**
+	* Set the EV3's heading
+	*
+	* @param theta1 The value to which to set the EV3's current theta(heading)
+	*/
 	public void setTheta(double theta1) {
 		synchronized (lock) {
 			this.theta = theta1;

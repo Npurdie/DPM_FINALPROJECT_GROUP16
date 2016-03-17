@@ -8,6 +8,14 @@ import lejos.hardware.port.SensorPort;
 import lejos.robotics.SampleProvider;
 import lejos.hardware.sensor.EV3ColorSensor;
 
+
+/**
+* This object adjusts the value of the odometer by tracking the grid lines crossed
+*
+* @author Nick Purdie
+* @version 1.0
+* @since   2016-03-16
+*/
 public class OdometryCorrection extends Thread {
 	private static final long CORRECTION_PERIOD = 10;
 	private Odometer odometer;
@@ -18,14 +26,20 @@ public class OdometryCorrection extends Thread {
 	private static final double foo = 7;	//distance of sensor from center of robot
 	private static final double brightnessThreshold = 0.40;
 
-	// constructor
+	/**
+	 * This object adhjusts the value  odomter by tracking the grid lines crossed
+	 *
+	 * @param odometer The Odometer
+	 */
 	public OdometryCorrection(Odometer odometer) {
 		this.odometer = odometer;
 		this.cs = new EV3ColorSensor(SensorPort.S1);
 		this.colorValue = cs.getMode("Red");
 	}
 
-	// run method (required for Thread)
+	/**
+	* Run method
+	*/
 	public void run() {
 		long correctionStart, correctionEnd;
 
@@ -53,6 +67,10 @@ public class OdometryCorrection extends Thread {
 			}
 		}
 	}
+
+	/**
+	* Correct the odometer. Done automatically when called
+	*/
 	private void correctOdometer(){
 		
 		if (lineCounter == 1 || lineCounter == 2 || lineCounter == 5 || lineCounter == 6)	{	//Y axis portions of the square

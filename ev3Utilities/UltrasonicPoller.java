@@ -1,17 +1,12 @@
 package ev3Utilities;
 import lejos.robotics.SampleProvider;
 
-//
-//  Control of the wall follower is applied periodically by the 
-//  UltrasonicPoller thread.  The while loop at the bottom executes
-//  in a loop.  Assuming that the us.fetchSample, and cont.processUSData
-//  methods operate in about 20mS, and that the thread sleeps for
-//  50 mS at the end of each loop, then one cycle through the loop
-//  is approximately 70 mS.  This corresponds to a sampling rate
-//  of 1/70mS or about 14 Hz.
-//
-
-
+/**
+* The ultrasonic Poller class return ultrasonic polling data
+* @author Nick Purdie
+* @version 1.0
+* @since   2016-03-16
+*/
 public class UltrasonicPoller extends Thread{
 	private SampleProvider us;
 	private UltrasonicController cont;
@@ -19,6 +14,14 @@ public class UltrasonicPoller extends Thread{
 	private int usSensorDistance = 50;
 	private Object lock;
 	
+	/**
+	 * The ultrasonic poller stores a reference to the sample provider, an array of floats containing the ultrasonic data
+	 * and a reference to the ultrasonic controller
+	 *
+	 * @param us The Sample Provider
+	 * @param usData Float array of the Ultrasonic Data
+	 * @oaram cont The Ultrasonic Controller
+	 */
 	public UltrasonicPoller(SampleProvider us, float[] usData, UltrasonicController cont) {
 		this.us = us;
 		this.cont = cont;
@@ -26,9 +29,9 @@ public class UltrasonicPoller extends Thread{
 		lock = new Object();
 	}
 
-//  Sensors now return floats using a uniform protocol.
-//  Need to convert US result to an integer [0,255]
-	
+	/**
+	* Run method
+	*/
 	public void run() {
 		int distance;
 		while (true) {
@@ -42,6 +45,11 @@ public class UltrasonicPoller extends Thread{
 		}
 	}
 
+	/**
+	* Returns the ultrasonic distance when called
+	*
+	* @return An integer representing the distance polled by the ultrasonic sensor
+	*/
 	public int getUsDistance()	{
 		int distance;
 		synchronized(lock)	{

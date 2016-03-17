@@ -5,15 +5,25 @@ import lejos.hardware.lcd.TextLCD;
 import lejos.utility.Timer;
 import lejos.utility.TimerListener;
 
+/**
+* The LCDInfo class provides the ability to print mamy helpful values to the screen
+* @author Nick Purdie
+* @version 1.0
+* @since   2016-03-16
+*/
 public class LCDInfo implements TimerListener{
 	public static final int LCD_REFRESH = 100;
 	private Odometer odo;
 	private Timer lcdTimer;
 	private TextLCD LCD = LocalEV3.get().getTextLCD();;
-	
 	// arrays for displaying data
 	private double [] pos;
-	
+
+	/**
+	 * The lCD info object stores a reference to the odometer
+	 *
+	 * @param odo The odometer
+	 */
 	public LCDInfo(Odometer odo) {
 		this.odo = odo;
 		this.lcdTimer = new Timer(LCD_REFRESH, this);
@@ -25,6 +35,9 @@ public class LCDInfo implements TimerListener{
 		lcdTimer.start();
 	}
 	
+	/**
+	* This method refreshes data
+	*/
 	public void timedOut() { 
 		odo.getPosition(pos, new boolean[] { true, true, true });
 		LCD.clear();
@@ -36,6 +49,12 @@ public class LCDInfo implements TimerListener{
 		LCD.drawInt((int)pos[2], 3, 2);
 	}
 
+	/**
+	* This method formats a double to string in order to be displace on the Ev3 Screen
+	*
+	* @param x The double to be formated
+	* @para places
+	*/
 	private static String formattedDoubleToString(double x, int places) {
 		String result = "";
 		String stack = "";
