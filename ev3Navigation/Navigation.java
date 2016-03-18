@@ -8,11 +8,7 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.Port;
 
-/** This object contains all methods necessary for the EV3 to travel to coordinates on the grid
-* @author Nick Purdie
-* @version 1.0
-* @since   2016-03-16
-*/
+/** This object contains all methods necessary for the EV3 to travel to coordinates on the grid */
 public class Navigation extends Thread	{
 	//-------- user defined--------------
 	private final int FORWARDSPEED = 200;
@@ -177,7 +173,7 @@ public class Navigation extends Thread	{
 	* This method returns a boolean that represents the current state of the EV3.
 	* Specifically it indicates whether the EV3 is currently navigating towards a coordinate.
 	*
-	* @param 
+	* @return Boolean is true if the EV3 is currently performing navigation, else returns false
 	*/
 	public boolean isNavigating()	{
 		return isNavigating;
@@ -225,6 +221,38 @@ public class Navigation extends Thread	{
 		rightMotor.setSpeed(turnSpeed);
 		leftMotor.backward();
 		rightMotor.backward();
+	}
+	
+	/**
+	* This method sets the right motor to rotate forward
+	*
+	* @param turnSpeed The speed at which to perform travel.
+	*/
+	public void rotateRightWheel(int turnSpeed)	{
+		rightMotor.setSpeed(turnSpeed);
+		rightMotor.forward();
+	}
+	
+	/**
+	* This method sets the left motor to rotate forward
+	*
+	* @param turnSpeed The speed at which to perform travel.
+	*/
+	public void rotateLeftWheel(int turnSpeed)	{
+		leftMotor.setSpeed(turnSpeed);
+		leftMotor.forward();
+	}
+	
+	/**
+	* This method sets both motors appropriately to travel forwards.
+	*
+	* @param turnSpeed The speed at which to perform travel.
+	*/
+	public void travelForwards(int turnSpeed)	{
+		leftMotor.setSpeed(turnSpeed);
+		rightMotor.setSpeed(turnSpeed);
+		leftMotor.forward();
+		rightMotor.forward();
 	}
 
 	/**

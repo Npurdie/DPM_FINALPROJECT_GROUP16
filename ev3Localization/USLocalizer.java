@@ -5,20 +5,16 @@ import ev3Odometer.Odometer;
 import java.util.Arrays;
 import ev3Navigation.Navigation;
 
-/** This object gives the EV3 the ability to localize using the Ultrasonic Sensor
-* @author Nick Purdie
-* @version 1.0
-* @since   2016-03-16
-*/
+/** This object gives the EV3 the ability to localize using the Ultrasonic Sensor */
 public class USLocalizer {
 	public enum LocalizationType { FALLING_EDGE, RISING_EDGE };
 	private static int TURN_SPEED = 80;
 	private static int maxDist = 40;		//sensor max dist
 	private static int dist = 30;		//distance from wall for angle calculation
 	private final double tile = 30.48;		//final variable that keeps track of tile size
-	private final double sensorPosition = 7;	//distance between sensor and the center of robot
+	private final double sensorPosition = 3;	//distance between sensor and the center of robot
 
-	private Odometer odo;
+	private Odometer odometer;
 	private SampleProvider usSensor;
 	private float[] usData;
 	private LocalizationType locType;
@@ -34,8 +30,8 @@ public class USLocalizer {
 	 * @param usData The ultrasonic sensor data array
 	 * @param locType The type of localization to be performed
 	 */
-	public USLocalizer(Odometer odo,  SampleProvider usSensor, float[] usData, LocalizationType locType, Navigation navigator) {
-		this.odo = odo;
+	public USLocalizer(Odometer odometer, SampleProvider usSensor, float[] usData, LocalizationType locType, Navigation navigator) {
+		this.odometer = odometer;
 		this.usSensor = usSensor;
 		this.usData = usData;
 		this.locType = locType;
@@ -56,13 +52,13 @@ public class USLocalizer {
 					navigator.turnRight(TURN_SPEED);
 				}
 				//turn right by 35 degrees to avoid picking up wall again
-				navigator.turnTo(odo.getTheta() - Math.toRadians(35));	
+				navigator.turnTo(odometer.getTheta() - Math.toRadians(35));	
 			}
 			// keep rotating until the robot sees a wall, then latch the angle
 			while (getFilteredData(10) > dist)	{
 				navigator.turnRight(TURN_SPEED);
 			}
-			latchA = (odo.getTheta());
+			latchA = (odometer.getTheta());
 			Sound.beep();
 			navigator.turnLeft(TURN_SPEED);	// again turn left for a few second to avoid latching on to the same wall
 			try { Thread.sleep(1500);}
@@ -77,7 +73,7 @@ public class USLocalizer {
 			while (getFilteredData(10) > dist)	{
 				navigator.turnLeft(TURN_SPEED);
 			}
-			latchB = odo.getTheta();
+			latchB = odometer.getTheta();
 			Sound.beep();
 			
 		} 
@@ -96,7 +92,7 @@ public class USLocalizer {
 			while (getFilteredData(10) <= dist)	{
 				navigator.turnRight(TURN_SPEED);
 			}
-			latchA = odo.getTheta();	//latch onto first angle
+			latchA = odometer.getTheta();	//latch onto first angle
 			Sound.beep();
 			//turn left until robot looses wall
 			while(getFilteredData(10) < maxDist-3)	{
@@ -110,16 +106,16 @@ public class USLocalizer {
 			while (getFilteredData(10) <= dist)	{
 				navigator.turnLeft(TURN_SPEED);
 			}
-			latchB = odo.getTheta();	//latch onto second angle
+			latchB = odometer.getTheta();	//latch onto second angle
 			Sound.beep();
 		}
-		double theta = odo.getTheta() + calcAngle(latchA,latchB);	// new theta is calculated
-		odo.setPosition(new double [] {0.0, 0.0, theta}, new boolean [] {true, true, true});	//set theta
+		double theta = odometer.getTheta() + calcAngle(latchA,latchB);	// new theta is calculated
+		odometer.setPosition(new double [] {0.0, 0.0, theta}, new boolean [] {true, true, true});	//set theta
 		
 		navigator.turnTo(Math.toRadians(180));	//turn to face wall parallel with y axis
-		odo.setX(getFilteredData(30) - tile + sensorPosition);	//calculate position in x relative to wall
+		odometer.setX(getFilteredData(30) - tile + sensorPosition);	//calculate position in x relative to wall
 		navigator.turnTo(Math.toRadians(270));	//turn to face wall parallel with x axis
-		odo.setY(getFilteredData(30) - tile + sensorPosition);	//calculate position in y relative to wall
+		odometer.setY(getFilteredData(30) - tile + sensorPosition);	//calculate position in y relative to wall
 		navigator.turnTo(0); //turn to face 0 for demo
 	}
 	
@@ -132,10 +128,10 @@ public class USLocalizer {
 	*/
 	private double calcAngle(double a, double b)	{
 		if (a <= b){
-			return Math.toRadians(40) - (a + b)/2;	//40 was changed based on experimentation
+			return Math.toRadians(25) - (a + b)/2;	//40 was changed based on experimentation
 		}
 		else 	{
-			return Math.toRadians(220) - (a + b)/2;	//220 was changed base on experimentation
+			return Math.toRadians(210) - (a + b)/2;	//220 was changed base on experimentation
 		}
 	}
 	

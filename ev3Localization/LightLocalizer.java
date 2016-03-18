@@ -4,34 +4,36 @@ import lejos.robotics.SampleProvider;
 import ev3Odometer.Odometer;
 import ev3Navigation.Navigation;
 
-/** This object gives the EV3 the ability to localize using the light sensor.
-* @author Nick Purdie
-* @version 1.0
-* @since   2016-03-16
-*/
+/** This object gives the EV3 the ability to localize using the light sensor. */
 public class LightLocalizer {
 
 	private Odometer odometer;
-	private SampleProvider colorSensor;
-	private float[] colorData;
+	private SampleProvider colorSensorL;
+	private SampleProvider colorSensorR;
+	private float[] colorDataL;
+	private float[] colorDataR;
 	private Navigation navigator;
 	private static int TURN_SPEED = 80;
-	private final double lightThreshHold = 0.4;	//for detecting grid lines
-	private final double sensorPosition = 7;	//distance from robot center to light sensor
+	private final double lightThreshHold = 0.265;	//for detecting grid lines
+	private final double sensorPosition = 12.5;	//distance from robot center to light sensor
 	
 	/**
 	 * The light localizer stores a reference to the Odometer, the Navigator, the colour sensor's sample provider
 	 * and an array containing the color data.
 	 *
 	 * @param odometer The Odometer
+	 * @param colorSensorL The SampleProvider for the left color sensor
+	 * @param colorSensorR The SampleProvider for the right color sensor
+	 * @param colorDataL The color data array for the left color sensor
+	 * @param colorDataR The color data array for the right color sensor
 	 * @param navigation The Navigator
-	 * @param colorsensor The SampleProvider
-	 * @param colorData The color data array
 	 */
-	public LightLocalizer(Odometer odometer, SampleProvider colorSensor, float[] colorData, Navigation navigation) {
+	public LightLocalizer(Odometer odometer, SampleProvider colorSensorL, SampleProvider colorSensorR, float[] colorDataL, float[] colorDataR, Navigation navigation) {
 		this.odometer = odometer;
-		this.colorSensor = colorSensor;
-		this.colorData = colorData;
+		this.colorSensorL = colorSensorL;
+		this.colorSensorR = colorSensorR;
+		this.colorDataL = colorDataL;
+		this.colorDataR = colorDataR;
 		this.navigator = navigation;
 	}
 
@@ -39,51 +41,67 @@ public class LightLocalizer {
 	* Perform the localization. The ev3 will travel to the point (0,0) and rotate
 	* while keeping track of the angles at which is encounters grid lines. This will
 	* allow the ev3 to accurately determine it's current location as well as heading.
+	* 
+	* @param x The x coordinate of the location to perform the light localization
+	* @param y The y coordinate of the location to perform the light localization
 	*/
-	public void doLocalization() {
-		// drive to location listed in tutorial
-		double gridLines [] = new double[4];	//stores the angles of all 4 lines
-		double dx = 0;
-		double dy = 0;
+	public void doLocalization(double x, double y) {
 		
-		navigator.travelTo(0,0);
-		navigator.turnTo(Math.toRadians(35));
+		navigator.travelTo(x,y);
+		navigator.turnTo(Math.toRadians(90));
 		
-		for (int i=0; i< gridLines.length; i++)	{	//for every line
-			while (!detectedGridLine())	{
-				navigator.turnRight(TURN_SPEED);
-			}
-			gridLines [i] = odometer.getTheta();
-			Sound.beep();
-			//turn 10 degrees to make sure the same line is not picked up on next iteration
-			navigator.turnTo(odometer.getTheta() - Math.toRadians(10));	
+		while (!detectedGridLineL() || !detectedGridLineR())	{
+			navigator.travelForwards(50);
 		}
 		navigator.stopMotors();
+		Sound.beep();
 		
-		if (gridLines[0] < Math.PI)	{	//wrap-around angle
-			gridLines[0] += 2*Math.PI;
+		if (detectedGridLineL())	{
+			while (!detectedGridLineR())	{
+				navigator.rotateRightWheel(50);
+			}
+			navigator.stopMotors();
+			Sound.beep();
 		}
 		
-		dy = gridLines[1] - gridLines[3];	//calculate dx
-		dx = gridLines[0] - gridLines[2];	//calculate dy
+		if (!detectedGridLineR())	{
+			while (!detectedGridLineL())	{
+				navigator.rotateLeftWheel(50);
+			}
+			navigator.stopMotors();
+			Sound.beep();
+		}
 		
-		odometer.setX(sensorPosition * Math.cos(dy/2));	//recalculate and set x and y position
-		odometer.setY(sensorPosition * Math.cos(dx/2));
+		odometer.setX(0);	//recalculate and set x and y position
+		odometer.setY(12.5);
 		
-		odometer.setTheta(odometer.getTheta() + gridLines[3]+ Math.toRadians(180) +dy/2); //calculate and set theta
-		navigator.travelTo(0,0);
-		navigator.turnTo(0); //finished localization
+		odometer.setTheta(0); //calculate and set theta
 		
 	}
 	
 	/**
-	* This method samples the colour sensor and return true if when it encounters one.
+	* This method samples the left colour sensor and returns true if when it encounters one.
 	*
 	* @return Boolean = true if a grid line is detected. False otherwise
 	*/
-	private boolean detectedGridLine()	{
-		colorSensor.fetchSample(colorData, 0);
-		if (colorData[0] < lightThreshHold)	{
+	private boolean detectedGridLineL()	{
+		colorSensorL.fetchSample(colorDataL, 0);
+		if (colorDataL[0] < lightThreshHold)	{
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	* This method samples the right colour sensor and returns true if when it encounters one.
+	*
+	* @return Boolean = true if a grid line is detected. False otherwise
+	*/
+	private boolean detectedGridLineR()	{
+		colorSensorR.fetchSample(colorDataR, 0);
+		if (colorDataR[0] < lightThreshHold)	{
 			return true;
 		}
 		else {

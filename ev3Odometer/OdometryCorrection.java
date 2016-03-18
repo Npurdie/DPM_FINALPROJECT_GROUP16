@@ -8,14 +8,6 @@ import lejos.hardware.port.SensorPort;
 import lejos.robotics.SampleProvider;
 import lejos.hardware.sensor.EV3ColorSensor;
 
-
-/**
-* This object adjusts the value of the odometer by tracking the grid lines crossed
-*
-* @author Nick Purdie
-* @version 1.0
-* @since   2016-03-16
-*/
 public class OdometryCorrection extends Thread {
 	private static final long CORRECTION_PERIOD = 10;
 	private Odometer odometer;

@@ -1,14 +1,12 @@
+/*
+ * Odometer.java
+ */
+
 package ev3Odometer;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
-/** 
-* This object keeps tracks of the rotation of both wheels to perpetualy keep track of x and y
-* coordinates as well as heading.
-*
-* @author Nick Purdie
-* @version 1.0
-* @since 2016-03-16
-*/
+/** This object keeps tracks of the rotation of both wheels to perpetualy keep track of x and y
+* coordinates as well as heading */
 public class Odometer extends Thread {
 	// robot position
 	private double x, y, theta, totalDistance;
@@ -49,7 +47,6 @@ public class Odometer extends Thread {
 	}
 
 	/** Run the odometer */
-	@Override
 	public void run() {
 		long updateStart, updateEnd;
 		leftMotor.resetTachoCount();

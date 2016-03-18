@@ -3,9 +3,6 @@ import lejos.robotics.SampleProvider;
 
 /**
 * The ultrasonic Poller class return ultrasonic polling data
-* @author Nick Purdie
-* @version 1.0
-* @since   2016-03-16
 */
 public class UltrasonicPoller extends Thread{
 	private SampleProvider us;
@@ -15,12 +12,9 @@ public class UltrasonicPoller extends Thread{
 	private Object lock;
 	
 	/**
-	 * The ultrasonic poller stores a reference to the sample provider, an array of floats containing the ultrasonic data
-	 * and a reference to the ultrasonic controller
-	 *
 	 * @param us The Sample Provider
 	 * @param usData Float array of the Ultrasonic Data
-	 * @oaram cont The Ultrasonic Controller
+	 * @param cont The Ultrasonic Controller
 	 */
 	public UltrasonicPoller(SampleProvider us, float[] usData, UltrasonicController cont) {
 		this.us = us;
@@ -29,6 +23,7 @@ public class UltrasonicPoller extends Thread{
 		lock = new Object();
 	}
 
+//  Sensors now return floats using a uniform protocol.
 	/**
 	* Run method
 	*/
@@ -46,9 +41,9 @@ public class UltrasonicPoller extends Thread{
 	}
 
 	/**
-	* Returns the ultrasonic distance when called
+	* Return the the ultrasonic distance when polled
 	*
-	* @return An integer representing the distance polled by the ultrasonic sensor
+	* @return An integer representing the distance polled
 	*/
 	public int getUsDistance()	{
 		int distance;
