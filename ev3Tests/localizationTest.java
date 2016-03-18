@@ -12,7 +12,7 @@ import lejos.hardware.port.Port;
 import lejos.hardware.sensor.*;
 import lejos.robotics.SampleProvider;
 
-public class localizationTest {
+public class LocalizationTest {
 	// Static Resources:
 		// Left motor connected to outputA
 		// Right motor connected to output D

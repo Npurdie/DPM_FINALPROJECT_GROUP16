@@ -12,6 +12,6 @@ import lejos.hardware.port.Port;
 import lejos.hardware.sensor.*;
 import lejos.robotics.SampleProvider;
 
-public class odometryTest {
+public class OdometryTest {
 
 }
