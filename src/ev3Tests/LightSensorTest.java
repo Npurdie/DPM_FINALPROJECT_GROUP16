@@ -2,6 +2,7 @@ package ev3Tests;
 
 import ev3Odometer.LCDInfo;
 import ev3Odometer.Odometer;
+import ev3Odometer.OdometryCorrection;
 import ev3Tests.SquareDriver;
 import ev3Utilities.LightPoller;
 import lejos.hardware.Button;
@@ -20,8 +21,8 @@ public class LightSensorTest {
 			LocalEV3.get().getPort("D"));
 	private static final Port colorPortL = LocalEV3.get().getPort("S1");
 	private static final Port colorPortR = LocalEV3.get().getPort("S2");
-	public static final double WHEEL_RADIUS = 2.2;
-	public static final double TRACK = 15.37;
+	public static final double WHEEL_RADIUS = 2.08;
+	public static final double TRACK = 15.7;
 	public static final double LIGHTSENSOR_WIDTH = 12.5;
 
 	public static void main(String[] args) {
@@ -34,7 +35,6 @@ public class LightSensorTest {
 		// use the difference - update odometer?
 		// pop old reflection out, push new reflection in
 		
-		//check when difference is greater than 30
 		@SuppressWarnings("resource")
 		// Because we don't bother to close this resource
 		SensorModes colorSensorL = new EV3ColorSensor(colorPortL);
@@ -51,6 +51,9 @@ public class LightSensorTest {
 		LightPoller rightLP = new LightPoller(colorValueR, colorDataR);
 		leftLP.start();
 		rightLP.start();
+		
+		LightSensorDerivative lsDerivative = new LightSensorDerivative(odo, leftLP, rightLP);
+		lsDerivative.start();
 
 		LCDInfo lcd = new LCDInfo(odo, leftLP, rightLP);
 
