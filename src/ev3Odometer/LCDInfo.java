@@ -51,8 +51,8 @@ public class LCDInfo implements TimerListener{
 		LCD.drawInt((int)(pos[0] * 10), 3, 0);
 		LCD.drawInt((int)(pos[1] * 10), 3, 1);
 		LCD.drawInt((int)pos[2], 3, 2);
-		LCD.drawInt((int)leftLP.getReflection(), 3, 3);
-		LCD.drawInt((int)rightLP.getReflection(), 3, 4);
+		LCD.drawInt((int)(leftLP.getReflection()*100), 3, 3);
+		LCD.drawInt((int)(rightLP.getReflection()*100), 3, 4);
 	}
 
 	/**

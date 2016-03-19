@@ -33,6 +33,8 @@ public class LightSensorTest {
 		// between currentReflection and previousReflection
 		// use the difference - update odometer?
 		// pop old reflection out, push new reflection in
+		
+		//check when difference is greater than 30
 		@SuppressWarnings("resource")
 		// Because we don't bother to close this resource
 		SensorModes colorSensorL = new EV3ColorSensor(colorPortL);
