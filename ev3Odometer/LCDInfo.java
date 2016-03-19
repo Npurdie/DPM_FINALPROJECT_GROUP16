@@ -1,5 +1,6 @@
 package ev3Odometer;
 
+import ev3Utilities.LightPoller;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.TextLCD;
 import lejos.utility.Timer;
@@ -12,7 +13,9 @@ public class LCDInfo implements TimerListener{
 	public static final int LCD_REFRESH = 100;
 	private Odometer odo;
 	private Timer lcdTimer;
-	private TextLCD LCD = LocalEV3.get().getTextLCD();;
+	private TextLCD LCD = LocalEV3.get().getTextLCD();
+	private LightPoller leftLP;
+	private LightPoller rightLP;
 	// arrays for displaying data
 	private double [] pos;
 
@@ -21,9 +24,11 @@ public class LCDInfo implements TimerListener{
 	 *
 	 * @param odo The odometer
 	 */
-	public LCDInfo(Odometer odo) {
+	public LCDInfo(Odometer odo, LightPoller leftLP, LightPoller rightLP) {
 		this.odo = odo;
 		this.lcdTimer = new Timer(LCD_REFRESH, this);
+		this.leftLP = leftLP;
+		this.rightLP = rightLP;
 		
 		// initialise the arrays for displaying data
 		pos = new double [3];
@@ -41,9 +46,13 @@ public class LCDInfo implements TimerListener{
 		LCD.drawString("X: ", 0, 0);
 		LCD.drawString("Y: ", 0, 1);
 		LCD.drawString("H: ", 0, 2);
+		LCD.drawString("L1", 0, 3);
+		LCD.drawString("L2", 0, 4);
 		LCD.drawInt((int)(pos[0] * 10), 3, 0);
 		LCD.drawInt((int)(pos[1] * 10), 3, 1);
 		LCD.drawInt((int)pos[2], 3, 2);
+		LCD.drawInt((int)leftLP.getReflection(), 3, 3);
+		LCD.drawInt((int)rightLP.getReflection(), 3, 4);
 	}
 
 	/**
