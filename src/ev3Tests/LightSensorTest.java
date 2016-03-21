@@ -19,8 +19,7 @@ public class LightSensorTest {
 			LocalEV3.get().getPort("A"));
 	private static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(
 			LocalEV3.get().getPort("D"));
-	private static final Port colorPortL = LocalEV3.get().getPort("S1");
-	private static final Port colorPortR = LocalEV3.get().getPort("S2");
+	private static final Port colorPort = LocalEV3.get().getPort("S1");
 	public static final double WHEEL_RADIUS = 2.08;
 	public static final double TRACK = 15.7;
 	public static final double LIGHTSENSOR_WIDTH = 12.5;
@@ -37,25 +36,20 @@ public class LightSensorTest {
 		
 		@SuppressWarnings("resource")
 		// Because we don't bother to close this resource
-		SensorModes colorSensorL = new EV3ColorSensor(colorPortL);
-		SensorModes colorSensorR = new EV3ColorSensor(colorPortR);
-		SampleProvider colorValueL = colorSensorL.getMode("Red");
-		SampleProvider colorValueR = colorSensorR.getMode("Red");
-		float[] colorDataL = new float[colorValueL.sampleSize()]; 
-		float[] colorDataR = new float[colorValueR.sampleSize()];
+		SensorModes colorSensor = new EV3ColorSensor(colorPort);
+		SampleProvider colorValue = colorSensor.getMode("Red");
+		float[] colorData = new float[colorValue.sampleSize()]; 
 
 		Odometer odo = new Odometer(leftMotor, rightMotor, WHEEL_RADIUS, TRACK);
 		odo.start();
 
-		LightPoller leftLP = new LightPoller(colorValueL, colorDataL);
-		LightPoller rightLP = new LightPoller(colorValueR, colorDataR);
-		leftLP.start();
-		rightLP.start();
+		LightPoller lightPoller = new LightPoller(colorValue, colorData);
+		lightPoller.start();
 		
-		LightSensorDerivative lsDerivative = new LightSensorDerivative(odo, leftLP, rightLP);
+		LightSensorDerivative lsDerivative = new LightSensorDerivative(odo, lightPoller);
 		lsDerivative.start();
 
-		LCDInfo lcd = new LCDInfo(odo, leftLP, rightLP);
+		LCDInfo lcd = new LCDInfo(odo, lightPoller);
 
 		int buttonChoice = Button.waitForAnyPress();
 		if (buttonChoice == Button.ID_DOWN) {

@@ -11,8 +11,7 @@ import lejos.hardware.sensor.EV3ColorSensor;
 
 public class LightSensorDerivative extends Thread {
 	private Odometer odometer;
-	private LightPoller leftLP;
-	private LightPoller rightLP;
+	private LightPoller lightPoller;
 
 	/**
 	 * This object adjusts the value odometer by tracking the grid lines crossed
@@ -20,11 +19,9 @@ public class LightSensorDerivative extends Thread {
 	 * @param odometer
 	 *            The Odometer
 	 */
-	public LightSensorDerivative(Odometer odometer, LightPoller leftLP,
-			LightPoller rightLP) {
+	public LightSensorDerivative(Odometer odometer, LightPoller lightPoller) {
 		this.odometer = odometer;
-		this.leftLP = leftLP;
-		this.rightLP = rightLP;
+		this.lightPoller = lightPoller;
 
 	}
 
@@ -33,31 +30,22 @@ public class LightSensorDerivative extends Thread {
 	 */
 	public void run() {
 		// long correctionStart, correctionEnd;
-		Stack<Double> leftDerivStack = new Stack<Double>();
-		Stack<Double> rightDerivStack = new Stack<Double>();
+		Stack<Double> derivStack = new Stack<Double>();
 
-		leftDerivStack.push(leftLP.getReflection());
-		rightDerivStack.push(rightLP.getReflection());
+		derivStack.push(lightPoller.getReflection());
 
 		while (true) {
 			// compare current reflection with the reflection in the stack
-			double oldLReflection = leftDerivStack.pop();
-			double oldRReflection = rightDerivStack.pop();
+			double oldReflection = derivStack.pop();
 
-			double currLReflection = leftLP.getReflection();
-			double currRReflection = rightLP.getReflection();
+			double currReflection = lightPoller.getReflection();
 
-			leftDerivStack.push(currLReflection);
-			rightDerivStack.push(currRReflection);
+			derivStack.push(currReflection);
 
-			double leftDiff = oldLReflection - currLReflection;
-			double rightDiff = oldRReflection - currRReflection;
+			double diff = oldReflection - currReflection;
 
-			/*if (leftDiff > 0.15) {
+			if (diff > 0.15) {
 				Sound.beep();
-			}*/
-			if (rightDiff > 0.15) {
-				Sound.buzz();
 			}
 
 			try {

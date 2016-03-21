@@ -14,8 +14,7 @@ public class LCDInfo implements TimerListener{
 	private Odometer odo;
 	private Timer lcdTimer;
 	private TextLCD LCD = LocalEV3.get().getTextLCD();
-	private LightPoller leftLP;
-	private LightPoller rightLP;
+	private LightPoller lightPoller;
 	// arrays for displaying data
 	private double [] pos;
 
@@ -24,11 +23,10 @@ public class LCDInfo implements TimerListener{
 	 *
 	 * @param odo The odometer
 	 */
-	public LCDInfo(Odometer odo, LightPoller leftLP, LightPoller rightLP) {
+	public LCDInfo(Odometer odo, LightPoller lightPoller) {
 		this.odo = odo;
 		this.lcdTimer = new Timer(LCD_REFRESH, this);
-		this.leftLP = leftLP;
-		this.rightLP = rightLP;
+		this.lightPoller = lightPoller;
 		
 		// initialise the arrays for displaying data
 		pos = new double [3];
@@ -51,8 +49,7 @@ public class LCDInfo implements TimerListener{
 		LCD.drawInt((int)(pos[0] * 10), 3, 0);
 		LCD.drawInt((int)(pos[1] * 10), 3, 1);
 		LCD.drawInt((int)pos[2], 3, 2);
-		LCD.drawInt((int)(leftLP.getReflection()*100), 3, 3);
-		LCD.drawInt((int)(rightLP.getReflection()*100), 3, 4);
+		LCD.drawInt((int)(lightPoller.getReflection()*100), 3, 3);
 	}
 
 	/**
