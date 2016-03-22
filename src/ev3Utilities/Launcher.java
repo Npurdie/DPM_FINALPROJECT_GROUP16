@@ -5,9 +5,9 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 public class Launcher {
 	private EV3LargeRegulatedMotor scooperMotor;
 	private EV3LargeRegulatedMotor launcherMotor;
-	private int ACCELERATION = 50;
-	private int SCOOPE_SPEED = 30;
-	private int SHOOT_SPEED = 50;
+	private int ACCELERATION = 100;
+	private int SCOOPE_SPEED = 90;
+	private int SHOOT_SPEED = 200;
 	
 	public Launcher(EV3LargeRegulatedMotor scooperMotor, EV3LargeRegulatedMotor launcherMotor)	{
 		this.scooperMotor = scooperMotor;
@@ -17,21 +17,26 @@ public class Launcher {
 		launcherMotor.setAcceleration(ACCELERATION);
 		scooperMotor.setSpeed(SCOOPE_SPEED);
 		launcherMotor.setSpeed(SHOOT_SPEED);
-		scooperMotor.rotate(70);
+		scooperMotor.rotate(-160);
 	}
-	
+	public void lowerScooper(int angle)	{
+		scooperMotor.rotate(angle);
+	}
+	public void raiseScooper(int angle)	{
+		scooperMotor.rotate(-angle);
+	}
 	public void lowerScooper()	{
-		scooperMotor.rotate(-70);
+		scooperMotor.rotate(160);
 	}
 	public void raiseScooper()	{
-		scooperMotor.rotate(70);
+		scooperMotor.rotate(-160);
 	}
 	
 	public void shootBall(int numberOfBalls)	{
 		for (int i=0; i< numberOfBalls; i++)	{
-			raiseScooper();
-			lowerScooper();
-			launcherMotor.rotate(360);
+			lowerScooper(100);
+			launcherMotor.rotate(-1080);
+			raiseScooper(100);
 		}
 	}
 }

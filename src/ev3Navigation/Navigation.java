@@ -207,8 +207,11 @@ public class Navigation extends Thread	{
 	* This method stops both motors.
 	*/
 	public void stopMotors(){
-		leftMotor.stop();
-		rightMotor.stop();
+		leftMotor.setSpeed(0);
+		rightMotor.setSpeed(0);
+		
+		leftMotor.forward();
+		rightMotor.forward();
 	}
 
 	/**

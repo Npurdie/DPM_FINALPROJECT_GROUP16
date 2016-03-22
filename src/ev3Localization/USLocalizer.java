@@ -128,10 +128,10 @@ public class USLocalizer {
 	*/
 	private double calcAngle(double a, double b)	{
 		if (a <= b){
-			return Math.toRadians(25) - (a + b)/2;	//40 was changed based on experimentation
+			return Math.toRadians(45) - (a + b)/2;	//40 was changed based on experimentation
 		}
 		else 	{
-			return Math.toRadians(210) - (a + b)/2;	//220 was changed base on experimentation
+			return Math.toRadians(225) - (a + b)/2;	//220 was changed base on experimentation
 		}
 	}
 	

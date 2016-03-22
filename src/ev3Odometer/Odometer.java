@@ -5,7 +5,7 @@
 package ev3Odometer;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
-/** This object keeps tracks of the rotation of both wheels to perpetualy keep track of x and y
+/** This object keeps tracks of the rotation of both wheels to perpetually keep track of x and y
 * coordinates as well as heading */
 public class Odometer extends Thread {
 	// robot position

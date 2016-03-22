@@ -3,8 +3,9 @@ package ev3Tests;
 import ev3Odometer.LCDInfo;
 import ev3Odometer.Odometer;
 import ev3Odometer.OdometryCorrection;
-import ev3Tests.SquareDriver;
+import ev3Tests.Driver;
 import ev3Utilities.LightPoller;
+import ev3Utilities.LightSensorDerivative;
 import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -25,14 +26,6 @@ public class LightSensorTest {
 	public static final double LIGHTSENSOR_WIDTH = 12.5;
 
 	public static void main(String[] args) {
-		// test the motors going forward over the lines
-		// get values from LightPoller
-		// Store value into a stack (push into stack)
-		// get value of reflection again
-		// get the value of the reflection in the stack - take difference
-		// between currentReflection and previousReflection
-		// use the difference - update odometer?
-		// pop old reflection out, push new reflection in
 		
 		@SuppressWarnings("resource")
 		// Because we don't bother to close this resource
@@ -46,8 +39,9 @@ public class LightSensorTest {
 		LightPoller lightPoller = new LightPoller(colorValue, colorData);
 		lightPoller.start();
 		
-		LightSensorDerivative lsDerivative = new LightSensorDerivative(odo, lightPoller);
-		lsDerivative.start();
+		
+		/*LightSensorDerivative lsDerivative = new LightSensorDerivative(odo, lightPoller);
+		lsDerivative.start();*/
 
 		LCDInfo lcd = new LCDInfo(odo, lightPoller);
 
@@ -56,7 +50,7 @@ public class LightSensorTest {
 
 			(new Thread() {
 				public void run() {
-					SquareDriver.drive(leftMotor, rightMotor, WHEEL_RADIUS,
+					Driver.driveStraight(leftMotor, rightMotor, WHEEL_RADIUS,
 							WHEEL_RADIUS, TRACK, 2);
 				}
 			}).start();

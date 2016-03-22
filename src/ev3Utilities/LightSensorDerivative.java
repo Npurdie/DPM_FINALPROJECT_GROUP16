@@ -1,9 +1,9 @@
-package ev3Tests;
+package ev3Utilities;
 
 import java.util.Stack;
 
+import ev3Localization.LightLocalizer;
 import ev3Odometer.Odometer;
-import ev3Utilities.LightPoller;
 import lejos.hardware.Sound;
 import lejos.hardware.port.SensorPort;
 import lejos.robotics.SampleProvider;
@@ -12,6 +12,8 @@ import lejos.hardware.sensor.EV3ColorSensor;
 public class LightSensorDerivative extends Thread {
 	private Odometer odometer;
 	private LightPoller lightPoller;
+	private boolean foundLine = false;
+	private LightLocalizer lsl;
 
 	/**
 	 * This object adjusts the value odometer by tracking the grid lines crossed
@@ -19,9 +21,10 @@ public class LightSensorDerivative extends Thread {
 	 * @param odometer
 	 *            The Odometer
 	 */
-	public LightSensorDerivative(Odometer odometer, LightPoller lightPoller) {
+	public LightSensorDerivative(Odometer odometer, LightPoller lightPoller, LightLocalizer lsl) {
 		this.odometer = odometer;
 		this.lightPoller = lightPoller;
+		this.lsl = lsl;
 
 	}
 
@@ -30,22 +33,22 @@ public class LightSensorDerivative extends Thread {
 	 */
 	public void run() {
 		// long correctionStart, correctionEnd;
-		Stack<Double> derivStack = new Stack<Double>();
+		Stack<Double> leftDerivStack = new Stack<Double>();
 
-		derivStack.push(lightPoller.getReflection());
+		leftDerivStack.push(lightPoller.getReflection());
 
 		while (true) {
 			// compare current reflection with the reflection in the stack
-			double oldReflection = derivStack.pop();
+			double oldLReflection = leftDerivStack.pop();
 
-			double currReflection = lightPoller.getReflection();
+			double currLReflection = lightPoller.getReflection();
 
-			derivStack.push(currReflection);
+			leftDerivStack.push(currLReflection);
 
-			double diff = oldReflection - currReflection;
+			double leftDiff = oldLReflection - currLReflection;
 
-			if (diff > 0.15) {
-				Sound.beep();
+			if (leftDiff > 0.15) {
+				lsl.foundGridLine();
 			}
 
 			try {
@@ -55,6 +58,14 @@ public class LightSensorDerivative extends Thread {
 			}
 
 		}
+	}
+	
+	public boolean lineDetected()	{
+		if (foundLine)	{
+			foundLine = false;
+			return true;
+		}
+		return false;
 	}
 
 }
