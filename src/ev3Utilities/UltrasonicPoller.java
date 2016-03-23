@@ -5,46 +5,67 @@ import lejos.robotics.SampleProvider;
 * The ultrasonic Poller class return ultrasonic polling data
 */
 public class UltrasonicPoller extends Thread{
-	private SampleProvider us;
-	private float[] usData;
-	private int usSensorDistance = 50;
+	private SampleProvider forwardUS;
+	private SampleProvider rightUS;
+	private float[] forwardUSData;
+	private float[] rightUSData;
+	private int rightUSSensorDistance = 50;
+	private int forwardUSSensorDistance = 50;
 	private Object lock;
 	
 	/**
 	 * @param us The Sample Provider
 	 * @param usData Float array of the Ultrasonic Data
 	 */
-	public UltrasonicPoller(SampleProvider us, float[] usData) {
-		this.us = us;
-		this.usData = usData;
+	public UltrasonicPoller(SampleProvider fUS, SampleProvider rUS, float[] fUSData, float[] rUSData) {
+		this.forwardUS = fUS;
+		this.rightUS = rUS;
+		this.forwardUSData = fUSData;
+		this.rightUSData = rUSData;
 		lock = new Object();
 	}
 
-//  Sensors now return floats using a uniform protocol.
+	//  Sensors now return floats using a uniform protocol.
 	/**
 	* Run method
 	*/
 	public void run() {
-		int distance;
+		int rDistance,fDistance;
 		while (true) {
-			us.fetchSample(usData,0);							// acquire data
-			distance=(int)(usData[0]*100.0);					// extract from buffer, cast to int
+			forwardUS.fetchSample(forwardUSData,0);							// acquire data
+			rightUS.fetchSample(rightUSData,0);
+			fDistance=(int)(forwardUSData[0]*100.0);					// extract from buffer, cast to int
+			rDistance=(int)(rightUSData[0]*100.0);
 			try { Thread.sleep(50); } catch(Exception e){}		// Poor man's timed sampling
 			synchronized(lock)	{
-				usSensorDistance = distance;
+				rightUSSensorDistance = rDistance;
+				forwardUSSensorDistance = fDistance;
 			}
 		}
 	}
 
 	/**
-	* Return the the ultrasonic distance when polled
+	* Return the right ultrasonic distance when polled
 	*
 	* @return An integer representing the distance polled
 	*/
-	public int getUsDistance()	{
+	public int getRightUsDistance()	{
 		int distance;
 		synchronized(lock)	{
-			distance = usSensorDistance;
+			distance = rightUSSensorDistance;
+		}
+		return distance;
+	}
+
+	/**
+	* Return the forward ultrasonic distance when polled
+	*
+	* @return An integer representing the distance polled
+	*/
+	public int getForwardUsDistance()	{
+		int distance;
+		synchronized(lock)	{
+			distance = forwardUSSensorDistance;
 		}
 		return distance;
 	}
