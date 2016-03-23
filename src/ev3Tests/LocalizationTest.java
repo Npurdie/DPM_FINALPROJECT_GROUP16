@@ -56,7 +56,10 @@ public class LocalizationTest {
 			// setup the odometer and display and navigation
 			Odometer odo = new Odometer(leftMotor,rightMotor,WHEEL_RADIUS,TRACK);
 			odo.start();
+<<<<<<< HEAD:ev3Tests/localizationTest.java
 			LCDInfo lcd = new LCDInfo(odo);
+=======
+>>>>>>> 47545d521e8cf582b5789984e7f410fa1bb1d882:src/ev3Tests/LocalizationTest.java
 			Navigation navigator = new Navigation(leftMotor,rightMotor,WHEEL_RADIUS,TRACK,odo, false);
 			
 			// perform the ultrasonic localization
@@ -65,10 +68,20 @@ public class LocalizationTest {
 			
 			
 			// perform the light sensor localization
+<<<<<<< HEAD:ev3Tests/localizationTest.java
 			LightPoller lightpoller = new LightPoller(colorValue, colorData);
 			lightpoller.start();
 			LightLocalizer lsl = new LightLocalizer(odo, colorValue, colorData, navigator);
 			LightSensorDerivative lsd = new LightSensorDerivative(odo, lightpoller, lsl);
+=======
+			LightPoller lightPoller = new LightPoller(colorValue, colorData);
+			lightPoller.start();
+			
+			LCDInfo lcd = new LCDInfo(odo, lightPoller);
+			
+			LightLocalizer lsl = new LightLocalizer(odo, colorValue, colorData, navigator);
+			LightSensorDerivative lsd = new LightSensorDerivative(odo, lightPoller, lsl);
+>>>>>>> 47545d521e8cf582b5789984e7f410fa1bb1d882:src/ev3Tests/LocalizationTest.java
 			lsd.start();
 			lsl.doLocalization(0,0);			
 			
