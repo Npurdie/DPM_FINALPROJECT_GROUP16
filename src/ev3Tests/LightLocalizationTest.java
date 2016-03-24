@@ -14,7 +14,7 @@ import lejos.hardware.port.Port;
 import lejos.hardware.sensor.*;
 import lejos.robotics.SampleProvider;
 
-public class LocalizationTest {
+public class LightLocalizationTest {
 	// Static Resources:
 		// Left motor connected to outputA
 		// Right motor connected to output D
@@ -22,8 +22,8 @@ public class LocalizationTest {
 		// Color sensor port connected to input S2
 		private static final EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
 		private static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
-		private static final Port usPort1 = LocalEV3.get().getPort("S4");	
-		private static final Port usPort2 = LocalEV3.get().getPort("S3");
+		//private static final Port usPort1 = LocalEV3.get().getPort("S4");	
+		//private static final Port usPort2 = LocalEV3.get().getPort("S3");
 		private static final Port colorPort = LocalEV3.get().getPort("S1");	
 		public static final double WHEEL_RADIUS = 2.05;
 		public static final double TRACK = 15.7;
@@ -37,12 +37,12 @@ public class LocalizationTest {
 			// 3. Create a sample provider instance for the above and initialize operating mode
 			// 4. Create a buffer for the sensor data
 			@SuppressWarnings("resource")							    	// Because we don't bother to close this resource
-			SensorModes usSensorF = new EV3UltrasonicSensor(usPort1);
-			SensorModes usSensorL = new EV3UltrasonicSensor(usPort2);
-			SampleProvider usValueF = usSensorF.getMode("Distance");
-			SampleProvider usValueL = usSensorL.getMode("Distance");	
-			float[] usDataF = new float[usValueF.sampleSize()];				// colorData is the buffer in which data are returned
-			float[] usDataL = new float[usValueL.sampleSize()];
+			//SensorModes usSensorF = new EV3UltrasonicSensor(usPort1);
+			//SensorModes usSensorL = new EV3UltrasonicSensor(usPort2);
+			//SampleProvider usValueF = usSensorF.getMode("Distance");
+			//SampleProvider usValueL = usSensorL.getMode("Distance");	
+			//float[] usDataF = new float[usValueF.sampleSize()];				// colorData is the buffer in which data are returned
+			//float[] usDataL = new float[usValueL.sampleSize()];
 			
 			//Setup color sensor
 			// 1. Create a port object attached to a physical port (done above)
@@ -60,8 +60,8 @@ public class LocalizationTest {
 			Navigation navigator = new Navigation(leftMotor,rightMotor,WHEEL_RADIUS,TRACK,odo, false);
 			
 			// perform the ultrasonic localization
-			USLocalizer usl = new USLocalizer(odo, usValueF, usDataF, USLocalizer.LocalizationType.FALLING_EDGE,navigator);
-			usl.doLocalization();
+			//USLocalizer usl = new USLocalizer(odo, usValueF, usDataF, USLocalizer.LocalizationType.FALLING_EDGE,navigator);
+			//usl.doLocalization();
 			
 			
 			// perform the light sensor localization

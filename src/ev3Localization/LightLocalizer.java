@@ -20,7 +20,7 @@ public class LightLocalizer {
 	}
 	
 	public void doLocalization(int x, int y) {
-		double gridLines [] = new double[3];	//stores the angles of all 4 lines
+		double gridLines [] = new double[4];	//stores the angles of all 4 lines
 		double dx = 0;
 		double dy = 0;
 
