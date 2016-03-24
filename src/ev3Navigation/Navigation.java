@@ -67,6 +67,9 @@ public class Navigation extends Thread	{
 				//}
 			}
 			navigateTo(x,y);
+			//if (odometer.getTravelDist > maxTravelDist)	{
+			//	lightLocalizer.doLocalization(findNearestCorner(odometer.getX(),odometer.getY())
+			//}
 		}
 		Sound.beep();
 		this.isNavigating=false;
