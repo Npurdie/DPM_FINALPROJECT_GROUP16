@@ -260,6 +260,15 @@ public class Navigation extends Thread	{
 		leftMotor.forward();
 		rightMotor.forward();
 	}
+	
+	public void travelBackwardDistance(double distance) {
+		leftMotor.setSpeed(TURNSPEED);
+		rightMotor.setSpeed(TURNSPEED);
+		leftMotor.rotate(-convertDistance(wheelRadius, distance), true);
+		rightMotor.rotate(-convertDistance(wheelRadius, distance), false);
+		
+		stopMotors();
+	}
 
 	/**
 	* This method converts the desired turn angle into the distance the left or right wheel has to rotate
@@ -270,6 +279,10 @@ public class Navigation extends Thread	{
 	*/
 	private static int convertAngle(double radius, double width, double angle){
 		return (int) ((180.0 * Math.PI * width * angle / 360.0) / (Math.PI * radius));
+	}
+	
+	private static int convertDistance(double radius, double distance) {
+		return (int) ((180.0 * distance) / (Math.PI * radius));
 	}
 	
 }

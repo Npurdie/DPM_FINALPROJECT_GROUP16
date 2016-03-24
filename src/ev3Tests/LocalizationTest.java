@@ -59,23 +59,30 @@ public class LocalizationTest {
 
 			Navigation navigator = new Navigation(leftMotor,rightMotor,WHEEL_RADIUS,TRACK,odo, false);
 			
-			// perform the ultrasonic localization
 			USLocalizer usl = new USLocalizer(odo, usValueF, usDataF,navigator);
-			usl.doLocalization();
 			
-			
-			// perform the light sensor localization
 
-//			LightPoller lightPoller = new LightPoller(colorValue, colorData);
-//			lightPoller.start();
-//			
-//			LCDInfo lcd = new LCDInfo(odo, lightPoller);
-//			
-//			LightLocalizer lsl = new LightLocalizer(odo, colorValue, colorData, navigator);
-//			LightSensorDerivative lsd = new LightSensorDerivative(odo, lightPoller, lsl);
-//
-//			lsd.start();
-//			lsl.doLocalization(0,0);			
+			LightPoller lightPoller = new LightPoller(colorValue, colorData);
+			lightPoller.start();
+			
+			LCDInfo lcd = new LCDInfo(odo, lightPoller);
+			
+			LightLocalizer lsl = new LightLocalizer(odo, colorValue, colorData, navigator);
+			
+			
+			
+			int buttonChoice = Button.waitForAnyPress();
+			
+			if (buttonChoice == Button.ID_DOWN) {
+				// perform the ultrasonic localization
+				usl.doLocalization();
+				
+				LightSensorDerivative lsd = new LightSensorDerivative(odo, lightPoller, lsl);
+				lsd.start();
+				
+				// perform the light sensor localization
+				lsl.doLocalization();
+			}
 			
 			while (Button.waitForAnyPress() != Button.ID_ESCAPE);
 			System.exit(0);		
