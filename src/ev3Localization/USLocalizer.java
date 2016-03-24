@@ -183,7 +183,7 @@ public class USLocalizer {
 		} else
 		// If the robot is initially not facing any wall.
 		{
-			while (getFilteredData(10) <= maxDist - 3) {
+			while (getFilteredData(10) >= maxDist - 3) {
 				navigator.turnLeft(TURN_SPEED);
 			}
 			// Once it reaches initial position, 
