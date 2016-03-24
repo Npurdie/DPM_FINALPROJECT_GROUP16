@@ -11,7 +11,7 @@ import ev3Navigation.Navigation;
  */
 public class USLocalizer {
 	
-	private static int TURN_SPEED = 120;
+	private static int TURN_SPEED = 200;
 	private static int maxDist = 40; // sensor max dist
 	private static int dist = 30; // distance from wall for angle calculation
 	private final double tile = 30.48; // final variable that keeps track of

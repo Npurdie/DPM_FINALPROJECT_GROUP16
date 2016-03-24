@@ -12,7 +12,7 @@ import lejos.hardware.port.Port;
 public class Navigation extends Thread	{
 	//-------- user defined--------------
 	private final int FORWARDSPEED = 200;
-	private final int TURNSPEED = 100;
+	private final int TURNSPEED = 120;
 	private final int ACCELERATION = 2000;
 	private final double travelToError = 1.0;
 	private final double travelAngleError = 1.0;
