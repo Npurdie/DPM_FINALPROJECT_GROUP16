@@ -60,8 +60,8 @@ public class LocalizationTest {
 			Navigation navigator = new Navigation(leftMotor,rightMotor,WHEEL_RADIUS,TRACK,odo, false);
 			
 			// perform the ultrasonic localization
-			USLocalizer usl = new USLocalizer(odo, usValueF, usDataF, USLocalizer.LocalizationType.FALLING_EDGE,navigator);
-			usl.doLocalization();
+			//USLocalizer usl = new USLocalizer(odo, usValueF, usDataF, USLocalizer.LocalizationType.FALLING_EDGE,navigator);
+			//usl.doLocalization();
 			
 			
 			// perform the light sensor localization
