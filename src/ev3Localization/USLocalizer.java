@@ -11,7 +11,7 @@ import ev3Navigation.Navigation;
  */
 public class USLocalizer {
 	
-	private static int TURN_SPEED = 80;
+	private static int TURN_SPEED = 120;
 	private static int maxDist = 40; // sensor max dist
 	private static int dist = 30; // distance from wall for angle calculation
 	private final double tile = 30.48; // final variable that keeps track of
@@ -67,7 +67,7 @@ public class USLocalizer {
 		navigator.turnLeft(TURN_SPEED); // again turn left for a few second to
 										// avoid latching on to the same wall
 		try {
-			Thread.sleep(1500);
+			Thread.sleep(1000);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
@@ -83,23 +83,6 @@ public class USLocalizer {
 																		// calculated
 		odometer.setPosition(new double[] { 0.0, 0.0, theta }, new boolean[] { true, true, true }); // set
 																									// theta
-		/*
-		navigator.turnTo(Math.toRadians(180)); // turn to face wall parallel
-												// with y axis
-		odometer.setX(getFilteredData(30) - tile + sensorPosition); // calculate
-																	// position
-																	// in x
-																	// relative
-																	// to wall
-		navigator.turnTo(Math.toRadians(270)); // turn to face wall parallel
-												// with x axis
-		odometer.setY(getFilteredData(30) - tile + sensorPosition); // calculate
-																	// position
-																	// in y
-																	// relative
-																	// to wall
-		
-		*/ 
 		navigator.turnTo(Math.toRadians(45)); // turn to face 0 for demo
 	}
 

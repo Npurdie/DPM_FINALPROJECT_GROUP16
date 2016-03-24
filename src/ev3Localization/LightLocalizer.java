@@ -11,6 +11,7 @@ public class LightLocalizer {
 	private Odometer odometer;
 	private Navigation navigator;
 	private static int TURN_SPEED = 80;
+	private static int FORWARDSPEED = 150;
 	private final double sensorPosition = 12.5; // distance from robot center to
 												// light sensor
 	private boolean gridLine = false;
@@ -27,7 +28,7 @@ public class LightLocalizer {
 		double dy = 0;
 
 		while (!gridLine) {
-			navigator.travelForwards(150);
+			navigator.travelForwards(FORWARDSPEED);
 		}
 		navigator.stopMotors();
 		
