@@ -55,18 +55,10 @@ public class USLocalizer {
 	public void doLocalization() {
 		
 		initializeRobot();
-		/*
+		
 		double latchA, latchB; // angle of wall A and Wall B
 
-		// rotate the robot until it sees no wall
-		if (getFilteredData(10) <= maxDist) {
-			while (getFilteredData(10) <= maxDist - 3) {
-				navigator.turnRight(TURN_SPEED);
-			}
-			// turn right by 35 degrees to avoid picking up wall again
-			navigator.turnTo(odometer.getTheta() - Math.toRadians(35));
-		}
-		// keep rotating until the robot sees a wall, then latch the angle
+
 		while (getFilteredData(10) > dist) {
 			navigator.turnRight(TURN_SPEED);
 		}
@@ -78,10 +70,6 @@ public class USLocalizer {
 			Thread.sleep(1500);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
-		}
-		// switch direction and wait until it sees no wall
-		while (getFilteredData(10) <= maxDist - 3) {
-			navigator.turnLeft(TURN_SPEED);
 		}
 		// keep rotating until the robot sees a wall, then latch the angle
 		while (getFilteredData(10) > dist) {
@@ -95,7 +83,7 @@ public class USLocalizer {
 																		// calculated
 		odometer.setPosition(new double[] { 0.0, 0.0, theta }, new boolean[] { true, true, true }); // set
 																									// theta
-
+		/*
 		navigator.turnTo(Math.toRadians(180)); // turn to face wall parallel
 												// with y axis
 		odometer.setX(getFilteredData(30) - tile + sensorPosition); // calculate
@@ -110,8 +98,10 @@ public class USLocalizer {
 																	// in y
 																	// relative
 																	// to wall
-		navigator.turnTo(0); // turn to face 0 for demo
-	*/}
+		
+		*/ 
+		navigator.turnTo(Math.toRadians(45)); // turn to face 0 for demo
+	}
 
 	/**
 	 * Returns value that must be added to the EV3's heading to be accurately

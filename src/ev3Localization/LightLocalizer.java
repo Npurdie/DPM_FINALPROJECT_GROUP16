@@ -19,18 +19,24 @@ public class LightLocalizer {
 		this.navigator = navigation;
 	}
 	
-	public void doLocalization(int x, int y) {
+	public void doLocalization() {
 		double gridLines [] = new double[4];	//stores the angles of all 4 lines
 		double dx = 0;
 		double dy = 0;
-
-		navigator.travelTo(x,y);
+		
+		while(!gridLine){
+		navigator.travelForwards(150);
+		}
+		navigator.stopMotors();
+		
+		
 		navigator.turnTo(Math.toRadians(45));
 		gridLine = false;
 		
 		for (int i=0; i< gridLines.length; i++)	{	//for every line
 			while (!gridLine)	{
 				navigator.turnRight(TURN_SPEED);
+				foundGridLine();
 			}
 			gridLines [i] = odometer.getTheta();
 			//turn 10 degrees to make sure the same line is not picked up on next iteration
@@ -46,8 +52,8 @@ public class LightLocalizer {
 		dx = gridLines[1] - gridLines[3];	//calculate dx
 		dy = gridLines[0] - gridLines[2];	//calculate dy
 		
-		odometer.setX(x + -1*(sensorPosition * Math.cos(dx/2)));	//recalculate and set x and y position
-		odometer.setY(y+ -1*(sensorPosition * Math.cos(dy/2)));
+		odometer.setX(-1*(sensorPosition * Math.cos(dx/2)));	//recalculate and set x and y position
+		odometer.setY(-1*(sensorPosition * Math.cos(dy/2)));
 		
 		odometer.setTheta(odometer.getTheta() - (gridLines[3]) - ((gridLines[1]-gridLines[3])/2) + (Math.PI)); //calculate and set theta
 		navigator.travelTo(0,0);
