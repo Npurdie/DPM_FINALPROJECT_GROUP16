@@ -6,7 +6,6 @@ import ev3Utilities.LightSensorDerivative;
 import ev3Odometer.LCDInfo;
 import ev3Navigation.Navigation;
 import ev3Localization.LightLocalizer;
-import ev3Localization.USLocalizer;
 import lejos.hardware.*;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -30,20 +29,6 @@ public class LightLocalizationTest {
 		public static final double LIGHTSENSOR_WIDTH = 12.5;
 		
 		public static void main(String[] args) {
-			
-			//Setup ultrasonic sensor 
-			// 1. Create a port object attached to a physical port (done above)
-			// 2. Create a sensor instance and attach to port
-			// 3. Create a sample provider instance for the above and initialize operating mode
-			// 4. Create a buffer for the sensor data
-			@SuppressWarnings("resource")							    	// Because we don't bother to close this resource
-			//SensorModes usSensorF = new EV3UltrasonicSensor(usPort1);
-			//SensorModes usSensorL = new EV3UltrasonicSensor(usPort2);
-			//SampleProvider usValueF = usSensorF.getMode("Distance");
-			//SampleProvider usValueL = usSensorL.getMode("Distance");	
-			//float[] usDataF = new float[usValueF.sampleSize()];				// colorData is the buffer in which data are returned
-			//float[] usDataL = new float[usValueL.sampleSize()];
-			
 			//Setup color sensor
 			// 1. Create a port object attached to a physical port (done above)
 			// 2. Create a sensor instance and attach to port
@@ -58,14 +43,8 @@ public class LightLocalizationTest {
 			odo.start();
 
 			Navigation navigator = new Navigation(leftMotor,rightMotor,WHEEL_RADIUS,TRACK,odo, false);
-			
-			// perform the ultrasonic localization
-			//USLocalizer usl = new USLocalizer(odo, usValueF, usDataF, USLocalizer.LocalizationType.FALLING_EDGE,navigator);
-			//usl.doLocalization();
-			
-			
+					
 			// perform the light sensor localization
-
 			LightPoller lightPoller = new LightPoller(colorValue, colorData);
 			lightPoller.start();
 			
