@@ -10,8 +10,8 @@ import ev3Utilities.LightSensorDerivative;
 public class LightLocalizer {
 	private Odometer odometer;
 	private Navigation navigator;
-	private static int TURN_SPEED = 120;
-	private static int FORWARDSPEED = 250;
+	private static int TURN_SPEED = 175;
+	private static int FORWARDSPEED = 400;
 	private final double sensorPosition = 12.5; // distance from robot center to
 												// light sensor
 	private boolean gridLine = false;
@@ -30,7 +30,7 @@ public class LightLocalizer {
 		while (!gridLine) {
 			navigator.travelForwards(FORWARDSPEED);
 		}
-		navigator.stopMotors();
+//		navigator.stopMotors();
 		
 		navigator.travelBackwardDistance(sensorPosition);
 
@@ -44,10 +44,11 @@ public class LightLocalizer {
 			gridLines[i] = odometer.getTheta();
 			// turn 10 degrees to make sure the same line is not picked up on
 			// next iteration
+			Sound.beep();
 			navigator.turnTo(odometer.getTheta() - Math.toRadians(10));
 			gridLine = false;
 		}
-		navigator.stopMotors();
+	//	navigator.stopMotors();
 
 		if (gridLines[0] < Math.PI) { // wrap-around angle
 			gridLines[0] += 2 * Math.PI;

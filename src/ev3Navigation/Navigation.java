@@ -11,9 +11,9 @@ import lejos.hardware.port.Port;
 /** This object contains all methods necessary for the EV3 to travel to coordinates on the grid */
 public class Navigation extends Thread	{
 	//-------- user defined--------------
-	private final int FORWARDSPEED = 200;
-	private final int TURNSPEED = 120;
-	private final int ACCELERATION = 2000;
+	private final int FORWARDSPEED = 215;
+	private final int TURNSPEED = 175;
+	private final int ACCELERATION = 2016;
 	private final double travelToError = 1.0;
 	private final double travelAngleError = 1.0;
 	private final double correctDistThreshold = 15;
@@ -116,8 +116,8 @@ public class Navigation extends Thread	{
 
 		//makes small corrections slower
 		if (Math.abs(error) <= Math.toRadians(correctDistThreshold)) {
-			leftMotor.setSpeed((int)(0.2* TURNSPEED));
-			rightMotor.setSpeed((int)(0.2* TURNSPEED));
+			leftMotor.setSpeed((int)(TURNSPEED));
+			rightMotor.setSpeed((int)(TURNSPEED));
 		}
 		else	{
 			leftMotor.setSpeed(TURNSPEED);
