@@ -69,16 +69,16 @@ public class PController implements UltrasonicController	{
 
 		//too close to wall
 		else if (error < 0) {
-			leftMotor.setSpeed(motorStraight+delta);
-			rightMotor.setSpeed(motorStraight-delta);
+			rightMotor.setSpeed(motorStraight+delta);
+			leftMotor.setSpeed(motorStraight-delta);
 			leftMotor.forward();
 			rightMotor.forward();
 		}
 
 		//too far from wall
 		if (error > bandwidth) {
-			leftMotor.setSpeed(motorStraight -delta);
-			rightMotor.setSpeed(motorStraight + delta);
+			rightMotor.setSpeed(motorStraight -delta);
+			leftMotor.setSpeed(motorStraight + delta);
 			leftMotor.forward();
 			rightMotor.forward();
 		}

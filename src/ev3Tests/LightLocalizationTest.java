@@ -42,7 +42,6 @@ public class LightLocalizationTest {
 			Odometer odo = new Odometer(leftMotor,rightMotor,WHEEL_RADIUS,TRACK);
 			odo.start();
 
-			Navigation navigator = new Navigation(leftMotor,rightMotor,WHEEL_RADIUS,TRACK,odo, false);
 					
 			// perform the light sensor localization
 			LightPoller lightPoller = new LightPoller(colorValue, colorData);
@@ -54,7 +53,7 @@ public class LightLocalizationTest {
 			LightSensorDerivative lsd = new LightSensorDerivative(odo, lightPoller, lsl);
 
 			lsd.start();
-			lsl.doLocalization(0,0);			
+			lsl.doLocalization();			
 			
 			while (Button.waitForAnyPress() != Button.ID_ESCAPE);
 			System.exit(0);		

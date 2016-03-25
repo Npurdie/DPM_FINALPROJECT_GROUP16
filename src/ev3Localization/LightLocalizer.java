@@ -30,7 +30,6 @@ public class LightLocalizer {
 		while (!gridLine) {
 			navigator.travelForwards(FORWARDSPEED);
 		}
-//		navigator.stopMotors();
 		
 		navigator.travelBackwardDistance(sensorPosition);
 
@@ -48,7 +47,6 @@ public class LightLocalizer {
 			navigator.turnTo(odometer.getTheta() - Math.toRadians(10));
 			gridLine = false;
 		}
-	//	navigator.stopMotors();
 
 		if (gridLines[0] < Math.PI) { // wrap-around angle
 			gridLines[0] += 2 * Math.PI;

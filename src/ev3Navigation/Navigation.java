@@ -1,5 +1,6 @@
 package ev3Navigation;
 import ev3Odometer.Odometer;
+import ev3Utilities.UltrasonicPoller;
 import lejos.hardware.Button;
 import lejos.hardware.Sound;
 import lejos.hardware.ev3.LocalEV3;
@@ -29,6 +30,7 @@ public class Navigation extends Thread	{
 	private double wheelBase;
 	private double wheelRadius;
 	private boolean avoidCollisions;
+	private UltrasonicPoller ultraSonicPoller;
 
 	/**
 	 * The Navigator stores a reference to the left motor, right motor, wheelRadius, chassis width, odometer and collision avoidance
@@ -40,13 +42,14 @@ public class Navigation extends Thread	{
 	 * @param odometer The Odometer
 	 * @param avoidCollisions Boolean warns the EV3 whether or not to attempt to avoid obstacles in it's path
 	 */
-	public Navigation(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor, double wheelRadius, double width, Odometer odometer, boolean avoidCollisions)	{
+	public Navigation(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor, double wheelRadius, double width, Odometer odometer, boolean avoidCollisions,UltrasonicPoller ultraSonicPoller)	{
 		this.odometer = odometer;
 		this.leftMotor = leftMotor;
 		this.rightMotor = rightMotor;	
 		this.wheelBase = width;
 		this.wheelRadius = wheelRadius;
 		this.avoidCollisions = avoidCollisions;
+		this.ultraSonicPoller = ultraSonicPoller;
 
 		leftMotor.setAcceleration(ACCELERATION);
 		rightMotor.setAcceleration(ACCELERATION);
@@ -60,11 +63,13 @@ public class Navigation extends Thread	{
 	*/
 	public void travelTo(double x, double y)	{
 		this.isNavigating=true;
+		CollisionAvoidance collisionAvoidance = new CollisionAvoidance(odometer, ultraSonicPoller, leftMotor, rightMotor, wheelRadius, wheelBase);
 		while (Math.abs(x - odometer.getX()) > travelToError || Math.abs(y - odometer.getY()) > travelToError )	{
 			if (avoidCollisions)	{
-				//if (collisionAvoidance.detectedObject(30))	{
-					//AVOID OBJECT
-				//}
+				if (collisionAvoidance.detectedObject(30))	{
+					turnTo(odometer.getTheta() + Math.toRadians(90));
+					collisionAvoidance.avoidObject(x, y, 3, 20);
+				}
 			}
 			navigateTo(x,y);
 			//if (odometer.getTravelDist > maxTravelDist)	{

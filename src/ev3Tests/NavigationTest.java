@@ -1,9 +1,9 @@
 package ev3Tests;
 
 import ev3Odometer.Odometer;
-import ev3Utilities.UltrasonicPoller;
 import ev3Utilities.LightPoller;
 import ev3Utilities.LightSensorDerivative;
+import ev3Utilities.UltrasonicPoller;
 import ev3Odometer.LCDInfo;
 import ev3Navigation.Navigation;
 import ev3Localization.LightLocalizer;
@@ -15,8 +15,8 @@ import lejos.hardware.port.Port;
 import lejos.hardware.sensor.*;
 import lejos.robotics.SampleProvider;
 
-public class LocalizationTest {
-	// Static Resources:
+public class NavigationTest {
+		// Static Resources:
 		// Left motor connected to outputA
 		// Right motor connected to output D
 		// Ultrasonic sensor port connected to input S1
@@ -25,7 +25,7 @@ public class LocalizationTest {
 		private static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
 		private static final Port usPort1 = LocalEV3.get().getPort("S4");	
 		private static final Port usPort2 = LocalEV3.get().getPort("S3");
-		private static final Port colorPort = LocalEV3.get().getPort("S1");	
+		private static final Port colorPort = LocalEV3.get().getPort("S2");
 		public static final double WHEEL_RADIUS = 2.05;
 		public static final double TRACK = 15.7;
 		public static final double LIGHTSENSOR_WIDTH = 12.5;
@@ -70,21 +70,18 @@ public class LocalizationTest {
 			LCDInfo lcd = new LCDInfo(odo, lightPoller);
 			
 			LightLocalizer lsl = new LightLocalizer(odo, colorValue, colorData, navigator);
-			
-			
-			
-			int buttonChoice = Button.waitForAnyPress();
-			
-			if (buttonChoice == Button.ID_DOWN) {
-				// perform the ultrasonic localization
-				usl.doLocalization();
+
+			usl.doLocalization();
 				
-				LightSensorDerivative lsd = new LightSensorDerivative(odo, lightPoller, lsl);
-				lsd.start();
+			LightSensorDerivative lsd = new LightSensorDerivative(odo, lightPoller, lsl);
+			lsd.start();
 				
-				// perform the light sensor localization
-				lsl.doLocalization();
-			}
+			// perform the light sensor localization
+			lsl.doLocalization();
+			
+			
+			navigator.travelTo(6*navigator.tile,6*navigator.tile);
+			
 			
 			while (Button.waitForAnyPress() != Button.ID_ESCAPE);
 			System.exit(0);		

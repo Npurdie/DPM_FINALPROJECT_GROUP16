@@ -1,6 +1,6 @@
 package ev3Navigation;
 
-
+import ev3WallFollow.PController;
 import ev3Odometer.Odometer;
 import ev3Utilities.UltrasonicPoller;
 import lejos.hardware.Sound;
@@ -13,7 +13,7 @@ import lejos.robotics.SampleProvider;
 * @version 1.0
 * @since   2016-03-16
 */
-public class collisionAvoidance	{
+public class CollisionAvoidance	{
 
 	//--------- User defined variables ------------
 	private double TURNSPEED = 100;
@@ -41,7 +41,7 @@ public class collisionAvoidance	{
 	* @param wheelRadius The radius of the EV3's wheels
 	* @param wheelBase The width of the EV3's chassis
 	*/
-	public collisionAvoidance(Odometer odometer, UltrasonicPoller ultraSonicPoller, EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor, double wheelRadius, double wheelBase)	{
+	public CollisionAvoidance(Odometer odometer, UltrasonicPoller ultraSonicPoller, EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor, double wheelRadius, double wheelBase)	{
 		this.odometer = odometer;
 		this.ultraSonicPoller  = ultraSonicPoller;
 		this.wheelBase = wheelBase;
@@ -69,21 +69,44 @@ public class collisionAvoidance	{
 	*
 	* @return A double that represents the distance of the object detected in centimeters
 	*/
-	public double getObjectDistance()	{
+	public int getForwardDistance()	{
 		int distance = ultraSonicPoller.getForwardUsDistance();
 		if(distance < 255)
 			return distance;
-		return 0.0;
+		return 0;
+	}
+	
+	public int getRightDistance()	{
+		int distance = ultraSonicPoller.getRightUsDistance();
+		if(distance < 255)
+			return distance;
+		return 0;
 	}
 
 	/**
-	* This method allows the EV3 to avoid an object while travelling to the desired coordinate
+	* This method allows the EV3 to avoid an object while traveling to the desired coordinate
 	*
-	* @param x The x coordinate of the desired location
-	* @param y The y coordinate of the desired location
-	*/
-	public void avoidObject(double x, double y)	{
-		
+	**/
+	// REMOVE X AND Y ??
+	public void avoidObject(double x, double y, int bandCenter, int bandWidth)	{
+		double theta = odometer.getTheta();
+		PController wallFollower = new PController(leftMotor, rightMotor, bandCenter,bandWidth);
+		while(!stopWallFollow(theta))	{
+			wallFollower.processUSData(getRightDistance());
+			try { Thread.sleep(50); } catch(Exception e){}
+		}
+	}
+	public boolean stopWallFollow(double theta)	{
+		if (theta >= Math.toRadians(180))	{
+			theta -= Math.toRadians(180);
+		}
+		else if (theta < Math.toRadians(180))	{
+			theta += Math.toRadians(180);
+		}
+		if (odometer.getTheta() == theta)	{
+			return true;
+		}
+		return false;
 	}
 }
 
