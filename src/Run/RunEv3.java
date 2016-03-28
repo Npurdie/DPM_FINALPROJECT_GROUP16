@@ -22,8 +22,8 @@ public class RunEv3 {
 	// Color sensor port connected to input S2
 	private static final EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
 	private static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
-	//private static final EV3LargeRegulatedMotor clawMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
-	//private static final EV3LargeRegulatedMotor launcherMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("C"));
+	private static final EV3LargeRegulatedMotor clawMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
+	private static final EV3LargeRegulatedMotor launcherMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("C"));
 	private static final Port usPort1 = LocalEV3.get().getPort("S4");	
 	private static final Port usPort2 = LocalEV3.get().getPort("S3");
 	private static final Port colorPort = LocalEV3.get().getPort("S1");
@@ -57,37 +57,27 @@ public class RunEv3 {
 		SampleProvider colorValue = colorSensor.getMode("Red");
 		float[] colorData = new float[colorValue.sampleSize()];			// colorData is the buffer in which data are returned
 		
-		// setup the odometer and display and navigation
+		// setup the odometer, display and navigation
 		Odometer odo = new Odometer(leftMotor,rightMotor,WHEEL_RADIUS,TRACK);
-		odo.start();
 		Navigation navigator = new Navigation(leftMotor,rightMotor,WHEEL_RADIUS,TRACK,odo, usPoller);
 		USLocalizer usl = new USLocalizer(odo, usValueF, usDataF,navigator);
 		LightPoller lightPoller = new LightPoller(colorValue, colorData);
-		lightPoller.start();
 		LCDInfo lcd = new LCDInfo(odo, lightPoller);
 		LightLocalizer lsl = new LightLocalizer(odo, colorValue, colorData, navigator);
-		navigator.setLSL(lsl);
 		
 		//Launcher launcher = new Launcher(clawMotor, launcherMotor);
 		
 		int buttonChoice = Button.waitForAnyPress();
 		
 		if (buttonChoice == Button.ID_DOWN) {
-			// perform the ultrasonic localization
-			usl.doLocalization();
-			
-			LightSensorDerivative lsd = new LightSensorDerivative(odo, lightPoller, lsl);
-			lsd.start();
-			
-			// perform the light sensor localization
-			lsl.doLocalization();
-			
-			// travel to location where the balls are held
-			navigator.travelTo(navigator.tile*6, navigator.tile*6,true);
-			lsl.doLocalization();
-			
-			//launcher.lowerScooper();
-			
+		
+	/*	if(false){
+			Defender defender = new Defender(leftMotor, rightMotor, TRACK, WHEEL_RADIUS, odo, lightPoller, navigator, usl, lsl);
+			defender.startDefense();
+		} else { */
+			Attacker attacker = new Attacker(leftMotor, rightMotor, clawMotor, launcherMotor, TRACK, WHEEL_RADIUS, odo, lightPoller, navigator, usl, lsl);
+			attacker.startAttack();
+//		}
 			
 				
 		}
