@@ -46,7 +46,7 @@ public class RunEv3 {
 		float[] usDataF = new float[usValueF.sampleSize()];				// colorData is the buffer in which data are returned
 		float[] usDataL = new float[usValueL.sampleSize()];
 		UltrasonicPoller usPoller = new UltrasonicPoller(usValueF, usValueL, usDataF, usDataL);
-		usPoller.run();
+		usPoller.start();
 		
 		//Setup color sensor
 		// 1. Create a port object attached to a physical port (done above)
@@ -70,7 +70,7 @@ public class RunEv3 {
 		int buttonChoice = Button.waitForAnyPress();
 		
 		if (buttonChoice == Button.ID_DOWN) {
-		
+
 	/*	if(false){
 			Defender defender = new Defender(leftMotor, rightMotor, TRACK, WHEEL_RADIUS, odo, lightPoller, navigator, usl, lsl);
 			defender.startDefense();
@@ -78,6 +78,8 @@ public class RunEv3 {
 			Attacker attacker = new Attacker(leftMotor, rightMotor, clawMotor, launcherMotor, TRACK, WHEEL_RADIUS, odo, lightPoller, navigator, usl, lsl);
 			attacker.startAttack();
 //		}
+
+			
 			
 				
 		}
