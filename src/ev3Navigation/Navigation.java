@@ -73,7 +73,7 @@ public class Navigation extends Thread	{
 			//		lsl.doLocalization(corner[0],corner[1]);
 			//		travelTo(currLoc[0],currLoc[1],false);
 					turnTo(odometer.getTheta() + Math.toRadians(90));
-					collisionAvoidance.avoidObject(3, 15);
+					collisionAvoidance.avoidObject(8, 4);
 					double dist = odometer.getDistance();
 					if(dist>30){
 					odometer.setDistance(dist-30);

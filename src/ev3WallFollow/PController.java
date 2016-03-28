@@ -57,8 +57,8 @@ public class PController implements UltrasonicController	{
 		//too close to wall
 		else if (error < 0) {
 			rightMotor.setSpeed(motorStraight+delta);
-			leftMotor.setSpeed(motorStraight-delta);
-			leftMotor.forward();
+			leftMotor.setSpeed(delta);
+			leftMotor.backward();
 			rightMotor.forward();
 		}
 
@@ -69,6 +69,8 @@ public class PController implements UltrasonicController	{
 			leftMotor.forward();
 			rightMotor.forward();
 		}
+		
+		
 	}
 
 	public int pValue(int error)	{
