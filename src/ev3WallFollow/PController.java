@@ -13,13 +13,13 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 public class PController implements UltrasonicController	{
 	
 	private final int bandCenter, bandwidth;
-	private final int motorStraight = 200, FILTER_OUT = 20;
+	private final int motorStraight = 200;
 	private EV3LargeRegulatedMotor leftMotor, rightMotor;
 	private int distance;
 	private int filterControl;
 
 	private final int PConstant = 8;
-	private int correctionMax = 60;
+	private int correctionMax = 70;
 	
 	/**
 	* The pController stores a reference to the left motor and right motor
@@ -63,7 +63,7 @@ public class PController implements UltrasonicController	{
 		}
 
 		//too far from wall
-		if (error > bandwidth) {
+		if (error > 0) {
 			rightMotor.setSpeed(motorStraight -delta);
 			leftMotor.setSpeed(motorStraight + delta);
 			leftMotor.forward();
@@ -74,7 +74,7 @@ public class PController implements UltrasonicController	{
 	public int pValue(int error)	{
 		error = Math.abs(error);
 		int correction = PConstant*error;
-		if (correction > motorStraight)	{
+		if (correction > correctionMax)	{
 			return correctionMax;
 		}
 		return correction;

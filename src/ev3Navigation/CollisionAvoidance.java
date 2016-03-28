@@ -89,15 +89,15 @@ public class CollisionAvoidance	{
 		PController wallFollower = new PController(leftMotor, rightMotor, bandCenter,bandWidth);
 		while(!stopWallFollow(theta))	{
 			wallFollower.processUSData(getRightDistance());
-			try { Thread.sleep(50); } catch(Exception e){}
+			try { Thread.sleep(30); } catch(Exception e){}
 		}
 	}
 	public boolean stopWallFollow(double theta)	{
 		if (theta >= Math.toRadians(180))	{
-			theta = theta - Math.toRadians(180);
+			theta = theta - Math.toRadians(195);
 		}
 		else if (theta < Math.toRadians(180))	{
-			theta = theta + Math.toRadians(180);
+			theta = theta + Math.toRadians(195);
 		}
 		if ((odometer.getTheta() > (theta - Math.toRadians(5))) && (odometer.getTheta() < (theta + Math.toRadians(5))))	{
 			return true;
