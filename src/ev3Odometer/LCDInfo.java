@@ -7,7 +7,7 @@ import lejos.utility.Timer;
 import lejos.utility.TimerListener;
 
 /**
-* The LCDInfo class provides the ability to print mamy helpful values to the screen
+* The LCDInfo class provides the ability to print may helpful values to the screen
 */
 public class LCDInfo implements TimerListener{
 	public static final int LCD_REFRESH = 100;

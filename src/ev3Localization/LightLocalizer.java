@@ -67,7 +67,7 @@ public class LightLocalizer {
 		
 		odometer.setX(x);
 		odometer.setY(y);
-
+		odometer.setDistance(0);
 	}
 	
 	public void doLocalization() {
@@ -115,7 +115,7 @@ public class LightLocalizer {
 																	// theta
 		navigator.travelTo(0, 0,false);
 		navigator.turnTo(0); // finished localization
-
+		odometer.setDistance(0);
 	}
 	
 	public double[] pickCorner()	{

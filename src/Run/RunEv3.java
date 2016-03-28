@@ -46,6 +46,7 @@ public class RunEv3 {
 		float[] usDataF = new float[usValueF.sampleSize()];				// colorData is the buffer in which data are returned
 		float[] usDataL = new float[usValueL.sampleSize()];
 		UltrasonicPoller usPoller = new UltrasonicPoller(usValueF, usValueL, usDataF, usDataL);
+		usPoller.run();
 		
 		//Setup color sensor
 		// 1. Create a port object attached to a physical port (done above)

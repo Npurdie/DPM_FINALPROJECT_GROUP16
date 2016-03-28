@@ -20,7 +20,7 @@ public class Navigation extends Thread	{
 	private final double travelAngleError = 1.0;
 	private final double correctDistThreshold = 15;
 	private final double correctAngleThreshold = 3;
-	private final double recolalizeThreshold = 130;
+	private final double recolalizeThreshold = 95;
 	//----------------------------------
 
 	//variables
@@ -67,7 +67,7 @@ public class Navigation extends Thread	{
 		CollisionAvoidance collisionAvoidance = new CollisionAvoidance(odometer, ultraSonicPoller, leftMotor, rightMotor, wheelRadius, wheelBase);
 		while (Math.abs(x - odometer.getX()) > travelToError || Math.abs(y - odometer.getY()) > travelToError )	{
 			if (avoidCollisions)	{
-				if (collisionAvoidance.detectedObject(20))	{
+				if (ultraSonicPoller.getForwardUsDistance() < 20)	{
 					double[] currLoc = {odometer.getX(), odometer.getY()};
 					double[] corner = lsl.pickCorner();
 					lsl.doLocalization(corner[0],corner[1]);
@@ -77,7 +77,8 @@ public class Navigation extends Thread	{
 				}
 			}
 			navigateTo(x,y);
-			if (odometer.getDistance() < recolalizeThreshold)	{
+			if (odometer.getDistance() > recolalizeThreshold)	{
+				odometer.setDistance(0);
 				double[] corner = lsl.pickCorner();
 				lsl.doLocalization(corner[0],corner[1]);
 			}
