@@ -71,16 +71,12 @@ public class CollisionAvoidance	{
 	*/
 	public int getForwardDistance()	{
 		int distance = ultraSonicPoller.getForwardUsDistance();
-		if(distance < 255)
-			return distance;
-		return 0;
+		return distance;
 	}
 	
 	public int getRightDistance()	{
 		int distance = ultraSonicPoller.getRightUsDistance();
-		if(distance < 255)
-			return distance;
-		return 0;
+		return distance;
 	}
 
 	/**
@@ -98,12 +94,12 @@ public class CollisionAvoidance	{
 	}
 	public boolean stopWallFollow(double theta)	{
 		if (theta >= Math.toRadians(180))	{
-			theta -= Math.toRadians(180);
+			theta = theta - Math.toRadians(180);
 		}
 		else if (theta < Math.toRadians(180))	{
-			theta += Math.toRadians(180);
+			theta = theta + Math.toRadians(180);
 		}
-		if (odometer.getTheta() == theta)	{
+		if ((odometer.getTheta() > (theta - Math.toRadians(5))) && (odometer.getTheta() < (theta + Math.toRadians(5))))	{
 			return true;
 		}
 		return false;

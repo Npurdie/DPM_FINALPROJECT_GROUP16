@@ -46,7 +46,7 @@ public class RunEv3 {
 		float[] usDataF = new float[usValueF.sampleSize()];				// colorData is the buffer in which data are returned
 		float[] usDataL = new float[usValueL.sampleSize()];
 		UltrasonicPoller usPoller = new UltrasonicPoller(usValueF, usValueL, usDataF, usDataL);
-		usPoller.run();
+		usPoller.start();
 		
 		//Setup color sensor
 		// 1. Create a port object attached to a physical port (done above)
@@ -83,7 +83,7 @@ public class RunEv3 {
 			lsl.doLocalization();
 			
 			// travel to location where the balls are held
-			navigator.travelTo(navigator.tile*6, navigator.tile*6,true);
+			navigator.travelTo(navigator.tile*5, navigator.tile*5,true);
 			lsl.doLocalization();
 			
 			//launcher.lowerScooper();

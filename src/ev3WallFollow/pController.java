@@ -4,7 +4,7 @@ import ev3Utilities.UltrasonicController;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 /**
-* The class pController allows the EV3 to follow walls and obstacles using a proporitonal control algorithm
+* The class pController allows the EV3 to follow walls and obstacles using a proportional control algorithm
 *
 * @author Nick Purdie
 * @version 1.0
@@ -18,8 +18,8 @@ public class PController implements UltrasonicController	{
 	private int distance;
 	private int filterControl;
 
-	private final int PConstant = 10;
-	private int correctionMax = 80;
+	private final int PConstant = 8;
+	private int correctionMax = 60;
 	
 	/**
 	* The pController stores a reference to the left motor and right motor
@@ -43,19 +43,6 @@ public class PController implements UltrasonicController	{
 	
 	@Override
 	public void processUSData(int distance) {
-		
-		if (distance == 255 && filterControl < FILTER_OUT) {
-			// bad value, do not set the distance var, however do increment the filter value
-			filterControl ++;
-		} else if (distance == 255){
-			// true 255, therefore set distance to 255
-			this.distance = distance;
-		} else {
-			// distance went below 255, therefore reset everything.
-			filterControl = 0;
-			this.distance = distance;
-		}
-
 		int error = distance - bandCenter;
 		int delta = pValue(error);
 

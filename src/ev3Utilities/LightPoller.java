@@ -30,7 +30,7 @@ public class LightPoller extends Thread {
 			ls.fetchSample(lsData, 0); // acquire data
 			reflection = lsData[0];
 			try {
-				Thread.sleep(50);
+				Thread.sleep(25);
 			} catch (Exception e) {
 			} // Poor man's timed sampling
 			synchronized (lock) {

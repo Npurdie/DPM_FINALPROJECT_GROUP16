@@ -67,13 +67,15 @@ public class Navigation extends Thread	{
 		CollisionAvoidance collisionAvoidance = new CollisionAvoidance(odometer, ultraSonicPoller, leftMotor, rightMotor, wheelRadius, wheelBase);
 		while (Math.abs(x - odometer.getX()) > travelToError || Math.abs(y - odometer.getY()) > travelToError )	{
 			if (avoidCollisions)	{
-				if (ultraSonicPoller.getForwardUsDistance() < 20)	{
+				if (collisionAvoidance.detectedObject(15))	{
 					double[] currLoc = {odometer.getX(), odometer.getY()};
 					double[] corner = lsl.pickCorner();
 					lsl.doLocalization(corner[0],corner[1]);
 					travelTo(currLoc[0],currLoc[1],false);
 					turnTo(odometer.getTheta() + Math.toRadians(90));
-					collisionAvoidance.avoidObject(3, 20);
+					collisionAvoidance.avoidObject(3, 15);
+					corner = lsl.pickCorner();
+					lsl.doLocalization(corner[0]+tile,corner[1]+tile);
 				}
 			}
 			navigateTo(x,y);

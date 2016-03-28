@@ -52,7 +52,7 @@ public class LightSensorDerivative extends Thread {
 			}
 
 			try {
-				Thread.sleep(50);
+				Thread.sleep(25);
 			} catch (InterruptedException e) {
 
 			}
