@@ -89,7 +89,7 @@ public class CollisionAvoidance	{
 		PController wallFollower = new PController(leftMotor, rightMotor, bandCenter,bandWidth);
 		while(!stopWallFollow(theta))	{
 			wallFollower.processUSData(getRightDistance());
-			try { Thread.sleep(30); } catch(Exception e){}
+			try { Thread.sleep(100); } catch(Exception e){}
 		}
 	}
 	public boolean stopWallFollow(double theta)	{
