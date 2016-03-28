@@ -25,7 +25,7 @@ public class NavigationTest {
 		private static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
 		private static final Port usPort1 = LocalEV3.get().getPort("S4");	
 		private static final Port usPort2 = LocalEV3.get().getPort("S3");
-		private static final Port colorPort = LocalEV3.get().getPort("S2");
+		private static final Port colorPort = LocalEV3.get().getPort("S1");
 		public static final double WHEEL_RADIUS = 2.05;
 		public static final double TRACK = 15.7;
 		public static final double LIGHTSENSOR_WIDTH = 12.5;
@@ -59,7 +59,7 @@ public class NavigationTest {
 			Odometer odo = new Odometer(leftMotor,rightMotor,WHEEL_RADIUS,TRACK);
 			odo.start();
 
-			Navigation navigator = new Navigation(leftMotor,rightMotor,WHEEL_RADIUS,TRACK,odo, false, usPoller);
+			Navigation navigator = new Navigation(leftMotor,rightMotor,WHEEL_RADIUS,TRACK,odo, usPoller);
 			
 			USLocalizer usl = new USLocalizer(odo, usValueF, usDataF,navigator);
 			
@@ -70,18 +70,25 @@ public class NavigationTest {
 			LCDInfo lcd = new LCDInfo(odo, lightPoller);
 			
 			LightLocalizer lsl = new LightLocalizer(odo, colorValue, colorData, navigator);
-
-			usl.doLocalization();
+			
+			int buttonChoice = Button.waitForAnyPress();
+			
+			if (buttonChoice == Button.ID_DOWN) {
+				// perform the ultrasonic localization
+				usl.doLocalization();
 				
-			LightSensorDerivative lsd = new LightSensorDerivative(odo, lightPoller, lsl);
-			lsd.start();
+				LightSensorDerivative lsd = new LightSensorDerivative(odo, lightPoller, lsl);
+				lsd.start();
 				
-			// perform the light sensor localization
-			lsl.doLocalization();
-			
-			
-			navigator.travelTo(6*navigator.tile,6*navigator.tile);
-			
+				// perform the light sensor localization
+				lsl.doLocalization();
+				
+				lsl.doLocalization(5*navigator.tile,0);
+				lsl.doLocalization(5*navigator.tile,5*navigator.tile);
+				lsl.doLocalization(0,5*navigator.tile);
+				lsl.doLocalization(0,0);
+				
+			}
 			
 			while (Button.waitForAnyPress() != Button.ID_ESCAPE);
 			System.exit(0);		

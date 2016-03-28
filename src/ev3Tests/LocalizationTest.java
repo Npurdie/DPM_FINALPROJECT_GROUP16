@@ -59,7 +59,7 @@ public class LocalizationTest {
 			Odometer odo = new Odometer(leftMotor,rightMotor,WHEEL_RADIUS,TRACK);
 			odo.start();
 
-			Navigation navigator = new Navigation(leftMotor,rightMotor,WHEEL_RADIUS,TRACK,odo, false, usPoller);
+			Navigation navigator = new Navigation(leftMotor,rightMotor,WHEEL_RADIUS,TRACK,odo, usPoller);
 			
 			USLocalizer usl = new USLocalizer(odo, usValueF, usDataF,navigator);
 			

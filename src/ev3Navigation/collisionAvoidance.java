@@ -88,7 +88,7 @@ public class CollisionAvoidance	{
 	*
 	**/
 	// REMOVE X AND Y ??
-	public void avoidObject(double x, double y, int bandCenter, int bandWidth)	{
+	public void avoidObject(int bandCenter, int bandWidth)	{
 		double theta = odometer.getTheta();
 		PController wallFollower = new PController(leftMotor, rightMotor, bandCenter,bandWidth);
 		while(!stopWallFollow(theta))	{

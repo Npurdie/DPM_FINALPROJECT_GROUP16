@@ -84,6 +84,7 @@ public class USLocalizer {
 		odometer.setPosition(new double[] { 0.0, 0.0, theta }, new boolean[] { true, true, true }); // set
 																									// theta
 		navigator.turnTo(Math.toRadians(45)); // turn to face 0 for demo
+		
 	}
 
 	/**

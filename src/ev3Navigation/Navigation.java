@@ -1,6 +1,7 @@
 package ev3Navigation;
 import ev3Odometer.Odometer;
 import ev3Utilities.UltrasonicPoller;
+import ev3Localization.LightLocalizer;
 import lejos.hardware.Button;
 import lejos.hardware.Sound;
 import lejos.hardware.ev3.LocalEV3;
@@ -12,13 +13,14 @@ import lejos.hardware.port.Port;
 /** This object contains all methods necessary for the EV3 to travel to coordinates on the grid */
 public class Navigation extends Thread	{
 	//-------- user defined--------------
-	private final int FORWARDSPEED = 215;
+	private final int FORWARDSPEED = 250;
 	private final int TURNSPEED = 175;
 	private final int ACCELERATION = 2016;
 	private final double travelToError = 1.0;
 	private final double travelAngleError = 1.0;
 	private final double correctDistThreshold = 15;
 	private final double correctAngleThreshold = 3;
+	private final double recolalizeThreshold = 130;
 	//----------------------------------
 
 	//variables
@@ -29,8 +31,8 @@ public class Navigation extends Thread	{
 	private EV3LargeRegulatedMotor leftMotor, rightMotor;
 	private double wheelBase;
 	private double wheelRadius;
-	private boolean avoidCollisions;
 	private UltrasonicPoller ultraSonicPoller;
+	private LightLocalizer lsl;
 
 	/**
 	 * The Navigator stores a reference to the left motor, right motor, wheelRadius, chassis width, odometer and collision avoidance
@@ -42,13 +44,12 @@ public class Navigation extends Thread	{
 	 * @param odometer The Odometer
 	 * @param avoidCollisions Boolean warns the EV3 whether or not to attempt to avoid obstacles in it's path
 	 */
-	public Navigation(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor, double wheelRadius, double width, Odometer odometer, boolean avoidCollisions,UltrasonicPoller ultraSonicPoller)	{
+	public Navigation(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor, double wheelRadius, double width, Odometer odometer, UltrasonicPoller ultraSonicPoller)	{
 		this.odometer = odometer;
 		this.leftMotor = leftMotor;
 		this.rightMotor = rightMotor;	
 		this.wheelBase = width;
 		this.wheelRadius = wheelRadius;
-		this.avoidCollisions = avoidCollisions;
 		this.ultraSonicPoller = ultraSonicPoller;
 
 		leftMotor.setAcceleration(ACCELERATION);
@@ -61,20 +62,25 @@ public class Navigation extends Thread	{
 	* @param x The location in centimeters of the coordinate on the x axis
 	* @param y The location in centimeters of the coordinate on the y axis
 	*/
-	public void travelTo(double x, double y)	{
+	public void travelTo(double x, double y, boolean avoidCollisions)	{
 		this.isNavigating=true;
 		CollisionAvoidance collisionAvoidance = new CollisionAvoidance(odometer, ultraSonicPoller, leftMotor, rightMotor, wheelRadius, wheelBase);
 		while (Math.abs(x - odometer.getX()) > travelToError || Math.abs(y - odometer.getY()) > travelToError )	{
 			if (avoidCollisions)	{
-				if (collisionAvoidance.detectedObject(30))	{
+				if (collisionAvoidance.detectedObject(20))	{
+					double[] currLoc = {odometer.getX(), odometer.getY()};
+					double[] corner = lsl.pickCorner();
+					lsl.doLocalization(corner[0],corner[1]);
+					travelTo(currLoc[0],currLoc[1],false);
 					turnTo(odometer.getTheta() + Math.toRadians(90));
-					collisionAvoidance.avoidObject(x, y, 3, 20);
+					collisionAvoidance.avoidObject(3, 20);
 				}
 			}
 			navigateTo(x,y);
-			//if (odometer.getTravelDist > maxTravelDist)	{
-			//	lightLocalizer.doLocalization(findNearestCorner(odometer.getX(),odometer.getY())
-			//}
+			if (odometer.getDistance() < recolalizeThreshold)	{
+				double[] corner = lsl.pickCorner();
+				lsl.doLocalization(corner[0],corner[1]);
+			}
 		}
 		Sound.beep();
 		this.isNavigating=false;
@@ -288,6 +294,9 @@ public class Navigation extends Thread	{
 	
 	private static int convertDistance(double radius, double distance) {
 		return (int) ((180.0 * distance) / (Math.PI * radius));
+	}
+	public void setLSL(LightLocalizer lsl)	{
+		this.lsl = lsl;
 	}
 	
 }

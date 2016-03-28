@@ -162,6 +162,33 @@ public class Odometer extends Thread {
 
 		return result;
 	}
+	
+	/**
+	* Obtain the total distance traveled by the EV3
+	*
+	* @return A double that represents the total distance traveled by the EV3
+	*/
+	public double getDistance() {
+		double result;
+
+		synchronized (lock) {
+			result = totalDistance;
+		}
+
+		return result;
+	}
+	
+	/**
+	* Set the EV3's total distance.
+	*
+	* @param d The distance to set the EV3's totalDistance to.
+	*/
+	public void setDistance(double d) {
+		synchronized (lock) {
+			this.totalDistance = d;
+		}
+	}
+
 
 	/**
 	* Set the current position of the EV3

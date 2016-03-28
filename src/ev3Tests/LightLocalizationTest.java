@@ -41,6 +41,7 @@ public class LightLocalizationTest {
 			// setup the odometer and display and navigation
 			Odometer odo = new Odometer(leftMotor,rightMotor,WHEEL_RADIUS,TRACK);
 			odo.start();
+			Navigation navigator = new Navigation(leftMotor, rightMotor, WHEEL_RADIUS, TRACK, odo, null);
 
 					
 			// perform the light sensor localization
