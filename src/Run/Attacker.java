@@ -52,8 +52,10 @@ public class Attacker {
 		lsl.doLocalization();
 
 		// travel to location where the balls are held
-		navigator.travelTo(navigator.tile * 6, navigator.tile * 6, true);
-		lsl.doLocalization();
+		navigator.travelTo(navigator.tile * 5, navigator.tile * 2.5, true);
+		double[] corner = lsl.pickCorner();
+		lsl.doLocalization(corner[0],corner[1]);
+		navigator.travelTo(navigator.tile * 5, navigator.tile * 2.5, false);
 	}
 
 }

@@ -15,12 +15,12 @@ public class Navigation extends Thread	{
 	//-------- user defined--------------
 	private final int FORWARDSPEED = 250;
 	private final int TURNSPEED = 175;
-	private final int ACCELERATION = 2016;
-	private final double travelToError = 1.0;
-	private final double travelAngleError = 1.0;
+	private final int ACCELERATION = 2000;
+	private final double travelToError = 2.0;
+	private final double travelAngleError = 5.0;
 	private final double correctDistThreshold = 15;
 	private final double correctAngleThreshold = 3;
-	private final double recolalizeThreshold = 95;
+	private final double recolalizeThreshold = 180;
 	//----------------------------------
 
 	//variables
@@ -69,13 +69,17 @@ public class Navigation extends Thread	{
 			if (avoidCollisions)	{
 				if (collisionAvoidance.detectedObject(15))	{
 					double[] currLoc = {odometer.getX(), odometer.getY()};
-					double[] corner = lsl.pickCorner();
-					lsl.doLocalization(corner[0],corner[1]);
-					travelTo(currLoc[0],currLoc[1],false);
+			//		double[] corner = lsl.pickCorner();
+			//		lsl.doLocalization(corner[0],corner[1]);
+			//		travelTo(currLoc[0],currLoc[1],false);
 					turnTo(odometer.getTheta() + Math.toRadians(90));
 					collisionAvoidance.avoidObject(3, 15);
-					corner = lsl.pickCorner();
-					lsl.doLocalization(corner[0]+tile,corner[1]+tile);
+					double dist = odometer.getDistance();
+					if(dist>30){
+					odometer.setDistance(dist-30);
+					}
+					//	corner = lsl.pickCorner();
+				//	lsl.doLocalization(corner[0]+tile,corner[1]+tile);
 				}
 			}
 			navigateTo(x,y);
@@ -87,6 +91,7 @@ public class Navigation extends Thread	{
 		}
 		Sound.beep();
 		this.isNavigating=false;
+		Sound.buzz();
 		leftMotor.stop();
 		rightMotor.stop();
 	}
