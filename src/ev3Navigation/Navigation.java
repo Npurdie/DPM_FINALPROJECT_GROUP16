@@ -20,7 +20,7 @@ public class Navigation extends Thread	{
 	private final double travelAngleError = 5.0;
 	private final double correctDistThreshold = 15;
 	private final double correctAngleThreshold = 3;
-	private final double recolalizeThreshold = 180;
+	private final double recolalizeThreshold = 130;
 	//----------------------------------
 
 	//variables
@@ -73,11 +73,9 @@ public class Navigation extends Thread	{
 			//		lsl.doLocalization(corner[0],corner[1]);
 			//		travelTo(currLoc[0],currLoc[1],false);
 					turnTo(odometer.getTheta() + Math.toRadians(90));
-					collisionAvoidance.avoidObject(8, 4);
-					double dist = odometer.getDistance();
-					if(dist>30){
-					odometer.setDistance(dist-30);
-					}
+					collisionAvoidance.avoidObject(10, 3);
+					odometer.setDistance(90);
+			
 					//	corner = lsl.pickCorner();
 				//	lsl.doLocalization(corner[0]+tile,corner[1]+tile);
 				}

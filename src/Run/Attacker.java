@@ -52,11 +52,11 @@ public class Attacker {
 		lsl.doLocalization();
 
 		// travel to location where the balls are held
-		navigator.travelTo(navigator.tile * 5, navigator.tile * 2.5, true);
+		navigator.travelTo(navigator.tile * 5, navigator.tile * 5, true);
 		double[] corner = lsl.pickCorner();
 		odometer.setDistance(0);
 		lsl.doLocalization(corner[0],corner[1]);
-		navigator.travelTo(navigator.tile * 5, navigator.tile * 2.5, false);
+		navigator.travelTo(navigator.tile * 5, navigator.tile * 5, false);
 	}
 
 }

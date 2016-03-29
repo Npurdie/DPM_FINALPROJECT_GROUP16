@@ -16,10 +16,9 @@ public class PController implements UltrasonicController	{
 	private final int motorStraight = 200;
 	private EV3LargeRegulatedMotor leftMotor, rightMotor;
 	private int distance;
-	private int filterControl;
 
-	private final int PConstant = 8;
-	private int correctionMax = 70;
+	private final int PConstant = 10;
+	private int correctionMax = 85;
 	
 	/**
 	* The pController stores a reference to the left motor and right motor
@@ -38,7 +37,6 @@ public class PController implements UltrasonicController	{
 		rightMotor.setSpeed(motorStraight);
 		leftMotor.forward();
 		rightMotor.forward();
-		filterControl = 0;
 	}
 	
 	@Override
@@ -57,14 +55,14 @@ public class PController implements UltrasonicController	{
 		//too close to wall
 		else if (error < 0) {
 			rightMotor.setSpeed(motorStraight+delta);
-			leftMotor.setSpeed(delta);
+			leftMotor.setSpeed(delta-delta);
 			leftMotor.backward();
 			rightMotor.forward();
 		}
 
 		//too far from wall
 		if (error > 0) {
-			rightMotor.setSpeed(motorStraight -delta);
+			rightMotor.setSpeed(motorStraight - delta);
 			leftMotor.setSpeed(motorStraight + delta);
 			leftMotor.forward();
 			rightMotor.forward();
