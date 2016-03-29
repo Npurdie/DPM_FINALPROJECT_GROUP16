@@ -54,7 +54,7 @@ public class WifiConnection {
 		LCD.drawString("Waiting for transmission...", 0, 2);
 		while(dis.available() <= 0)
 			try {Thread.sleep(10);} catch (InterruptedException e) {}
-		LCD.drawString("Receiving transmission", 0, 3);		
+		LCD.drawString("Receiving transmission", 0, 3);
 		
 		// Parse transmission
 		this.StartData = ParseTransmission.parseData(dis);

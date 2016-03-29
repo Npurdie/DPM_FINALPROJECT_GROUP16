@@ -6,12 +6,16 @@ import ev3Odometer.*;
 import ev3Utilities.*;
 import lejos.hardware.*;
 import lejos.hardware.ev3.LocalEV3;
+import lejos.hardware.lcd.TextLCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.sensor.SensorModes;
 import lejos.robotics.SampleProvider;
+import java.io.IOException;
+import java.util.HashMap;
+import ev3Utilities.WifiConnection;
 
 public class RunEv3 {
 
@@ -30,6 +34,12 @@ public class RunEv3 {
 	public static final double WHEEL_RADIUS = 2.05;
 	public static final double TRACK = 15.7;
 	public static final double LIGHTSENSOR_WIDTH = 12.5;
+	
+	//wifi stuff
+	private static final String SERVER_IP = "192.168.0.101"; //"localhost";
+	private static final int TEAM_NUMBER = 16;
+	private static TextLCD LCD = LocalEV3.get().getTextLCD();
+	private static int player, ballColor, corner, lowerLocX, lowerLocY, upperLocX, upperLocY, d1, d2, w1;
 	
 	public static void main(String[] args) {
 		
@@ -66,6 +76,7 @@ public class RunEv3 {
 		LightLocalizer lsl = new LightLocalizer(odo, colorValue, colorData, navigator);
 		
 		//Launcher launcher = new Launcher(clawMotor, launcherMotor);
+	
 		
 		int buttonChoice = Button.waitForAnyPress();
 		
