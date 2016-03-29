@@ -118,15 +118,33 @@ public class LightLocalizer {
 		odometer.setDistance(0);
 	}
 	
-	public double[] pickCorner()	{
-		double[] corner = new double[2];
+	public double[] pickCorner(int obstacleCorner)	{
+		double[][] corner = {new double[2],new double[2],new double[2],new double[2]};
 		double currX = odometer.getX();
 		double currY = odometer.getY();
 		double tile = navigator.tile;
-		corner[0] = currX - currX%tile;
-		corner[1] = currY - currY%tile;
+		corner[0][0] = currX - currX%tile;
+		corner[0][1] = currY - currY%tile;
+		corner[1][0] = currX - currX%tile + tile;
+		corner[1][1] = currY - currY%tile;
+		corner[2][0] = currX - currX%tile+ tile;
+		corner[2][1] = currY - currY%tile+ tile;
+		corner[3][0] = currX - currX%tile;
+		corner[3][1] = currY - currY%tile + tile;
 		
-		return corner;
+		double smallest = tile;
+		int foo = 0;
+		for (int i=0; i<4; i++)	{
+			double temp = Math.sqrt(Math.pow((currX-corner[i][0]),2) + Math.pow(currX-corner[i][1], 2));
+			if (temp < smallest)	{
+				smallest = temp;
+				foo = i;
+			}
+		}
+		if (foo == obstacleCorner){
+			return corner[0];
+		}
+		return corner[foo];
 	}
 
 	public void foundGridLine() {

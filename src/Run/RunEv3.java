@@ -73,9 +73,9 @@ public class RunEv3 {
 		
 		//ParseWifi pw = new ParseWifi();
 		
-		int buttonChoice = Button.waitForAnyPress();
+		//int buttonChoice = Button.waitForAnyPress();
 		
-		if (buttonChoice == Button.ID_DOWN) {
+		//if (buttonChoice == Button.ID_DOWN) {
 
 	/*	if(pw.getRole()){
 			Defender defender = new Defender(leftMotor, rightMotor, TRACK, WHEEL_RADIUS, odo, lightPoller, navigator, usl, lsl);
@@ -88,7 +88,7 @@ public class RunEv3 {
 			
 			
 				
-		}
+		//}
 			
 			while (Button.waitForAnyPress() != Button.ID_ESCAPE);
 			System.exit(0);		

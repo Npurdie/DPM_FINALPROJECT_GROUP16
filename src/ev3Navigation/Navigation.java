@@ -69,11 +69,11 @@ public class Navigation extends Thread	{
 			if (avoidCollisions)	{
 				if (collisionAvoidance.detectedObject(20))	{
 					double[] currLoc = {odometer.getX(), odometer.getY(), odometer.getTheta()};
-					double[] corner = lsl.pickCorner();
+					double[] corner = lsl.pickCorner(2);
 					lsl.doLocalization(corner[0],corner[1]);
 					travelTo(currLoc[0],currLoc[1],false);
 					turnTo(currLoc[2] + Math.toRadians(90));
-					collisionAvoidance.avoidObject(12, 5);
+					collisionAvoidance.avoidObject(16, 5);
 					odometer.setDistance(80);
 			
 					//	corner = lsl.pickCorner();
@@ -82,9 +82,9 @@ public class Navigation extends Thread	{
 			}
 			navigateTo(x,y);
 			if (odometer.getDistance() > recolalizeThreshold)	{
-				odometer.setDistance(0);
-				double[] corner = lsl.pickCorner();
+				double[] corner = lsl.pickCorner(5);
 				lsl.doLocalization(corner[0],corner[1]);
+				odometer.setDistance(0);
 			}
 		}
 		Sound.beep();
