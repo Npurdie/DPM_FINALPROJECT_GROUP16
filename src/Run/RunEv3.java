@@ -69,9 +69,9 @@ public class RunEv3 {
 		LCDInfo lcd = new LCDInfo(odo, lightPoller);
 		LightLocalizer lsl = new LightLocalizer(odo, colorValue, colorData, navigator);
 		
-		//Launcher launcher = new Launcher(clawMotor, launcherMotor);
+		Launcher launcher = new Launcher(clawMotor, launcherMotor);
 		
-		ParseWifi pw = new ParseWifi();
+		//ParseWifi pw = new ParseWifi();
 		
 		int buttonChoice = Button.waitForAnyPress();
 		
@@ -81,7 +81,7 @@ public class RunEv3 {
 			Defender defender = new Defender(leftMotor, rightMotor, TRACK, WHEEL_RADIUS, odo, lightPoller, navigator, usl, lsl);
 			defender.startDefense();
 		} else { */
-			Attacker attacker = new Attacker(leftMotor, rightMotor, clawMotor, launcherMotor, TRACK, WHEEL_RADIUS, odo, lightPoller, navigator, usl, lsl,pw.getBallLoc());
+			Attacker attacker = new Attacker(leftMotor, rightMotor, clawMotor, launcherMotor, TRACK, WHEEL_RADIUS, odo, lightPoller, navigator, usl, lsl,launcher);
 			attacker.startAttack();
 //		}
 

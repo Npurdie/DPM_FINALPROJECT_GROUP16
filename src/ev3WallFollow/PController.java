@@ -17,8 +17,8 @@ public class PController implements UltrasonicController	{
 	private EV3LargeRegulatedMotor leftMotor, rightMotor;
 	private int distance;
 
-	private final int PConstant = 10;
-	private int correctionMax = 85;
+	private final int PConstant = 7;
+	private int correctionMax = 75;
 	
 	/**
 	* The pController stores a reference to the left motor and right motor

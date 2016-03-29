@@ -20,7 +20,7 @@ public class Navigation extends Thread	{
 	private final double travelAngleError = 5.0;
 	private final double correctDistThreshold = 15;
 	private final double correctAngleThreshold = 3;
-	private final double recolalizeThreshold = 130;
+	private final double recolalizeThreshold = 115;
 	//----------------------------------
 
 	//variables
@@ -67,14 +67,14 @@ public class Navigation extends Thread	{
 		CollisionAvoidance collisionAvoidance = new CollisionAvoidance(odometer, ultraSonicPoller, leftMotor, rightMotor, wheelRadius, wheelBase);
 		while (Math.abs(x - odometer.getX()) > travelToError || Math.abs(y - odometer.getY()) > travelToError )	{
 			if (avoidCollisions)	{
-				if (collisionAvoidance.detectedObject(15))	{
-					double[] currLoc = {odometer.getX(), odometer.getY()};
-			//		double[] corner = lsl.pickCorner();
-			//		lsl.doLocalization(corner[0],corner[1]);
-			//		travelTo(currLoc[0],currLoc[1],false);
-					turnTo(odometer.getTheta() + Math.toRadians(90));
-					collisionAvoidance.avoidObject(10, 3);
-					odometer.setDistance(90);
+				if (collisionAvoidance.detectedObject(20))	{
+					double[] currLoc = {odometer.getX(), odometer.getY(), odometer.getTheta()};
+					double[] corner = lsl.pickCorner();
+					lsl.doLocalization(corner[0],corner[1]);
+					travelTo(currLoc[0],currLoc[1],false);
+					turnTo(currLoc[2] + Math.toRadians(90));
+					collisionAvoidance.avoidObject(12, 5);
+					odometer.setDistance(80);
 			
 					//	corner = lsl.pickCorner();
 				//	lsl.doLocalization(corner[0]+tile,corner[1]+tile);
@@ -286,6 +286,15 @@ public class Navigation extends Thread	{
 		
 		stopMotors();
 	}
+	
+	public void travelForwardDistance(double distance, int SPEED) {
+		leftMotor.setSpeed(SPEED);
+		rightMotor.setSpeed(SPEED);
+		leftMotor.rotate(convertDistance(wheelRadius, distance), true);
+		rightMotor.rotate(convertDistance(wheelRadius, distance), false);
+		
+		stopMotors();
+	}
 
 	/**
 	* This method converts the desired turn angle into the distance the left or right wheel has to rotate
@@ -303,6 +312,9 @@ public class Navigation extends Thread	{
 	}
 	public void setLSL(LightLocalizer lsl)	{
 		this.lsl = lsl;
+	}
+	public void shootDirection(double x, double y)	{
+		turnTo(Math.atan((odometer.getY()-y)/(odometer.getX()-x)) + Math.toRadians(180));
 	}
 	
 }
