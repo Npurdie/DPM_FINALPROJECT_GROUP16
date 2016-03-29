@@ -35,12 +35,6 @@ public class RunEv3 {
 	public static final double TRACK = 15.7;
 	public static final double LIGHTSENSOR_WIDTH = 12.5;
 	
-	//wifi stuff
-	private static final String SERVER_IP = "192.168.0.101"; //"localhost";
-	private static final int TEAM_NUMBER = 16;
-	private static TextLCD LCD = LocalEV3.get().getTextLCD();
-	private static int player, ballColor, corner, lowerLocX, lowerLocY, upperLocX, upperLocY, d1, d2, w1;
-	
 	public static void main(String[] args) {
 		
 		//Setup ultrasonic sensor 
@@ -76,17 +70,18 @@ public class RunEv3 {
 		LightLocalizer lsl = new LightLocalizer(odo, colorValue, colorData, navigator);
 		
 		//Launcher launcher = new Launcher(clawMotor, launcherMotor);
-	
+		
+		ParseWifi pw = new ParseWifi();
 		
 		int buttonChoice = Button.waitForAnyPress();
 		
 		if (buttonChoice == Button.ID_DOWN) {
 
-	/*	if(false){
+	/*	if(pw.getRole()){
 			Defender defender = new Defender(leftMotor, rightMotor, TRACK, WHEEL_RADIUS, odo, lightPoller, navigator, usl, lsl);
 			defender.startDefense();
 		} else { */
-			Attacker attacker = new Attacker(leftMotor, rightMotor, clawMotor, launcherMotor, TRACK, WHEEL_RADIUS, odo, lightPoller, navigator, usl, lsl);
+			Attacker attacker = new Attacker(leftMotor, rightMotor, clawMotor, launcherMotor, TRACK, WHEEL_RADIUS, odo, lightPoller, navigator, usl, lsl,pw.getBallLoc());
 			attacker.startAttack();
 //		}
 

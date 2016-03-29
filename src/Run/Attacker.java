@@ -21,11 +21,12 @@ public class Attacker {
 	private USLocalizer usl;
 	private LightLocalizer lsl;
 	private LightPoller lightPoller;
+	private double[] ballLoc;
 
 	public Attacker(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
 			EV3LargeRegulatedMotor clawMotor, EV3LargeRegulatedMotor launcherMotor, double width, double wheelRadius,
 			Odometer odometer, LightPoller lightPoller, Navigation navigator, USLocalizer uslocalizer,
-			LightLocalizer lightlocalizer) {
+			LightLocalizer lightlocalizer, double[] ballLoc) {
 		this.leftMotor = leftMotor;
 		this.rightMotor = rightMotor;
 		this.width = width;
@@ -35,6 +36,7 @@ public class Attacker {
 		this.usl = uslocalizer;
 		this.lsl = lightlocalizer;
 		this.lightPoller = lightPoller;
+		this.ballLoc = ballLoc;
 	}
 
 	public void startAttack() {
@@ -51,12 +53,15 @@ public class Attacker {
 		// perform the light sensor localization
 		lsl.doLocalization();
 
-		// travel to location where the balls are held
-		navigator.travelTo(navigator.tile * 5, navigator.tile * 5, true);
+		//travel to location where the balls are held
+		navigator.travelTo(ballLoc[0],ballLoc[1],true);
 		double[] corner = lsl.pickCorner();
-		odometer.setDistance(0);
 		lsl.doLocalization(corner[0],corner[1]);
-		navigator.travelTo(navigator.tile * 5, navigator.tile * 5, false);
+		navigator.travelTo(ballLoc[0],ballLoc[1],false);
+//		navigator.travelTo(navigator.tile * 5, navigator.tile * 5, true);
+//		double[] corner = lsl.pickCorner();
+//		lsl.doLocalization(corner[0],corner[1]);
+//		navigator.travelTo(navigator.tile * 5, navigator.tile * 5, false);
 	}
 
 }

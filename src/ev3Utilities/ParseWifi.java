@@ -71,5 +71,20 @@ public class ParseWifi {
 		}
 		return result;
 	}
-
+	
+	public boolean getRole()	{
+		if (player == 0)	{
+			return true;
+		}
+		else	{
+			return false;
+		}
+	}
+	
+	public double[] getBallLoc()	{
+		double[] loc = new double[2];
+		loc[0] = tile* lowerLocX;
+		loc[1] = tile* lowerLocY + 11.43;
+		return loc;
+	}
 }
