@@ -150,6 +150,31 @@ public class Navigation extends Thread	{
 	}
 	
 	/**
+	* When called, this method will make the EV3 turn to face the heading it was given
+	* Method Overload that includes speed parameter
+	*
+	* @param theta The angle to which the EV3 will turn
+	*/
+	public void turnTo(double theta, int speed)	{		//robot turns to face this heading
+		theta = theta % (2*PI);
+		double error = theta - odometer.getTheta();
+		double correction = smallestAngle(theta, odometer.getTheta());
+
+		//makes small corrections slower
+		if (Math.abs(error) <= Math.toRadians(correctDistThreshold)) {
+			leftMotor.setSpeed(speed);
+			rightMotor.setSpeed((speed));
+		}
+		else	{
+			leftMotor.setSpeed(speed);
+			rightMotor.setSpeed(speed);
+		}
+
+		leftMotor.rotate(-convertAngle(wheelRadius, wheelBase, Math.toDegrees(correction)), true);
+		rightMotor.rotate(convertAngle(wheelRadius, wheelBase, Math.toDegrees(correction)), false);
+	}
+	
+	/**
 	* This method calculates the angle the EV3 would have to face in order to travel to a specified point
 	*
 	* @param dx The difference between the EV3's current location and the coordinate it is traveling to
