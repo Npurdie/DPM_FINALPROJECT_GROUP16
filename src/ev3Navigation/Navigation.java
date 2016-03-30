@@ -92,8 +92,7 @@ public class Navigation extends Thread	{
 		Sound.beep();
 		this.isNavigating=false;
 		Sound.buzz();
-		leftMotor.stop();
-		rightMotor.stop();
+		stopMotors();
 	}
 
 	/**
