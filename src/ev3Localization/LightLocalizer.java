@@ -61,6 +61,7 @@ public class LightLocalizer {
 			navigator.turnTo(odometer.getTheta() - Math.toRadians(10),TURN_SPEED);
 			gridLine = false;
 		}
+		navigator.stopMotors();
 
 		if (gridLines[0] < Math.PI) { // wrap-around angle
 			gridLines[0] += 2 * Math.PI;
@@ -124,6 +125,7 @@ public class LightLocalizer {
 			navigator.turnTo(odometer.getTheta() - Math.toRadians(10));
 			gridLine = false;
 		}
+		navigator.stopMotors();
 
 		if (gridLines[0] < Math.PI) { // wrap-around angle
 			gridLines[0] += 2 * Math.PI;
@@ -143,7 +145,14 @@ public class LightLocalizer {
 																	// and set
 																	// theta
 		navigator.travelTo(0, 0,false);
-		navigator.turnTo(0); // finished localization
+		navigator.turnTo(Math.toRadians(35)); // finished localization
+		gridLine = false;
+		while(!gridLine)	{
+			navigator.turnRight(TURN_SPEED);
+		}
+		navigator.stopMotors();
+		odometer.setTheta(0);
+		gridLine = false;
 		odometer.setDistance(0);
 	}
 	
