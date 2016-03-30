@@ -39,6 +39,11 @@ public class PController implements UltrasonicController	{
 		rightMotor.forward();
 	}
 	
+	/**
+	* This method processes the ultrasonic data by changing the speeds of the motors proportionally to the distance measured.
+	*
+	* @param distance The distance polled by the ultrasonic sensor
+	*/
 	@Override
 	public void processUSData(int distance) {
 		int error = distance - bandCenter;
@@ -71,6 +76,12 @@ public class PController implements UltrasonicController	{
 		
 	}
 
+	/**
+	 * The pValue method calculates the proportional correction to be applied to the motors based on the error value and
+	 * the p constant.
+	 * @param error The error between the distance to the object and the optimal band center.
+	 * @return an integer correction to be added or subtracted from the motor speed.
+	 */
 	public int pValue(int error)	{
 		error = Math.abs(error);
 		int correction = PConstant*error;

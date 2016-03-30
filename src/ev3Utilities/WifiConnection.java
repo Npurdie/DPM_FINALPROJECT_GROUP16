@@ -21,7 +21,7 @@ import java.util.HashMap;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.TextLCD;
 
-/*
+/**
  * This class opens a wifi connection, waits for the data
  * and then allows access to the data after closing the wifi socket.
  * 
