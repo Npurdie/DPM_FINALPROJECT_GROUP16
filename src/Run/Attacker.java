@@ -11,6 +11,7 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.Port;
 import ev3Utilities.Launcher;
 
+/** This object coordinates the Attacker case of the competition */
 public class Attacker {
 
 	private EV3LargeRegulatedMotor leftMotor, rightMotor;
@@ -25,6 +26,24 @@ public class Attacker {
 	private double[] ballLoc;
 	private Launcher launcher;
 
+	/**
+	 * The Attacker stores a reference to the left motor, right motor, claw motor, launcher motor, the EV3's width, wheel radius
+	 * , odometer, light poller, navigator, us localizer, light localizer and the launcher. This class calls the appropriate
+	 * methods and objects to complete the attacker portion of the challenge
+	 *
+	 * @param leftMotor The left motor object
+	 * @param rightMotor The right motor object
+	 * @param clawmotor The motor that actuates the claw
+	 * @param launcherMotor The motor that shoots the balls
+	 * @param width The width of the EV3's chassis
+	 * @param wheelRadius The radius of the EV3's wheels
+	 * @param odometer The Odometer
+	 * @param lightPoller The light poller
+	 * @param navigator The Navigator
+	 * @param UsLocalizer The ultrasonic localizer
+	 * @param lightlocalizer The light lozalizer
+	 * @param launcher The launcher class
+	 */
 	public Attacker(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
 			EV3LargeRegulatedMotor clawMotor, EV3LargeRegulatedMotor launcherMotor, double width, double wheelRadius,
 			Odometer odometer, LightPoller lightPoller, Navigation navigator, USLocalizer uslocalizer,
