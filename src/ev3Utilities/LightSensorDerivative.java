@@ -9,6 +9,9 @@ import lejos.hardware.port.SensorPort;
 import lejos.robotics.SampleProvider;
 import lejos.hardware.sensor.EV3ColorSensor;
 
+/**
+ * The light sensor derivative provides method that allow the EV3 to detect grid lines in different lighting conditions.
+ */
 public class LightSensorDerivative extends Thread {
 	private Odometer odometer;
 	private LightPoller lightPoller;

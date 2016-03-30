@@ -61,6 +61,9 @@ public class Attacker {
 		//this.ballLoc = ballLoc;
 	}
 
+	/**
+	 * Initializes the attack sequence
+	 */
 	public void startAttack() {
 		odometer.start();
 		lightPoller.start();

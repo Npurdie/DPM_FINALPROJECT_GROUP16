@@ -6,6 +6,9 @@ import java.util.HashMap;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.TextLCD;
 
+/**
+ * This class provides methods to parse data contained by the hashmap returned by the wifi class.
+ */
 public class ParseWifi {
 	
 	private static final String SERVER_IP = "192.168.0.101"; //"localhost";
@@ -14,7 +17,9 @@ public class ParseWifi {
 	private static int player, ballColor, corner, lowerLocX, lowerLocY, upperLocX, upperLocY, d1, d2, w1;
 	private final double tile = 30.48;
 	
-	
+	/**
+	 * Parse wifi connects to the host computer and creates a hashmap of all the game parameters
+	 */
 	public ParseWifi()	{
 		// WIFI
 		WifiConnection conn = null;
@@ -46,6 +51,11 @@ public class ParseWifi {
 			LCD.drawString("Connection failed", 0, 5);
 		}
 	}
+	
+	/**
+	 * Get corner returns the x,y and theta coordinate of the corner the EV3 will be starting in.
+	 * @return An array of doubles where (x coord, y coord, theta)
+	 */
 	public double[] getCorner()	{
 		int id = corner;
 		double[] result = new double[3];
@@ -72,6 +82,10 @@ public class ParseWifi {
 		return result;
 	}
 	
+	/**
+	 * The get role method returns the player role(attacker or defender)
+	 * @return True = Attacker, False = Defender
+	 */
 	public boolean getRole()	{
 		if (player == 0)	{
 			return true;
@@ -81,6 +95,10 @@ public class ParseWifi {
 		}
 	}
 	
+	/**
+	 * The get Ball loc method returns the location of the balls to be retrieved.
+	 * @return An array where (x coord, y coord) of the lower left corner of the tile containing the balls.
+	 */
 	public double[] getBallLoc()	{
 		double[] loc = new double[2];
 		loc[0] = tile* lowerLocX;

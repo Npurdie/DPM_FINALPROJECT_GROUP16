@@ -22,12 +22,11 @@ import java.util.HashMap;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.TextLCD;
 
-/*
+/**
  * Static parsers for parsing data off the communication channel
  * 
  * The order of data is defined in the Server's Transmission class
  */
-
 public class ParseTransmission {
 	
 	public static TextLCD LCD = LocalEV3.get().getTextLCD();
