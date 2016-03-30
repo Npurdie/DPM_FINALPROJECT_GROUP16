@@ -55,18 +55,21 @@ public class Attacker {
 
 		// perform the light sensor localization
 		lsl.doLocalization();
+		odometer.setX(0);
+		odometer.setY(0);
+		odometer.setTheta(0);
 
 		//travel to location where the balls are held
 //		navigator.travelTo(ballLoc[0],ballLoc[1],true);
 //		double[] corner = lsl.pickCorner();
 //		lsl.doLocalization(corner[0],corner[1]);
 //		navigator.travelTo(ballLoc[0],ballLoc[1],false);
-		navigator.travelTo(navigator.tile * 4, navigator.tile * 5, true);
-		lsl.doLocalization(navigator.tile * 4, navigator.tile * 5);
-		navigator.travelTo(navigator.tile * 5 - 10, navigator.tile * 5 + 11.43, false);
+		navigator.travelTo(navigator.tile * 5, navigator.tile * 5, true);
+		lsl.doLocalization(navigator.tile * 5, navigator.tile * 5);
+		navigator.travelTo(navigator.tile * 6 - 25, navigator.tile * 5 + 11.43, false);
 		navigator.turnTo(0);
 		launcher.lowerScooper();
-		navigator.travelForwardDistance(10,80);
+		navigator.travelForwardDistance(25,80);
 		launcher.raiseScooper();
 		navigator.shootDirection(0, 3);
 		launcher.shootBall(3);

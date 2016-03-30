@@ -67,7 +67,7 @@ public class USLocalizer {
 		navigator.turnLeft(TURN_SPEED); // again turn left for a few second to
 										// avoid latching on to the same wall
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(1500);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}

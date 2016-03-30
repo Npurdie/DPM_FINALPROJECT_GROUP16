@@ -74,6 +74,11 @@ public class CollisionAvoidance	{
 		return distance;
 	}
 	
+	/**
+	* This method return the distance detected by the right ultrasonic sensor.
+	*
+	* @return A double that represents the distance of the object detected in centimeters
+	*/
 	public int getRightDistance()	{
 		int distance = ultraSonicPoller.getRightUsDistance();
 		return distance;
@@ -92,6 +97,13 @@ public class CollisionAvoidance	{
 			try { Thread.sleep(30); } catch(Exception e){}
 		}
 	}
+	
+	/**
+	* This method help the wallFollower method determine when to stop wallfollowing.
+	* This method returns true when the opposite angle of the wallfollw
+	*
+	* @return A double that represents the distance of the object detected in centimeters
+	*/
 	public boolean stopWallFollow(double theta)	{
 		if (theta >= Math.toRadians(180))	{
 			theta = theta - Math.toRadians(195);

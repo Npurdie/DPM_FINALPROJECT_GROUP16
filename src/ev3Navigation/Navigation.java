@@ -67,14 +67,15 @@ public class Navigation extends Thread	{
 		CollisionAvoidance collisionAvoidance = new CollisionAvoidance(odometer, ultraSonicPoller, leftMotor, rightMotor, wheelRadius, wheelBase);
 		while (Math.abs(x - odometer.getX()) > travelToError || Math.abs(y - odometer.getY()) > travelToError )	{
 			if (avoidCollisions)	{
-				if (collisionAvoidance.detectedObject(20))	{
+				if (collisionAvoidance.detectedObject(14))	{
 					double[] currLoc = {odometer.getX(), odometer.getY(), odometer.getTheta()};
-					double[] corner = lsl.pickCorner(2);
-					lsl.doLocalization(corner[0],corner[1]);
+					double[] corner = lsl.pickCorner(1);
+					odometer.setDistance(0);
+					lsl.doLocalization(corner[0]+tile,corner[1]);
 					travelTo(currLoc[0],currLoc[1],false);
 					turnTo(currLoc[2] + Math.toRadians(90));
-					collisionAvoidance.avoidObject(16, 5);
-					odometer.setDistance(80);
+					collisionAvoidance.avoidObject(22, 5);
+					odometer.setDistance(60);
 			
 					//	corner = lsl.pickCorner();
 				//	lsl.doLocalization(corner[0]+tile,corner[1]+tile);
@@ -82,6 +83,7 @@ public class Navigation extends Thread	{
 			}
 			navigateTo(x,y);
 			if (odometer.getDistance() > recolalizeThreshold)	{
+				odometer.setDistance(0);
 				double[] corner = lsl.pickCorner(5);
 				lsl.doLocalization(corner[0],corner[1]);
 				odometer.setDistance(0);
@@ -116,8 +118,10 @@ public class Navigation extends Thread	{
 				leftMotor.setSpeed(FORWARDSPEED);		//travel straight
 				rightMotor.setSpeed(FORWARDSPEED);
 			}
-			leftMotor.forward();
-			rightMotor.forward();
+			if (!leftMotor.isMoving() && !rightMotor.isMoving())	{
+				leftMotor.forward();
+				rightMotor.forward();
+			}
 		}
 	}
 	
