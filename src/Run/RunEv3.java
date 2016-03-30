@@ -17,6 +17,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import ev3Utilities.WifiConnection;
 
+/**
+ * This class is used to start the EV3. It is responsible for initializing all objects and sensors as well as
+ *  receiving all the game parameters over wifi.
+ */
 public class RunEv3 {
 
 	// Static Resources:
@@ -35,6 +39,9 @@ public class RunEv3 {
 	public static final double TRACK = 15.7;
 	public static final double LIGHTSENSOR_WIDTH = 12.5;
 	
+	/**
+	 * Main method
+	 */
 	public static void main(String[] args) {
 		
 		//Setup ultrasonic sensor 
