@@ -29,7 +29,7 @@ public class Launcher {
 		scooperMotor.rotate(160);
 	}
 	public void raiseScooper()	{
-		scooperMotor.rotate(-160);
+		scooperMotor.rotate(-170);
 	}
 	
 	public void shootBall(int numberOfBalls)	{

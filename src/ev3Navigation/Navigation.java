@@ -20,7 +20,7 @@ public class Navigation extends Thread	{
 	private final double travelAngleError = 5.0;
 	private final double correctDistThreshold = 15;
 	private final double correctAngleThreshold = 3;
-	private final double recolalizeThreshold = 115;
+	private final double recolalizeThreshold = 140;
 	//----------------------------------
 
 	//variables
@@ -92,7 +92,8 @@ public class Navigation extends Thread	{
 		Sound.beep();
 		this.isNavigating=false;
 		Sound.buzz();
-		stopMotors();
+		leftMotor.stop();
+		rightMotor.stop();
 	}
 
 	/**
