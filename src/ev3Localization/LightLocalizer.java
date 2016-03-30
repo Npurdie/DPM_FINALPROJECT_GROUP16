@@ -58,7 +58,7 @@ public class LightLocalizer {
 			// turn 10 degrees to make sure the same line is not picked up on
 			// next iteration
 			Sound.beep();
-			navigator.turnTo(odometer.getTheta() - Math.toRadians(10));
+			navigator.turnTo(odometer.getTheta() - Math.toRadians(10),TURN_SPEED);
 			gridLine = false;
 		}
 
@@ -80,7 +80,16 @@ public class LightLocalizer {
 																	// and set
 																	// theta
 		navigator.travelTo(0, 0,false);
-		navigator.turnTo(0); // finished localization
+		navigator.turnTo(Math.toRadians(35)); // finished localization
+		gridLine = false;
+		while(!gridLine)	{
+			navigator.turnRight(TURN_SPEED);
+		}
+		navigator.stopMotors();
+		odometer.setTheta(0);
+		gridLine = false;
+		
+		
 		
 		odometer.setX(x);
 		odometer.setY(y);
@@ -144,32 +153,32 @@ public class LightLocalizer {
 	 * @param obstacleCorner The integer ID of a corner to avoid returning because an object covers it. (0 = ll, 1 = lr, 2 = ur, 3 = ul)
 	 */
 	public double[] pickCorner(int obstacleCorner)	{
-		double[] corner = new double[2];
+		double[][] corner = {new double[2],new double[2],new double[2],new double[2]};
 		double currX = odometer.getX();
 		double currY = odometer.getY();
 		double tile = navigator.tile;
-		corner[0] = currX - currX%tile;
-		corner[1] = currY - currY%tile;
-//		corner[1][0] = currX - currX%tile + tile;
-//		corner[1][1] = currY - currY%tile;
-//		corner[2][0] = currX - currX%tile+ tile;
-//		corner[2][1] = currY - currY%tile+ tile;
-//		corner[3][0] = currX - currX%tile;
-//		corner[3][1] = currY - currY%tile + tile;
+		corner[0][0] = currX - currX%tile;
+		corner[0][1] = currY - currY%tile;
+		corner[1][0] = currX - currX%tile + tile;
+		corner[1][1] = currY - currY%tile;
+		corner[2][0] = currX - currX%tile+ tile;
+		corner[2][1] = currY - currY%tile+ tile;
+		corner[3][0] = currX - currX%tile;
+		corner[3][1] = currY - currY%tile + tile;
 		
-//		double smallest = tile;
-//		int foo = 0;
-//		for (int i=0; i<4; i++)	{
-//			double temp = Math.sqrt(Math.pow((currX-corner[i][0]),2) + Math.pow(currX-corner[i][1], 2));
-//			if (temp < smallest)	{
-//				smallest = temp;
-//				foo = i;
-//			}
-//		}
-//		if (foo == obstacleCorner){
-//			return corner[0];
-//		}
-		return corner;
+		double smallest = tile;
+		int foo = 0;
+		for (int i=0; i<4; i++)	{
+			double temp = Math.sqrt(Math.pow((currX-corner[i][0]),2) + Math.pow(currX-corner[i][1], 2));
+			if (temp < smallest)	{
+				smallest = temp;
+				foo = i;
+			}
+		}
+		if (foo == obstacleCorner){
+			return corner[2];
+		}
+		return corner[foo];
 	}
 
 	/**
