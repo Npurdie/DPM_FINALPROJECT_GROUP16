@@ -19,7 +19,7 @@ public class Navigation extends Thread {
 	// -------- user defined--------------
 	private final int FORWARDSPEED = 250;
 	private final int TURNSPEED = 175;
-	private final int ACCELERATION = 2000;
+	private final int ACCELERATION = 4000;
 	private final double travelToError = 2.0;
 	private final double travelAngleError = 5.0;
 	private final double correctDistThreshold = 15;
@@ -143,10 +143,8 @@ public class Navigation extends Thread {
 				leftMotor.setSpeed(FORWARDSPEED); // travel straight
 				rightMotor.setSpeed(FORWARDSPEED);
 			}
-			if (!leftMotor.isMoving() && !rightMotor.isMoving()) {
 				leftMotor.forward();
 				rightMotor.forward();
-			}
 		}
 	}
 
@@ -177,6 +175,7 @@ public class Navigation extends Thread {
 		rightMotor
 				.rotate(convertAngle(wheelRadius, wheelBase,
 						Math.toDegrees(correction)), false);
+	
 	}
 
 	/**

@@ -47,7 +47,7 @@ public class LightLocalizer {
 		double dy = 0;
 		
 		navigator.travelTo(x, y,false);
-		navigator.turnTo(Math.toRadians(45));
+		navigator.turnTo(Math.toRadians(45), TURN_SPEED);
 		gridLine = false;
 
 		for (int i = 0; i < gridLines.length; i++) { // for every line
@@ -61,8 +61,6 @@ public class LightLocalizer {
 			navigator.turnTo(odometer.getTheta() - Math.toRadians(10),TURN_SPEED);
 			gridLine = false;
 		}
-		navigator.stopMotors();
-
 		if (gridLines[0] < Math.PI) { // wrap-around angle
 			gridLines[0] += 2 * Math.PI;
 		}
@@ -81,12 +79,8 @@ public class LightLocalizer {
 																	// and set
 																	// theta
 		navigator.travelTo(0, 0,false);
-		navigator.turnTo(Math.toRadians(35)); // finished localization
-		gridLine = false;
-		while(!gridLine)	{
-			navigator.turnRight(TURN_SPEED);
-		}
-		
+		navigator.stopMotors();
+		navigator.turnTo(Math.toRadians(0), TURN_SPEED); // finished localization
 		navigator.stopMotors();
 		odometer.setTheta(0);
 		gridLine = false;
@@ -112,7 +106,7 @@ public class LightLocalizer {
 		
 		navigator.travelBackwardDistance(sensorPosition);
 
-		navigator.turnTo(Math.toRadians(45));
+		navigator.turnTo(Math.toRadians(45), TURN_SPEED);
 		gridLine = false;
 
 		for (int i = 0; i < gridLines.length; i++) { // for every line
@@ -123,11 +117,9 @@ public class LightLocalizer {
 			// turn 10 degrees to make sure the same line is not picked up on
 			// next iteration
 			Sound.beep();
-			navigator.turnTo(odometer.getTheta() - Math.toRadians(10));
+			navigator.turnTo(odometer.getTheta() - Math.toRadians(10),TURN_SPEED);
 			gridLine = false;
 		}
-		navigator.stopMotors();
-
 		if (gridLines[0] < Math.PI) { // wrap-around angle
 			gridLines[0] += 2 * Math.PI;
 		}
@@ -146,14 +138,10 @@ public class LightLocalizer {
 																	// and set
 																	// theta
 		navigator.travelTo(0, 0,false);
-		navigator.turnTo(Math.toRadians(35)); // finished localization
-		gridLine = false;
-		while(!gridLine)	{
-			navigator.turnRight(TURN_SPEED);
-		}
+		navigator.stopMotors();
+		navigator.turnTo(Math.toRadians(0), TURN_SPEED); // finished localization
 		navigator.stopMotors();
 		odometer.setTheta(0);
-		gridLine = false;
 		odometer.setDistance(0);
 	}
 	

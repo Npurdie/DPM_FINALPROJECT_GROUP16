@@ -77,9 +77,7 @@ public class Attacker {
 
 		LightSensorDerivative lsd = new LightSensorDerivative(odometer, lightPoller, lsl);
 		lsd.start();
-		
-		leftMotor.setAcceleration(2000);
-		rightMotor.setAcceleration(2000);
+
 		// perform the light sensor localization
 		lsl.doLocalization();
 		setOdometryValues(new double[]{0,0,0});
@@ -89,16 +87,13 @@ public class Attacker {
 //		navigator.travelTo(ballLoc[0],ballLoc[1],true);
 //		double[] corner = lsl.pickCorner();
 //		lsl.doLocalization(corner[0],corner[1]);
-//		navigator.travelTo(ballLoc[0],ballLoc[1],false);
-		leftMotor.setAcceleration(1000);
-		rightMotor.setAcceleration(1000);
-				
-		navigator.travelTo(navigator.tile * 5, navigator.tile * 5, true);
-		lsl.doLocalization(navigator.tile * 5, navigator.tile * 5);
-		navigator.travelTo(navigator.tile * 6 - 25, navigator.tile * 5 + 11.43, false);
-		navigator.turnTo(0);
+//		navigator.travelTo(ballLoc[0],ballLoc[1],false);			
+		navigator.travelTo(navigator.tile * 1, navigator.tile * 2, false);
+		lsl.doLocalization(navigator.tile * 1, navigator.tile * 2);
+		navigator.travelTo(navigator.tile * 2 - 25, navigator.tile * 2 + 11.43 + 2.5, false);
+		navigator.turnTo(-(Math.toRadians(5)));
 		launcher.lowerScooper();
-		navigator.travelForwardDistance(25,80);
+		navigator.travelForwardDistance(20,80);
 		launcher.raiseScooper();
 		navigator.shootDirection(0, 3);
 		launcher.shootBall(3);
