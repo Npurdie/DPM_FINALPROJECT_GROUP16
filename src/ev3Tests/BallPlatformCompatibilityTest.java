@@ -50,15 +50,15 @@ public class BallPlatformCompatibilityTest {
 		
 		odo.start();
 		
-		navigator.turnTo(Math.toRadians(45));
-		navigator.turnTo(Math.toRadians(-45));
-		
+		odo.setTheta(0);
+		navigator.turnTo(Math.toRadians(90));
+		navigator.stopMotors();
+		navigator.turnTo(Math.toRadians(-90));
+		navigator.stopMotors();
 		navigator.turnTo(0);
-		
+		navigator.stopMotors();
 		launcher.lowerScooper();
-		
 		navigator.travelForwardDistance(25, 80);
-
 		launcher.raiseScooper();
 		
 	}
