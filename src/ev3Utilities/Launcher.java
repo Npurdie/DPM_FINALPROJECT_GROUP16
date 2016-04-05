@@ -49,7 +49,7 @@ public class Launcher {
 	 * This method raises the claw by 160 degrees, it's full range of motion.
 	 */
 	public void lowerScooper()	{
-		scooperMotor.rotate(146);
+		scooperMotor.rotate(145);
 	}
 	
 	/**
