@@ -86,6 +86,7 @@ public class LightLocalizer {
 		while(!gridLine)	{
 			navigator.turnRight(TURN_SPEED);
 		}
+		
 		navigator.stopMotors();
 		odometer.setTheta(0);
 		gridLine = false;

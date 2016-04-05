@@ -50,7 +50,7 @@ public class LightSensorDerivative extends Thread {
 
 			double leftDiff = oldLReflection - currLReflection;
 
-			if (leftDiff > 0.12) { //originally 0.15. tried 0.2 (no detection)
+			if (leftDiff > 0.10) { //originally 0.15. tried 0.2 (no detection)
 				lsl.foundGridLine();
 			}
 

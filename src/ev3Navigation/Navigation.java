@@ -82,12 +82,12 @@ public class Navigation extends Thread	{
 				}
 			}
 			navigateTo(x,y);
-			if (odometer.getDistance() > recolalizeThreshold)	{
+	/*		if (odometer.getDistance() > recolalizeThreshold)	{
 				odometer.setDistance(0);
 				double[] corner = lsl.pickCorner(5);
 				lsl.doLocalization(corner[0],corner[1]);
 				odometer.setDistance(0);
-			}
+			}*/
 		}
 		Sound.beep();
 		this.isNavigating=false;
@@ -256,11 +256,16 @@ public class Navigation extends Thread	{
 	* This method stops both motors.
 	*/
 	public void stopMotors(){
+		leftMotor.stop();
+		rightMotor.stop();
+		
 		leftMotor.setSpeed(0);
 		rightMotor.setSpeed(0);
 		
 		leftMotor.forward();
 		rightMotor.forward();
+		
+		
 	}
 
 	/**
