@@ -34,6 +34,7 @@ public class RunEv3 {
 	private static final EV3LargeRegulatedMotor launcherMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("C"));
 	private static final Port usPort1 = LocalEV3.get().getPort("S4");	
 	private static final Port usPort2 = LocalEV3.get().getPort("S3");
+	private static final Port usPort3 = LocalEV3.get().getPort("S2");
 	private static final Port colorPort = LocalEV3.get().getPort("S1");
 	public static final double WHEEL_RADIUS = 2.05;
 	public static final double TRACK = 15.7;
@@ -51,12 +52,15 @@ public class RunEv3 {
 		// 4. Create a buffer for the sensor data
 		@SuppressWarnings("resource")							    	// Because we don't bother to close this resource
 		SensorModes usSensorF = new EV3UltrasonicSensor(usPort1);
-		SensorModes usSensorL = new EV3UltrasonicSensor(usPort2);
+		SensorModes usSensorR = new EV3UltrasonicSensor(usPort2);
+		SensorModes usSensorL = new EV3UltrasonicSensor(usPort3);
 		SampleProvider usValueF = usSensorF.getMode("Distance");
-		SampleProvider usValueL = usSensorL.getMode("Distance");	
+		SampleProvider usValueR = usSensorR.getMode("Distance");
+		SampleProvider usValueL = usSensorL.getMode("Distance");
 		float[] usDataF = new float[usValueF.sampleSize()];				// colorData is the buffer in which data are returned
-		float[] usDataL = new float[usValueL.sampleSize()];
-		UltrasonicPoller usPoller = new UltrasonicPoller(usValueF, usValueL, usDataF, usDataL);
+		float[] usDataR = new float[usValueR.sampleSize()];
+		float [] usDataL = new float[usValueL.sampleSize()];
+		UltrasonicPoller usPoller = new UltrasonicPoller(usValueF, usValueR, usValueL, usDataF, usDataR, usDataL);
 		usPoller.start();
 		
 		//Setup color sensor
