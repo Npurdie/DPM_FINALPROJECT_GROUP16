@@ -6,6 +6,7 @@ import ev3Navigation.Navigation;
 import ev3Odometer.Odometer;
 import ev3Utilities.LightPoller;
 import ev3Utilities.LightSensorDerivative;
+import ev3Utilities.ParseWifi;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.Port;
@@ -25,6 +26,7 @@ public class Attacker {
 	private LightPoller lightPoller;
 	private double[] ballLoc;
 	private Launcher launcher;
+	private ParseWifi pw;
 
 	/**
 	 * The Attacker stores a reference to the left motor, right motor, claw motor, launcher motor, the EV3's width, wheel radius
@@ -47,7 +49,7 @@ public class Attacker {
 	public Attacker(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
 			EV3LargeRegulatedMotor clawMotor, EV3LargeRegulatedMotor launcherMotor, double width, double wheelRadius,
 			Odometer odometer, LightPoller lightPoller, Navigation navigator, USLocalizer uslocalizer,
-			LightLocalizer lightlocalizer, Launcher launcher) {
+			LightLocalizer lightlocalizer, Launcher launcher){//, ParseWifi pw) {
 		this.leftMotor = leftMotor;
 		this.rightMotor = rightMotor;
 		this.width = width;
@@ -58,6 +60,7 @@ public class Attacker {
 		this.lsl = lightlocalizer;
 		this.lightPoller = lightPoller;
 		this.launcher = launcher;
+		//this.pw = pw;
 		//this.ballLoc = ballLoc;
 	}
 
@@ -79,10 +82,9 @@ public class Attacker {
 		rightMotor.setAcceleration(2000);
 		// perform the light sensor localization
 		lsl.doLocalization();
-		odometer.setX(0);
-		odometer.setY(0);
-		odometer.setTheta(0);
-
+		setOdometryValues(new double[]{0,0,0});
+		//		setOdometryValues(pw.getCorner());
+		
 		//travel to location where the balls are held
 //		navigator.travelTo(ballLoc[0],ballLoc[1],true);
 //		double[] corner = lsl.pickCorner();
@@ -101,5 +103,10 @@ public class Attacker {
 		navigator.shootDirection(0, 3);
 		launcher.shootBall(3);
 	}
-
+	private void setOdometryValues(double[] cornerValues){
+		odometer.setX(cornerValues[0]);
+		odometer.setY(cornerValues[1]);
+		odometer.setTheta(cornerValues[2]);
+		
+	}
 }
