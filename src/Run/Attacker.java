@@ -93,9 +93,9 @@ public class Attacker {
 		leftMotor.setAcceleration(1000);
 		rightMotor.setAcceleration(1000);
 				
-		navigator.travelTo(navigator.tile * 2, navigator.tile * 2, true);
-		lsl.doLocalization(navigator.tile * 2, navigator.tile * 2);
-		navigator.travelTo(navigator.tile * 3 - 25, navigator.tile * 2 + 11.43, false);
+		navigator.travelTo(navigator.tile * 5, navigator.tile * 5, true);
+		lsl.doLocalization(navigator.tile * 5, navigator.tile * 5);
+		navigator.travelTo(navigator.tile * 6 - 25, navigator.tile * 5 + 11.43, false);
 		navigator.turnTo(0);
 		launcher.lowerScooper();
 		navigator.travelForwardDistance(25,80);

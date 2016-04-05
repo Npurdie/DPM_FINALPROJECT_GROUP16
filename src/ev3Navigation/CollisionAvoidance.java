@@ -57,7 +57,7 @@ public class CollisionAvoidance	{
 	* @return A boolean where true = object detected, false = object not detected
 	*/
 	public boolean detectedObject(int distance)	{
-		if( ultraSonicPoller.getForwardUsDistance() < distance)
+		if( ultraSonicPoller.getForwardUsDistance() < distance || ultraSonicPoller.getLeftUSDistance() < distance)
 		{
 			return true;
 		}
