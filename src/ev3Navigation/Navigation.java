@@ -85,7 +85,7 @@ public class Navigation extends Thread {
 			if (avoidCollisions) {
 				if (collisionAvoidance.detectedObject(14)) {
 					double[] currLoc = { odometer.getX(), odometer.getY(), odometer.getTheta() };
-					double[] corner = lsl.pickCorner(1);
+					double[] corner = lsl.pickCorner(0);
 					odometer.setDistance(0);
 					lsl.doLocalization(corner[0] + tile, corner[1]);
 					travelTo(currLoc[0], currLoc[1], false);
@@ -100,7 +100,7 @@ public class Navigation extends Thread {
 			navigateTo(x, y);
 			if (odometer.getDistance() > recolalizeThreshold) {
 				odometer.setDistance(0);
-				double[] corner = lsl.pickCorner(5);
+				double[] corner = lsl.pickCorner();
 				lsl.doLocalization(corner[0], corner[1]);
 				odometer.setDistance(0);
 			}

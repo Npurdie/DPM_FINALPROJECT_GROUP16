@@ -19,7 +19,7 @@ public class LightLocalizer {
 	private final double sensorPosition = 12.5; // distance from robot center to
 												// light sensor
 	private boolean gridLine = false;
-	private double finalAngleOffset = Math.toRadians(9);
+	private double finalAngleOffset = Math.toRadians(4);
 
 	/**
 	 * The LightLocalizer stores a reference to the Odometer, the Color sensor's
@@ -106,7 +106,7 @@ public class LightLocalizer {
 
 	/**
 	 * Method overloading of class doLocalization that takes no parameters. This
-	 * method performs th elcoalization in place.
+	 * method performs the localization in place.
 	 */
 	public void doLocalization() {
 		double gridLines[] = new double[4]; // stores the angles of all 4 lines
@@ -169,7 +169,7 @@ public class LightLocalizer {
 	 *            The integer ID of a corner to avoid returning because an
 	 *            object covers it. (0 = ll, 1 = lr, 2 = ur, 3 = ul)
 	 */
-	public double[] pickCorner(int obstacleCorner) {
+	public double[] pickCorner() {
 		double[][] corner = { new double[2], new double[2], new double[2], new double[2] };
 		double currX = odometer.getX();
 		double currY = odometer.getY();
@@ -192,10 +192,30 @@ public class LightLocalizer {
 				foo = i;
 			}
 		}
-		if (foo == obstacleCorner) {
-			return corner[2];
-		}
 		return corner[foo];
+	}
+	
+	/**
+	 * localize in corner passed as int
+	 *
+	 * @param obstacleCorner
+	 *            The integer ID of a corner to localize in  (0 = ll, 1 = lr, 2 = ur, 3 = ul)
+	 */
+	public double[] pickCorner(int localizeCorner) {
+		double[][] corner = { new double[2], new double[2], new double[2], new double[2] };
+		double currX = odometer.getX();
+		double currY = odometer.getY();
+		double tile = navigator.tile;
+		corner[0][0] = currX - currX % tile;
+		corner[0][1] = currY - currY % tile;
+		corner[1][0] = currX - currX % tile + tile;
+		corner[1][1] = currY - currY % tile;
+		corner[2][0] = currX - currX % tile + tile;
+		corner[2][1] = currY - currY % tile + tile;
+		corner[3][0] = currX - currX % tile;
+		corner[3][1] = currY - currY % tile + tile;
+
+		return corner[localizeCorner];
 	}
 
 	/**
