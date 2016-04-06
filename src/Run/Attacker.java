@@ -105,11 +105,12 @@ public class Attacker {
 		// navigator.travelTo(ballLoc[0],ballLoc[1],false);
 		navigator.travelTo(navigator.tile * 1, navigator.tile * 2, false);
 		lsl.doLocalization(navigator.tile * 1, navigator.tile * 2);
-		navigator.travelTo(navigator.tile * 2 - 25, navigator.tile * 2 + 20.38, false);
+		navigator.travelTo(navigator.tile * 2 - 25, navigator.tile * 2 + 21, false);
 		navigator.turnTo(-(Math.toRadians(5)));
 		launcher.lowerScooper();
-		navigator.travelForwardDistance(22, 120);
+		navigator.travelForwardDistance(22, 160);
 		launcher.raiseScooper();
+		navigator.travelBackwardDistance(10);
 		navigator.shootDirection(0, 3);
 		launcher.shootBall(3);
 	}

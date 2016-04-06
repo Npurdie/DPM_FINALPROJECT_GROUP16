@@ -9,8 +9,8 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 public class Launcher {
 	private EV3LargeRegulatedMotor scooperMotor;
 	private EV3LargeRegulatedMotor launcherMotor;
-	private int ACCELERATION = 100;
-	private int SCOOPE_SPEED = 90;
+	private int ACCELERATION = 400;
+	private int SCOOPE_SPEED = 100;
 	private int SHOOT_SPEED = 200;
 
 	/**
