@@ -105,7 +105,7 @@ public class Attacker {
 		// navigator.travelTo(ballLoc[0],ballLoc[1],false);
 		navigator.travelTo(navigator.tile * 1, navigator.tile * 2, false);
 		lsl.doLocalization(navigator.tile * 1, navigator.tile * 2);
-		navigator.travelTo(navigator.tile * 2 - 25, navigator.tile * 2 + 11.43 + 2.5, false);
+		navigator.travelTo(navigator.tile * 2 - 25, navigator.tile * 2 + 20.38, false);
 		navigator.turnTo(-(Math.toRadians(5)));
 		launcher.lowerScooper();
 		navigator.travelForwardDistance(20, 80);
