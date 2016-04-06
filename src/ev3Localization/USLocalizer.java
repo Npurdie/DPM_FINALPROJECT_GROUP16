@@ -54,7 +54,6 @@ public class USLocalizer {
 	 */
 	public void doLocalization() {
 
-		Sound.buzz();
 		Sound.twoBeeps();
 		
 		initializeRobot();

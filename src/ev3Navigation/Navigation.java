@@ -24,7 +24,9 @@ public class Navigation extends Thread {
 	private final double travelAngleError = 5.0;
 	private final double correctDistThreshold = 15;
 	private final double correctAngleThreshold = 3;
-	private final double recolalizeThreshold = 140;
+	private final double recolalizeThreshold = 90;
+	private final int middleField = 3;  
+	private final int isItSafeError = 15;
 	// ----------------------------------
 
 	// variables
@@ -37,6 +39,7 @@ public class Navigation extends Thread {
 	private double wheelRadius;
 	private UltrasonicPoller ultraSonicPoller;
 	private LightLocalizer lsl;
+
 
 	/**
 	 * The Navigator stores a reference to the left motor, right motor,
@@ -91,18 +94,18 @@ public class Navigation extends Thread {
 					travelTo(currLoc[0], currLoc[1], false);
 					turnTo(currLoc[2] + Math.toRadians(90));
 					collisionAvoidance.avoidObject(22, 5);
-					odometer.setDistance(60);
+					odometer.setDistance(50);
 
 					// corner = lsl.pickCorner();
 					// lsl.doLocalization(corner[0]+tile,corner[1]+tile);
 				}
 			}
 			navigateTo(x, y);
+			isItSafe();
 			if (odometer.getDistance() > recolalizeThreshold) {
 				odometer.setDistance(0);
 				double[] corner = lsl.pickCorner();
 				lsl.doLocalization(corner[0], corner[1]);
-				odometer.setDistance(0);
 			}
 		}
 
@@ -194,6 +197,15 @@ public class Navigation extends Thread {
 
 		leftMotor.rotate(-convertAngle(wheelRadius, wheelBase, Math.toDegrees(correction)), true);
 		rightMotor.rotate(convertAngle(wheelRadius, wheelBase, Math.toDegrees(correction)), false);
+	}
+	
+	public void turnBy(double theta, int speed){
+		
+		leftMotor.setSpeed(speed);
+		rightMotor.setSpeed(speed);
+		
+		leftMotor.rotate(convertAngle(wheelRadius, wheelBase, theta), true);
+		rightMotor.rotate(-convertAngle(wheelRadius, wheelBase, theta), false);
 	}
 
 	/**
@@ -388,6 +400,23 @@ public class Navigation extends Thread {
 
 	public void shootDirection(double x, double y) {
 		turnTo(Math.atan((odometer.getY() - y) / (odometer.getX() - x)) + Math.toRadians(180));
+	}
+	
+	public void isItSafe(){
+		double x = odometer.getX();
+		double y = odometer.getY();
+		
+		if((x<tile*middleField+isItSafeError)||(x>tile*middleField-isItSafeError)){
+			
+			odometer.setDistance(50);
+		}
+		
+		if((y<tile*middleField+isItSafeError)||(y>tile*middleField-isItSafeError)){
+			
+			odometer.setDistance(50);
+		}
+		
+		
 	}
 
 }

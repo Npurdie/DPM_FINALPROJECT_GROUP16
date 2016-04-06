@@ -10,7 +10,7 @@ public class Launcher {
 	private EV3LargeRegulatedMotor scooperMotor;
 	private EV3LargeRegulatedMotor launcherMotor;
 	private int ACCELERATION = 400;
-	private int SCOOPE_SPEED = 100;
+	private int SCOOPE_SPEED = 200;
 	private int SHOOT_SPEED = 200;
 
 	/**

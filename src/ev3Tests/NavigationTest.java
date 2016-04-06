@@ -25,6 +25,7 @@ public class NavigationTest {
 	private static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
 	private static final Port usPort1 = LocalEV3.get().getPort("S4");
 	private static final Port usPort2 = LocalEV3.get().getPort("S3");
+	private static final Port usPort3 = LocalEV3.get().getPort("S2");
 	private static final Port colorPort = LocalEV3.get().getPort("S1");
 	public static final double WHEEL_RADIUS = 2.05;
 	public static final double TRACK = 15.7;
@@ -41,14 +42,17 @@ public class NavigationTest {
 		@SuppressWarnings("resource") // Because we don't bother to close this
 										// resource
 		SensorModes usSensorF = new EV3UltrasonicSensor(usPort1);
-		SensorModes usSensorL = new EV3UltrasonicSensor(usPort2);
+		SensorModes usSensorR = new EV3UltrasonicSensor(usPort2);
+		SensorModes usSensorL = new EV3UltrasonicSensor(usPort3);
 		SampleProvider usValueF = usSensorF.getMode("Distance");
+		SampleProvider usValueR = usSensorR.getMode("Distance");
 		SampleProvider usValueL = usSensorL.getMode("Distance");
 		float[] usDataF = new float[usValueF.sampleSize()]; // colorData is the
 															// buffer in which
 															// data are returned
+		float[] usDataR = new float[usValueR.sampleSize()];
 		float[] usDataL = new float[usValueL.sampleSize()];
-		UltrasonicPoller usPoller = new UltrasonicPoller(usValueF, usValueL, usDataF, usDataL);
+		UltrasonicPoller usPoller = new UltrasonicPoller(usValueF, usValueR, usValueL, usDataF, usDataR, usDataL);
 
 		// Setup color sensor
 		// 1. Create a port object attached to a physical port (done above)
@@ -89,12 +93,13 @@ public class NavigationTest {
 
 			// perform the light sensor localization
 			lsl.doLocalization();
-
-			lsl.doLocalization(5 * navigator.tile, 0);
-			lsl.doLocalization(5 * navigator.tile, 5 * navigator.tile);
-			lsl.doLocalization(0, 5 * navigator.tile);
-			lsl.doLocalization(0, 0);
-
+			
+			navigator.travelTo(0*navigator.tile, 5*navigator.tile , false);
+			Sound.beep();
+			navigator.travelTo(5*navigator.tile, 0*navigator.tile , false);
+			Sound.beep();
+			navigator.travelTo(3*navigator.tile, 5*navigator.tile , false);
+			Sound.beep();
 		}
 
 		while (Button.waitForAnyPress() != Button.ID_ESCAPE)
