@@ -86,7 +86,7 @@ public class Navigation extends Thread {
 				rightMotor, wheelRadius, wheelBase);
 		while (Math.abs(x - odometer.getX()) > travelToError || Math.abs(y - odometer.getY()) > travelToError) {
 			if (avoidCollisions) {
-				if (collisionAvoidance.detectedObject(14)) {
+				/*if (collisionAvoidance.detectedObject(14)) {
 					double[] currLoc = { odometer.getX(), odometer.getY(), odometer.getTheta() };
 					double[] corner = lsl.pickCorner(0);
 					odometer.setDistance(0);
@@ -98,15 +98,15 @@ public class Navigation extends Thread {
 
 					// corner = lsl.pickCorner();
 					// lsl.doLocalization(corner[0]+tile,corner[1]+tile);
-				}
+				}*/
 			}
 			navigateTo(x, y);
 			isItSafe();
 			if (odometer.getDistance() > recolalizeThreshold) {
 				odometer.setDistance(0);
-				double[] corner = lsl.pickCorner();
-				lsl.doLocalization(corner[0], corner[1]);
-				
+				double [] corner = new double[2];
+				pickCorner(corner);
+				lsl.doLocalization(corner[0],corner[1]);
 			}
 		}
 
@@ -418,6 +418,29 @@ public class Navigation extends Thread {
 		}
 		
 		
+	}
+	
+	public void pickCorner(double [] corner) {
+		double currX = odometer.getX();
+		double currY = odometer.getY();
+		corner[0] = currX - currX % tile;
+		corner[1] = currY - currY % tile;
+		//return corner;
+		
+		/*double[][] corner = { new double[2], new double[2], new double[2], new double[2] };
+		double currX = odometer.getX();
+		double currY = odometer.getY();
+		double tile = navigator.tile;
+		corner[0][0] = currX - currX % tile;
+		corner[0][1] = currY - currY % tile;
+		corner[1][0] = currX - currX % tile + tile;
+		corner[1][1] = currY - currY % tile;
+		corner[2][0] = currX - currX % tile + tile;
+		corner[2][1] = currY - currY % tile + tile;
+		corner[3][0] = currX - currX % tile;
+		corner[3][1] = currY - currY % tile + tile;
+
+		return corner[localizeCorner];*/
 	}
 
 }

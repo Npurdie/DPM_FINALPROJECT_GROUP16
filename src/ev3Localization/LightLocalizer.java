@@ -193,7 +193,7 @@ public class LightLocalizer {
 		double smallest = tile;
 		int foo = 0;
 		for (int i = 0; i < 4; i++) {
-			double temp = Math.sqrt(Math.pow((currX - corner[i][0]), 2) + Math.pow(currX - corner[i][1], 2));
+			double temp = Math.sqrt(Math.pow((currX - corner[i][0]), 2) + Math.pow(currY - corner[i][1], 2));
 			if (temp < smallest) {
 				smallest = temp;
 				foo = i;
@@ -208,7 +208,14 @@ public class LightLocalizer {
 	 * @param obstacleCorner
 	 *            The integer ID of a corner to localize in  (0 = ll, 1 = lr, 2 = ur, 3 = ul)
 	 */
-	public double[] pickCorner(int localizeCorner) {
+/*	public void pickCorner(double [] corner) {
+		double currX = odometer.getX();
+		double currY = odometer.getY();
+		double tile = navigator.tile;
+		corner[0] = currX - currX % tile;
+		corner[1] = currY - currY % tile;
+		//return corner;
+		
 		double[][] corner = { new double[2], new double[2], new double[2], new double[2] };
 		double currX = odometer.getX();
 		double currY = odometer.getY();
@@ -223,7 +230,7 @@ public class LightLocalizer {
 		corner[3][1] = currY - currY % tile + tile;
 
 		return corner[localizeCorner];
-	}
+	}*/
 
 	/**
 	 * foundGridLine sets the gridLine field to true when called
