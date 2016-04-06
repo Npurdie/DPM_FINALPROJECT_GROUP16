@@ -24,7 +24,7 @@ public class Navigation extends Thread {
 	private final double travelAngleError = 5.0;
 	private final double correctDistThreshold = 15;
 	private final double correctAngleThreshold = 3;
-	private final double recolalizeThreshold = 90;
+	private final double recolalizeThreshold = 130;
 	private final int middleField = 3;  
 	private final int isItSafeError = 15;
 	// ----------------------------------
@@ -106,6 +106,7 @@ public class Navigation extends Thread {
 				odometer.setDistance(0);
 				double[] corner = lsl.pickCorner();
 				lsl.doLocalization(corner[0], corner[1]);
+				
 			}
 		}
 
@@ -406,14 +407,14 @@ public class Navigation extends Thread {
 		double x = odometer.getX();
 		double y = odometer.getY();
 		
-		if((x<tile*middleField+isItSafeError)||(x>tile*middleField-isItSafeError)){
+		if((x<tile*middleField+isItSafeError)&&(x>tile*middleField-isItSafeError)){
 			
-			odometer.setDistance(50);
+			odometer.setDistance(85);
 		}
 		
-		if((y<tile*middleField+isItSafeError)||(y>tile*middleField-isItSafeError)){
+		if((y<tile*middleField+isItSafeError)&&(y>tile*middleField-isItSafeError)){
 			
-			odometer.setDistance(50);
+			odometer.setDistance(85);
 		}
 		
 		

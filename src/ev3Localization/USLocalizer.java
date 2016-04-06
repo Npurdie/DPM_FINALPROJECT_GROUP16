@@ -64,7 +64,6 @@ public class USLocalizer {
 			navigator.turnRight(TURN_SPEED);
 		}
 		latchA = (odometer.getTheta());
-		Sound.beep();
 		navigator.turnLeft(TURN_SPEED); // again turn left for a few second to
 										// avoid latching on to the same wall
 		try {

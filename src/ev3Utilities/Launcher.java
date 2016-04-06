@@ -10,7 +10,7 @@ public class Launcher {
 	private EV3LargeRegulatedMotor scooperMotor;
 	private EV3LargeRegulatedMotor launcherMotor;
 	private int ACCELERATION = 400;
-	private int SCOOPE_SPEED = 200;
+	private int SCOOPE_SPEED = 140;
 	private int SHOOT_SPEED = 200;
 
 	/**
@@ -62,7 +62,10 @@ public class Launcher {
 	 * This method raises the claw by 160 degrees, it's full range of motion.
 	 */
 	public void raiseScooper() {
-		scooperMotor.rotate(-170);
+		scooperMotor.setSpeed(300);
+		scooperMotor.rotate(-70);
+		scooperMotor.setSpeed(SCOOPE_SPEED);
+		scooperMotor.rotate(-100);
 	}
 
 	/**
@@ -74,9 +77,9 @@ public class Launcher {
 	 */
 	public void shootBall(int numberOfBalls) {
 		for (int i = 0; i < numberOfBalls; i++) {
-			lowerScooper(100);
+			lowerScooper(120);
 			launcherMotor.rotate(-1080);
-			raiseScooper(100);
+			raiseScooper(120);
 		}
 	}
 }
