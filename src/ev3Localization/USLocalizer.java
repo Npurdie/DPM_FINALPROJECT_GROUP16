@@ -54,10 +54,12 @@ public class USLocalizer {
 	 */
 	public void doLocalization() {
 
+		Sound.buzz();
+		Sound.twoBeeps();
+		
 		initializeRobot();
 
 		double latchA, latchB; // angle of wall A and Wall B
-		Sound.buzz();
 
 		while (getFilteredData(10) > dist) {
 			navigator.turnRight(TURN_SPEED);
