@@ -52,6 +52,9 @@ public class LightLocalizer {
 	 *            The y location of where to perform the localization.
 	 */
 	public void doLocalization(double x, double y) {
+		
+		Sound.beep();
+				
 		double gridLines[] = new double[4]; // stores the angles of all 4 lines
 		double dx = 0;
 		double dy = 0;
@@ -101,6 +104,7 @@ public class LightLocalizer {
 		odometer.setDistance(0);
 
 		Sound.buzz();
+		Sound.twoBeeps();
 
 	}
 
@@ -109,6 +113,9 @@ public class LightLocalizer {
 	 * method performs th elcoalization in place.
 	 */
 	public void doLocalization() {
+		
+		Sound.beep();
+		
 		double gridLines[] = new double[4]; // stores the angles of all 4 lines
 		double dx = 0;
 		double dy = 0;
@@ -159,6 +166,7 @@ public class LightLocalizer {
 		odometer.setDistance(0);
 
 		Sound.buzz();
+		Sound.twoBeeps();
 	}
 
 	/**

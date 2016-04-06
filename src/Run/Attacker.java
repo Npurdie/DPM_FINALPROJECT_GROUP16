@@ -108,7 +108,7 @@ public class Attacker {
 		navigator.travelTo(navigator.tile * 2 - 25, navigator.tile * 2 + 20.38, false);
 		navigator.turnTo(-(Math.toRadians(5)));
 		launcher.lowerScooper();
-		navigator.travelForwardDistance(20, 80);
+		navigator.travelForwardDistance(22, 120);
 		launcher.raiseScooper();
 		navigator.shootDirection(0, 3);
 		launcher.shootBall(3);
