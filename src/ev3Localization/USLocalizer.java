@@ -10,7 +10,7 @@ import ev3Navigation.Navigation;
  * This object gives the EV3 the ability to localize using the Ultrasonic Sensor
  */
 public class USLocalizer {
-	
+
 	private static int TURN_SPEED = 400;
 	private static int maxDist = 40; // sensor max dist
 	private static int dist = 30; // distance from wall for angle calculation
@@ -53,11 +53,11 @@ public class USLocalizer {
 	 * grid, using the walls to determine it's heading and approximate location.
 	 */
 	public void doLocalization() {
-		
-		initializeRobot();
-		
-		double latchA, latchB; // angle of wall A and Wall B
 
+		initializeRobot();
+
+		double latchA, latchB; // angle of wall A and Wall B
+		Sound.buzz();
 
 		while (getFilteredData(10) > dist) {
 			navigator.turnRight(TURN_SPEED);
@@ -76,15 +76,14 @@ public class USLocalizer {
 			navigator.turnLeft(TURN_SPEED);
 		}
 		latchB = odometer.getTheta();
-		Sound.beep();
 		double theta = odometer.getTheta() + calcAngle(latchA, latchB); // new
 																		// theta
 																		// is
 																		// calculated
 		odometer.setPosition(new double[] { 0.0, 0.0, theta }, new boolean[] { true, true, true }); // set
 																									// theta
-		navigator.turnTo(Math.toRadians(45),400); // turn to face 0 for demo
-		
+		navigator.turnTo(Math.toRadians(45), 400); // turn to face 0 for demo
+
 	}
 
 	/**
@@ -145,13 +144,14 @@ public class USLocalizer {
 		return (float) median;
 	}
 
-	public void initializeRobot(){
-		// If robot starts off facing wall, rotate clockwise until it no longer sees a wall.
+	public void initializeRobot() {
+		// If robot starts off facing wall, rotate clockwise until it no longer
+		// sees a wall.
 		if (getFilteredData(10) <= maxDist) {
 			while (getFilteredData(10) <= maxDist - 3) {
 				navigator.turnRight(TURN_SPEED);
 			}
-			// Once it reaches initial position, 
+			// Once it reaches initial position,
 			// turn right by 35 degrees to avoid picking up wall again
 			navigator.turnTo(odometer.getTheta() - Math.toRadians(35));
 		} else
@@ -160,11 +160,11 @@ public class USLocalizer {
 			while (getFilteredData(10) >= maxDist - 3) {
 				navigator.turnLeft(TURN_SPEED);
 			}
-			// Once it reaches initial position, 
+			// Once it reaches initial position,
 			// turn right by 35 degrees to avoid picking up wall again
 			navigator.turnTo(odometer.getTheta() - Math.toRadians(35));
-			
+
 		}
-			
+
 	}
 }

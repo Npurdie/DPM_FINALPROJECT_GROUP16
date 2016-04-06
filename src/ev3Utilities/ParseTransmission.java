@@ -28,25 +28,26 @@ import lejos.hardware.lcd.TextLCD;
  * The order of data is defined in the Server's Transmission class
  */
 public class ParseTransmission {
-	
+
 	public static TextLCD LCD = LocalEV3.get().getTextLCD();
-	
-	// This should only be called after verifying that there is data in the input stream
-	public static HashMap<String,Integer> parseData(DataInputStream dis){
-		HashMap<String,Integer> StartData;
+
+	// This should only be called after verifying that there is data in the
+	// input stream
+	public static HashMap<String, Integer> parseData(DataInputStream dis) {
+		HashMap<String, Integer> StartData;
 		LCD.drawString("Receipt initiated", 0, 1);
-		try{
+		try {
 			ObjectInputStream ois = new ObjectInputStream(dis);
-			StartData = (HashMap<String,Integer>) ois.readObject();
+			StartData = (HashMap<String, Integer>) ois.readObject();
 			LCD.drawString("Map received", 0, 1);
 		} catch (Exception e) {
 			StartData = null;
 		}
 		return StartData;
 	}
-	
+
 	public static void ignore(DataInputStream dis) throws IOException {
 		dis.readChar();
 	}
-	
+
 }

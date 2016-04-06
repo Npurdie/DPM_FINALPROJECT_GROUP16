@@ -10,7 +10,8 @@ import lejos.robotics.SampleProvider;
 import lejos.hardware.sensor.EV3ColorSensor;
 
 /**
- * The light sensor derivative provides method that allow the EV3 to detect grid lines in different lighting conditions.
+ * The light sensor derivative provides method that allow the EV3 to detect grid
+ * lines in different lighting conditions.
  */
 public class LightSensorDerivative extends Thread {
 	private Odometer odometer;
@@ -50,7 +51,7 @@ public class LightSensorDerivative extends Thread {
 
 			double leftDiff = oldLReflection - currLReflection;
 
-			if (leftDiff > 0.10) { //originally 0.15. tried 0.2 (no detection)
+			if (leftDiff > 0.10) { // originally 0.15. tried 0.2 (no detection)
 				lsl.foundGridLine();
 			}
 
@@ -62,9 +63,9 @@ public class LightSensorDerivative extends Thread {
 
 		}
 	}
-	
-	public boolean lineDetected()	{
-		if (foundLine)	{
+
+	public boolean lineDetected() {
+		if (foundLine) {
 			foundLine = false;
 			return true;
 		}

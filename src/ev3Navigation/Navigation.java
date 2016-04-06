@@ -56,8 +56,7 @@ public class Navigation extends Thread {
 	 *            Boolean warns the EV3 whether or not to attempt to avoid
 	 *            obstacles in it's path
 	 */
-	public Navigation(EV3LargeRegulatedMotor leftMotor,
-			EV3LargeRegulatedMotor rightMotor, double wheelRadius,
+	public Navigation(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor, double wheelRadius,
 			double width, Odometer odometer, UltrasonicPoller ultraSonicPoller) {
 		this.odometer = odometer;
 		this.leftMotor = leftMotor;
@@ -80,15 +79,12 @@ public class Navigation extends Thread {
 	 */
 	public void travelTo(double x, double y, boolean avoidCollisions) {
 		this.isNavigating = true;
-		CollisionAvoidance collisionAvoidance = new CollisionAvoidance(
-				odometer, ultraSonicPoller, leftMotor, rightMotor, wheelRadius,
-				wheelBase);
-		while (Math.abs(x - odometer.getX()) > travelToError
-				|| Math.abs(y - odometer.getY()) > travelToError) {
+		CollisionAvoidance collisionAvoidance = new CollisionAvoidance(odometer, ultraSonicPoller, leftMotor,
+				rightMotor, wheelRadius, wheelBase);
+		while (Math.abs(x - odometer.getX()) > travelToError || Math.abs(y - odometer.getY()) > travelToError) {
 			if (avoidCollisions) {
 				if (collisionAvoidance.detectedObject(14)) {
-					double[] currLoc = { odometer.getX(), odometer.getY(),
-							odometer.getTheta() };
+					double[] currLoc = { odometer.getX(), odometer.getY(), odometer.getTheta() };
 					double[] corner = lsl.pickCorner(1);
 					odometer.setDistance(0);
 					lsl.doLocalization(corner[0] + tile, corner[1]);
@@ -109,9 +105,9 @@ public class Navigation extends Thread {
 				odometer.setDistance(0);
 			}
 		}
-		Sound.beep();
+
 		this.isNavigating = false;
-		Sound.buzz();
+
 		stopMotors();
 	}
 
@@ -143,8 +139,8 @@ public class Navigation extends Thread {
 				leftMotor.setSpeed(FORWARDSPEED); // travel straight
 				rightMotor.setSpeed(FORWARDSPEED);
 			}
-				leftMotor.forward();
-				rightMotor.forward();
+			leftMotor.forward();
+			rightMotor.forward();
 		}
 	}
 
@@ -169,13 +165,9 @@ public class Navigation extends Thread {
 			rightMotor.setSpeed(TURNSPEED);
 		}
 
-		leftMotor.rotate(
-				-convertAngle(wheelRadius, wheelBase,
-						Math.toDegrees(correction)), true);
-		rightMotor
-				.rotate(convertAngle(wheelRadius, wheelBase,
-						Math.toDegrees(correction)), false);
-	
+		leftMotor.rotate(-convertAngle(wheelRadius, wheelBase, Math.toDegrees(correction)), true);
+		rightMotor.rotate(convertAngle(wheelRadius, wheelBase, Math.toDegrees(correction)), false);
+
 	}
 
 	/**
@@ -200,12 +192,8 @@ public class Navigation extends Thread {
 			rightMotor.setSpeed(speed);
 		}
 
-		leftMotor.rotate(
-				-convertAngle(wheelRadius, wheelBase,
-						Math.toDegrees(correction)), true);
-		rightMotor
-				.rotate(convertAngle(wheelRadius, wheelBase,
-						Math.toDegrees(correction)), false);
+		leftMotor.rotate(-convertAngle(wheelRadius, wheelBase, Math.toDegrees(correction)), true);
+		rightMotor.rotate(convertAngle(wheelRadius, wheelBase, Math.toDegrees(correction)), false);
 	}
 
 	/**
@@ -399,8 +387,7 @@ public class Navigation extends Thread {
 	}
 
 	public void shootDirection(double x, double y) {
-		turnTo(Math.atan((odometer.getY() - y) / (odometer.getX() - x))
-				+ Math.toRadians(180));
+		turnTo(Math.atan((odometer.getY() - y) / (odometer.getX() - x)) + Math.toRadians(180));
 	}
 
 }

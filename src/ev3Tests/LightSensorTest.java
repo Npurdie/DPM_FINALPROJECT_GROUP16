@@ -16,32 +16,31 @@ import lejos.robotics.SampleProvider;
 
 public class LightSensorTest {
 
-	private static final EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(
-			LocalEV3.get().getPort("A"));
-	private static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(
-			LocalEV3.get().getPort("D"));
+	private static final EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
+	private static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
 	private static final Port colorPort = LocalEV3.get().getPort("S1");
 	public static final double WHEEL_RADIUS = 2.08;
 	public static final double TRACK = 15.7;
 	public static final double LIGHTSENSOR_WIDTH = 12.5;
 
 	public static void main(String[] args) {
-		
+
 		@SuppressWarnings("resource")
 		// Because we don't bother to close this resource
 		SensorModes colorSensor = new EV3ColorSensor(colorPort);
 		SampleProvider colorValue = colorSensor.getMode("Red");
-		float[] colorData = new float[colorValue.sampleSize()]; 
+		float[] colorData = new float[colorValue.sampleSize()];
 
 		Odometer odo = new Odometer(leftMotor, rightMotor, WHEEL_RADIUS, TRACK);
 		odo.start();
 
 		LightPoller lightPoller = new LightPoller(colorValue, colorData);
 		lightPoller.start();
-		
-		
-		/*LightSensorDerivative lsDerivative = new LightSensorDerivative(odo, lightPoller);
-		lsDerivative.start();*/
+
+		/*
+		 * LightSensorDerivative lsDerivative = new LightSensorDerivative(odo,
+		 * lightPoller); lsDerivative.start();
+		 */
 
 		LCDInfo lcd = new LCDInfo(odo, lightPoller);
 
@@ -50,8 +49,7 @@ public class LightSensorTest {
 
 			(new Thread() {
 				public void run() {
-					Driver.driveStraight(leftMotor, rightMotor, WHEEL_RADIUS,
-							WHEEL_RADIUS, TRACK, 2);
+					Driver.driveStraight(leftMotor, rightMotor, WHEEL_RADIUS, WHEEL_RADIUS, TRACK, 2);
 				}
 			}).start();
 		}

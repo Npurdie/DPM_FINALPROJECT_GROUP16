@@ -13,15 +13,17 @@ public class OdometryCorrection extends Thread {
 	private Odometer odometer;
 	private EV3ColorSensor cs;
 	private SampleProvider colorValue;
-	private float colorValues[] = new float[3];	//contains sample readings
+	private float colorValues[] = new float[3]; // contains sample readings
 	private int lineCounter = 0;
-	private static final double foo = 7;	//distance of sensor from center of robot
+	private static final double foo = 7; // distance of sensor from center of
+											// robot
 	private static final double brightnessThreshold = 0.40;
 
 	/**
-	 * This object adhjusts the value  odomter by tracking the grid lines crossed
+	 * This object adhjusts the value odomter by tracking the grid lines crossed
 	 *
-	 * @param odometer The Odometer
+	 * @param odometer
+	 *            The Odometer
 	 */
 	public OdometryCorrection(Odometer odometer) {
 		this.odometer = odometer;
@@ -30,27 +32,30 @@ public class OdometryCorrection extends Thread {
 	}
 
 	/**
-	* Run method
-	*/
+	 * Run method
+	 */
 	public void run() {
 		long correctionStart, correctionEnd;
 
 		while (true) {
 			correctionStart = System.currentTimeMillis();
-			
-			colorValue.fetchSample(colorValues, 0);	//fetch sample of light readings and store in colorValues[]
-			if (colorValues[0] < brightnessThreshold)	{	//tested threshold that detects black lines
-				lineCounter ++;
-				Sound.beep();		//gives us feedback to make sure all lines are being detected
-				correctOdometer();	//correct the odometer
+
+			colorValue.fetchSample(colorValues, 0); // fetch sample of light
+													// readings and store in
+													// colorValues[]
+			if (colorValues[0] < brightnessThreshold) { // tested threshold that
+														// detects black lines
+				lineCounter++;
+				Sound.beep(); // gives us feedback to make sure all lines are
+								// being detected
+				correctOdometer(); // correct the odometer
 			}
-			
+
 			// this ensure the odometry correction occurs only once every period
 			correctionEnd = System.currentTimeMillis();
 			if (correctionEnd - correctionStart < CORRECTION_PERIOD) {
 				try {
-					Thread.sleep(CORRECTION_PERIOD
-							- (correctionEnd - correctionStart));
+					Thread.sleep(CORRECTION_PERIOD - (correctionEnd - correctionStart));
 				} catch (InterruptedException e) {
 					// there is nothing to be done here because it is not
 					// expected that the odometry correction will be
@@ -61,30 +66,34 @@ public class OdometryCorrection extends Thread {
 	}
 
 	/**
-	* Correct the odometer. Done automatically when called
-	*/
-	private void correctOdometer(){
-		
-		if (lineCounter == 1 || lineCounter == 2 || lineCounter == 5 || lineCounter == 6)	{	//Y axis portions of the square
-			if (lineCounter==1)
-				odometer.setY(15.15-foo);
-			if (lineCounter==2)
-				odometer.setY(45.15-foo);
-			if (lineCounter==5)
-				odometer.setY(45.15+foo);
-			if (lineCounter==6)
-				odometer.setY(15.15+foo);	
-		}
-		else	{
+	 * Correct the odometer. Done automatically when called
+	 */
+	private void correctOdometer() {
 
-			if (lineCounter== 3)	//X axis portions of the square
-				odometer.setX(15.15-foo);
-			if (lineCounter== 4)
-				odometer.setX(45.15-foo);
-			if (lineCounter== 7)
-				odometer.setX(45.15+foo);
+		if (lineCounter == 1 || lineCounter == 2 || lineCounter == 5 || lineCounter == 6) { // Y
+																							// axis
+																							// portions
+																							// of
+																							// the
+																							// square
+			if (lineCounter == 1)
+				odometer.setY(15.15 - foo);
+			if (lineCounter == 2)
+				odometer.setY(45.15 - foo);
+			if (lineCounter == 5)
+				odometer.setY(45.15 + foo);
+			if (lineCounter == 6)
+				odometer.setY(15.15 + foo);
+		} else {
+
+			if (lineCounter == 3) // X axis portions of the square
+				odometer.setX(15.15 - foo);
+			if (lineCounter == 4)
+				odometer.setX(45.15 - foo);
+			if (lineCounter == 7)
+				odometer.setX(45.15 + foo);
 			if (lineCounter == 8)
-				odometer.setX(15.15+foo);
+				odometer.setX(15.15 + foo);
 		}
 	}
 }

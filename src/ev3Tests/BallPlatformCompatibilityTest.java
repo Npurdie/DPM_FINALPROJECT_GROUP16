@@ -1,6 +1,5 @@
 package ev3Tests;
 
-
 import ev3Navigation.Navigation;
 import ev3Odometer.Odometer;
 import ev3Utilities.Launcher;
@@ -17,7 +16,7 @@ public class BallPlatformCompatibilityTest {
 	private static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
 	private static final EV3LargeRegulatedMotor clawMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
 	private static final EV3LargeRegulatedMotor launcherMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("C"));
-	private static final Port usPort1 = LocalEV3.get().getPort("S4");	
+	private static final Port usPort1 = LocalEV3.get().getPort("S4");
 	private static final Port usPort2 = LocalEV3.get().getPort("S3");
 	private static final Port usPort3 = LocalEV3.get().getPort("S2");
 	private static final Port colorPort = LocalEV3.get().getPort("S1");
@@ -27,29 +26,32 @@ public class BallPlatformCompatibilityTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		@SuppressWarnings("resource")							    	// Because we don't bother to close this resource
+		@SuppressWarnings("resource") // Because we don't bother to close this
+										// resource
 		SensorModes usSensorF = new EV3UltrasonicSensor(usPort1);
 		SensorModes usSensorR = new EV3UltrasonicSensor(usPort2);
 		SensorModes usSensorL = new EV3UltrasonicSensor(usPort3);
 		SampleProvider usValueF = usSensorF.getMode("Distance");
 		SampleProvider usValueR = usSensorR.getMode("Distance");
 		SampleProvider usValueL = usSensorL.getMode("Distance");
-		float[] usDataF = new float[usValueF.sampleSize()];				// colorData is the buffer in which data are returned
+		float[] usDataF = new float[usValueF.sampleSize()]; // colorData is the
+															// buffer in which
+															// data are returned
 		float[] usDataR = new float[usValueR.sampleSize()];
 		float[] usDataL = new float[usValueL.sampleSize()];
-		UltrasonicPoller usPoller = new UltrasonicPoller(usValueF, usValueR,usValueL, usDataF, usDataR, usDataL);
+		UltrasonicPoller usPoller = new UltrasonicPoller(usValueF, usValueR, usValueL, usDataF, usDataR, usDataL);
 		usPoller.start();
-		
+
 		// colorData is the buffer in which data are returned
-		
+
 		// setup the odometer, display and navigation
-		Odometer odo = new Odometer(leftMotor,rightMotor,WHEEL_RADIUS,TRACK);
-		Navigation navigator = new Navigation(leftMotor,rightMotor,WHEEL_RADIUS,TRACK,odo, usPoller);
-		
+		Odometer odo = new Odometer(leftMotor, rightMotor, WHEEL_RADIUS, TRACK);
+		Navigation navigator = new Navigation(leftMotor, rightMotor, WHEEL_RADIUS, TRACK, odo, usPoller);
+
 		Launcher launcher = new Launcher(clawMotor, launcherMotor);
-		
+
 		odo.start();
-		
+
 		odo.setTheta(0);
 		navigator.turnTo(Math.toRadians(90));
 		navigator.stopMotors();
@@ -60,10 +62,9 @@ public class BallPlatformCompatibilityTest {
 		launcher.lowerScooper();
 		navigator.travelForwardDistance(25, 80);
 		launcher.raiseScooper();
-		
-		
-		//COMMMENTING SO I CAN COMMNIT...DSLKJG;SAJDG;LSAJGALKJDS
-		
+
+		// COMMMENTING SO I CAN COMMNIT...DSLKJG;SAJDG;LSAJGALKJDS
+
 	}
 
 }

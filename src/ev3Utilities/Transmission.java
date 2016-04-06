@@ -25,7 +25,7 @@ package ev3Utilities;
  */
 
 public class Transmission {
-	
+
 	public StartCorner startingCorner;
 	public int homeZoneBL_X;
 	public int homeZoneBL_Y;
@@ -39,5 +39,5 @@ public class Transmission {
 	public int dropZone_Y;
 	public int flagType;
 	public int opponentFlagType;
-	
+
 }

@@ -18,20 +18,31 @@ public class Defender {
 	private USLocalizer usl;
 	private LightLocalizer lsl;
 	private LightPoller lightPoller;
+
 	/**
-	 * The Defender stores a reference to the left motor, right motor, the EV3's width, wheel radius
-	 * , odometer, light poller, navigator, us localizer and the light localizer. This class calls the appropriate
-	 * methods and objects to complete the attacker portion of the challenge
+	 * The Defender stores a reference to the left motor, right motor, the EV3's
+	 * width, wheel radius , odometer, light poller, navigator, us localizer and
+	 * the light localizer. This class calls the appropriate methods and objects
+	 * to complete the attacker portion of the challenge
 	 * 
-	 * @param leftMotor The left motor object
-	 * @param rightMotor The right motor object
-	 * @param width The width of the EV3's chassis
-	 * @param wheelRadius The radius of the EV3's wheels
-	 * @param odometer The Odometer
-	 * @param lightPoller The light poller
-	 * @param navigator The Navigator
-	 * @param UsLocalizer The ultrasonic localizer
-	 * @param lightlocalizer The light lozalizer
+	 * @param leftMotor
+	 *            The left motor object
+	 * @param rightMotor
+	 *            The right motor object
+	 * @param width
+	 *            The width of the EV3's chassis
+	 * @param wheelRadius
+	 *            The radius of the EV3's wheels
+	 * @param odometer
+	 *            The Odometer
+	 * @param lightPoller
+	 *            The light poller
+	 * @param navigator
+	 *            The Navigator
+	 * @param UsLocalizer
+	 *            The ultrasonic localizer
+	 * @param lightlocalizer
+	 *            The light lozalizer
 	 */
 	public Defender(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor, double width,
 			double wheelRadius, Odometer odometer, LightPoller lightPoller, Navigation navigator,

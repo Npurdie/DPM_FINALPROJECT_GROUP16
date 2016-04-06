@@ -6,12 +6,10 @@ public class Driver {
 	private static final int FORWARD_SPEED = 200;
 	private static final int ROTATE_SPEED = 100;
 
-	public static void driveSquare(EV3LargeRegulatedMotor leftMotor,
-			EV3LargeRegulatedMotor rightMotor, double leftRadius,
-			double rightRadius, double width, int numTiles) {
+	public static void driveSquare(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
+			double leftRadius, double rightRadius, double width, int numTiles) {
 		// reset the motors
-		for (EV3LargeRegulatedMotor motor : new EV3LargeRegulatedMotor[] {
-				leftMotor, rightMotor }) {
+		for (EV3LargeRegulatedMotor motor : new EV3LargeRegulatedMotor[] { leftMotor, rightMotor }) {
 			motor.stop();
 			motor.setAcceleration(2000);
 		}
@@ -29,10 +27,8 @@ public class Driver {
 			leftMotor.setSpeed(FORWARD_SPEED);
 			rightMotor.setSpeed(FORWARD_SPEED);
 
-			leftMotor.rotate(convertDistance(leftRadius, 30.48 * numTiles),
-					true);
-			rightMotor.rotate(convertDistance(rightRadius, 30.48 * numTiles),
-					false);
+			leftMotor.rotate(convertDistance(leftRadius, 30.48 * numTiles), true);
+			rightMotor.rotate(convertDistance(rightRadius, 30.48 * numTiles), false);
 
 			// turn 90 degrees clockwise
 			leftMotor.setSpeed(ROTATE_SPEED);
@@ -43,12 +39,10 @@ public class Driver {
 		}
 	}
 
-	public static void driveStraight(EV3LargeRegulatedMotor leftMotor,
-			EV3LargeRegulatedMotor rightMotor, double leftRadius,
-			double rightRadius, double width, int numTiles) {
+	public static void driveStraight(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
+			double leftRadius, double rightRadius, double width, int numTiles) {
 
-		for (EV3LargeRegulatedMotor motor : new EV3LargeRegulatedMotor[] {
-				leftMotor, rightMotor }) {
+		for (EV3LargeRegulatedMotor motor : new EV3LargeRegulatedMotor[] { leftMotor, rightMotor }) {
 			motor.stop();
 			motor.setAcceleration(2000);
 		}
@@ -66,16 +60,13 @@ public class Driver {
 		rightMotor.setSpeed(FORWARD_SPEED);
 
 		leftMotor.rotate(convertDistance(leftRadius, 30.48 * numTiles), true);
-		rightMotor
-				.rotate(convertDistance(rightRadius, 30.48 * numTiles), false);
+		rightMotor.rotate(convertDistance(rightRadius, 30.48 * numTiles), false);
 
 	}
 
-	public static void driveCircle(EV3LargeRegulatedMotor leftMotor,
-			EV3LargeRegulatedMotor rightMotor, double leftRadius,
-			double rightRadius, double width) {
-		for (EV3LargeRegulatedMotor motor : new EV3LargeRegulatedMotor[] {
-				leftMotor, rightMotor }) {
+	public static void driveCircle(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
+			double leftRadius, double rightRadius, double width) {
+		for (EV3LargeRegulatedMotor motor : new EV3LargeRegulatedMotor[] { leftMotor, rightMotor }) {
 			motor.stop();
 			motor.setAcceleration(2000);
 		}
@@ -91,10 +82,10 @@ public class Driver {
 
 		leftMotor.rotate(convertAngle(leftRadius, width, 360.0), true);
 		rightMotor.rotate(-convertAngle(rightRadius, width, 360.0), false);
-		
+
 		leftMotor.setSpeed(0);
 		rightMotor.setSpeed(0);
-		
+
 		leftMotor.forward();
 		rightMotor.forward();
 

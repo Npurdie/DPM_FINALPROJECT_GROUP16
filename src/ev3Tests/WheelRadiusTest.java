@@ -5,10 +5,8 @@ import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 public class WheelRadiusTest {
-	private static final EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(
-			LocalEV3.get().getPort("A"));
-	private static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(
-			LocalEV3.get().getPort("D"));
+	private static final EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
+	private static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
 	public static final double WHEEL_RADIUS = 2.05;
 	public static final double TRACK = 15.7;
 
@@ -19,8 +17,7 @@ public class WheelRadiusTest {
 
 				(new Thread() {
 					public void run() {
-						Driver.driveStraight(leftMotor, rightMotor,
-								WHEEL_RADIUS, WHEEL_RADIUS, TRACK, 3);
+						Driver.driveStraight(leftMotor, rightMotor, WHEEL_RADIUS, WHEEL_RADIUS, TRACK, 3);
 					}
 				}).start();
 			}
