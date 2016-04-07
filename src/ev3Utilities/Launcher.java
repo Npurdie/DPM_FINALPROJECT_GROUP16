@@ -55,6 +55,7 @@ public class Launcher {
 	 * This method raises the claw by 160 degrees, it's full range of motion.
 	 */
 	public void lowerScooper() {
+		scooperMotor.setSpeed(SCOOPE_SPEED);
 		scooperMotor.rotate(140);
 	}
 
@@ -62,9 +63,9 @@ public class Launcher {
 	 * This method raises the claw by 160 degrees, it's full range of motion.
 	 */
 	public void raiseScooper() {
-		scooperMotor.setSpeed(300);
+		scooperMotor.setSpeed(80);
 		scooperMotor.rotate(-70);
-		scooperMotor.setSpeed(SCOOPE_SPEED);
+		scooperMotor.setSpeed(100);
 		scooperMotor.rotate(-100);
 	}
 
@@ -77,9 +78,9 @@ public class Launcher {
 	 */
 	public void shootBall(int numberOfBalls) {
 		for (int i = 0; i < numberOfBalls; i++) {
-			lowerScooper(120);
+			lowerScooper();
 			launcherMotor.rotate(-1080);
-			raiseScooper(120);
+			raiseScooper(-140);
 		}
 	}
 }

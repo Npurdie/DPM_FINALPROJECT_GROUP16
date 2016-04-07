@@ -107,7 +107,7 @@ public class Attacker {
 		// navigator.travelTo(ballLoc[0],ballLoc[1],false);
 		navigator.travelTo(navigator.tile - 25, 23, false);
 		navigator.turnTo(0);
-		navigator.travelForwardDistance(17.5, 80);
+		navigator.travelForwardDistance(17.5, 100);
 		launcher.lowerScooper();
 //		navigator.travelForwardDistance(6, 50);
 		launcher.raiseScooper();
