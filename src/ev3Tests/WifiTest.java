@@ -8,6 +8,7 @@ import Run.Attacker;
 import ev3Utilities.ParseWifi;
 import ev3Utilities.WifiConnection;
 import lejos.hardware.Button;
+import lejos.hardware.Sound;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.TextLCD;
 
@@ -26,9 +27,13 @@ public class WifiTest {
 
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
+		Sound.beep();
+		Sound.beep();
+		Sound.beep();
 		ParseWifi pw = new ParseWifi();
-		System.out.println("Corner : " + pw.getCorner());
-		System.out.println("Role : " + pw.getRole());
-		System.out.println("Ball location : " + pw.getBallLoc());
+		LCD.drawString("Corner : " + pw.getCorner(),0,2);
+		LCD.drawString("Role : " + pw.getRole(),0,3);
+		LCD.drawString("Ball location : " + pw.getBallLoc(),0,4);
+		while (Button.waitForAnyPress() != Button.ID_ESCAPE);
 	}
 }

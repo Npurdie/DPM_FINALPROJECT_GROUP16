@@ -3,6 +3,7 @@ package ev3Utilities;
 import java.io.IOException;
 import java.util.HashMap;
 
+import lejos.hardware.Sound;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.TextLCD;
 
@@ -12,10 +13,10 @@ import lejos.hardware.lcd.TextLCD;
  */
 public class ParseWifi {
 
-	private static final String SERVER_IP = "192.168.0.101"; // "localhost";
+	private static final String SERVER_IP = "142.157.146.74"; // "localhost";
 	private static final int TEAM_NUMBER = 16;
 	private static TextLCD LCD = LocalEV3.get().getTextLCD();
-	private static int player, ballColor, corner, lowerLocX, lowerLocY, upperLocX, upperLocY, d1, d2, w1;
+	private int player, ballColor, corner, lowerLocX, lowerLocY, upperLocX, upperLocY, d1, d2, w1;
 	private final double tile = 30.48;
 
 	/**
@@ -37,17 +38,17 @@ public class ParseWifi {
 			if (t == null) {
 				LCD.drawString("Failed to read transmission", 0, 5);
 			} else {
-				player = t.get("Role"); // OFFENCE DEFENSE ?
-				ballColor = t.get("BC");
-				corner = t.get("SC");
-				lowerLocX = t.get("ll-x"); // lower left location of row of
+				this.player = t.get("Role"); // OFFENCE DEFENSE ?
+				this.ballColor = t.get("BC");
+				this.corner = t.get("SC");
+				this.lowerLocX = t.get("ll-x"); // lower left location of row of
 											// balls
-				upperLocY = t.get("ll-y");
-				upperLocX = t.get("ur-x");
-				upperLocY = t.get("ur-y");
-				w1 = t.get("w1");
-				d1 = t.get("d1");
-				d2 = t.get("d2");
+				this.upperLocY = t.get("ll-y");
+				this.upperLocX = t.get("ur-x");
+				this.upperLocY = t.get("ur-y");
+				this.w1 = t.get("w1");
+				this.d1 = t.get("d1");
+				this.d2 = t.get("d2");
 
 			}
 		} else {

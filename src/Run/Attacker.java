@@ -7,6 +7,7 @@ import ev3Odometer.Odometer;
 import ev3Utilities.LightPoller;
 import ev3Utilities.LightSensorDerivative;
 import ev3Utilities.ParseWifi;
+import lejos.hardware.Sound;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.Port;
@@ -83,6 +84,9 @@ public class Attacker {
 	 * Initializes the attack sequence
 	 */
 	public void startAttack() {
+		Sound.beep();
+		Sound.beep();
+		Sound.beep();
 		odometer.start();
 		lightPoller.start();
 		navigator.setLSL(lsl);
@@ -103,16 +107,11 @@ public class Attacker {
 		// double[] corner = lsl.pickCorner();
 		// lsl.doLocalization(corner[0],corner[1]);
 		// navigator.travelTo(ballLoc[0],ballLoc[1],false);
-		navigator.travelTo(navigator.tile * 0, navigator.tile * 5, false);
-		navigator.travelTo(navigator.tile * 2, navigator.tile * 2, false);
-		navigator.travelTo(navigator.tile * 4, navigator.tile * 5, false);
-		lsl.doLocalization(navigator.tile * 4, navigator.tile * 5);
-		navigator.travelTo(navigator.tile * 5 - 25, navigator.tile * 5 + 23, false);
-		navigator.turnTo(-(Math.toRadians(5)));
+		navigator.travelTo(navigator.tile - 25, 23, false);
+		navigator.turnTo(0);
+		navigator.travelForwardDistance(17.5, 50);
 		launcher.lowerScooper();
-		navigator.travelForwardDistance(16.5, 50);
-		launcher.lowerScooper(15);
-		navigator.travelForwardDistance(6, 50);
+//		navigator.travelForwardDistance(6, 50);
 		launcher.raiseScooper();
 		navigator.travelBackwardDistance(20,250);
 		navigator.shootDirection(0, 3);
