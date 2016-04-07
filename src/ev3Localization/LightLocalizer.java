@@ -124,7 +124,7 @@ public class LightLocalizer {
 			navigator.travelForwards(FORWARDSPEED);
 		}
 
-		navigator.travelBackwardDistance(sensorPosition);
+		navigator.travelBackwardDistance(sensorPosition,FORWARDSPEED);
 
 		navigator.turnTo(Math.toRadians(45), TURN_SPEED);
 		gridLine = false;

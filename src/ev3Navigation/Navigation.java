@@ -106,6 +106,8 @@ public class Navigation extends Thread {
 				odometer.setDistance(0);
 				double [] corner = new double[2];
 				pickCorner(corner);
+				leftMotor.stop();
+				rightMotor.stop();
 				lsl.doLocalization(corner[0],corner[1]);
 			}
 		}
@@ -358,9 +360,9 @@ public class Navigation extends Thread {
 		rightMotor.forward();
 	}
 
-	public void travelBackwardDistance(double distance) {
-		leftMotor.setSpeed(TURNSPEED);
-		rightMotor.setSpeed(TURNSPEED);
+	public void travelBackwardDistance(double distance,int speed) {
+		leftMotor.setSpeed(speed);
+		rightMotor.setSpeed(speed);
 		leftMotor.rotate(-convertDistance(wheelRadius, distance), true);
 		rightMotor.rotate(-convertDistance(wheelRadius, distance), false);
 
@@ -409,12 +411,12 @@ public class Navigation extends Thread {
 		
 		if((x<tile*middleField+isItSafeError)&&(x>tile*middleField-isItSafeError)){
 			
-			odometer.setDistance(85);
+			odometer.setDistance(95);
 		}
 		
 		if((y<tile*middleField+isItSafeError)&&(y>tile*middleField-isItSafeError)){
 			
-			odometer.setDistance(85);
+			odometer.setDistance(95);
 		}
 		
 		

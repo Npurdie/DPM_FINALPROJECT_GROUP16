@@ -103,16 +103,18 @@ public class Attacker {
 		// double[] corner = lsl.pickCorner();
 		// lsl.doLocalization(corner[0],corner[1]);
 		// navigator.travelTo(ballLoc[0],ballLoc[1],false);
-		navigator.travelTo(navigator.tile * 1, navigator.tile * 2, false);
-		lsl.doLocalization(navigator.tile * 1, navigator.tile * 2);
-		navigator.travelTo(navigator.tile * 2 - 25, navigator.tile * 2 + 23, false);
+		navigator.travelTo(navigator.tile * 0, navigator.tile * 5, false);
+		navigator.travelTo(navigator.tile * 2, navigator.tile * 2, false);
+		navigator.travelTo(navigator.tile * 4, navigator.tile * 5, false);
+		lsl.doLocalization(navigator.tile * 4, navigator.tile * 5);
+		navigator.travelTo(navigator.tile * 5 - 25, navigator.tile * 5 + 23, false);
 		navigator.turnTo(-(Math.toRadians(5)));
 		launcher.lowerScooper();
 		navigator.travelForwardDistance(16.5, 50);
 		launcher.lowerScooper(15);
 		navigator.travelForwardDistance(6, 50);
 		launcher.raiseScooper();
-		navigator.travelBackwardDistance(20);
+		navigator.travelBackwardDistance(20,250);
 		navigator.shootDirection(0, 3);
 	//	launcher.shootBall(3);
 	}
