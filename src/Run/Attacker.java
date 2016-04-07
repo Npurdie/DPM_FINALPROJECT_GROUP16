@@ -84,9 +84,7 @@ public class Attacker {
 	 * Initializes the attack sequence
 	 */
 	public void startAttack() {
-		Sound.beep();
-		Sound.beep();
-		Sound.beep();
+	
 		odometer.start();
 		lightPoller.start();
 		navigator.setLSL(lsl);
@@ -109,13 +107,13 @@ public class Attacker {
 		// navigator.travelTo(ballLoc[0],ballLoc[1],false);
 		navigator.travelTo(navigator.tile - 25, 23, false);
 		navigator.turnTo(0);
-		navigator.travelForwardDistance(17.5, 50);
+		navigator.travelForwardDistance(17.5, 80);
 		launcher.lowerScooper();
 //		navigator.travelForwardDistance(6, 50);
 		launcher.raiseScooper();
 		navigator.travelBackwardDistance(20,250);
 		navigator.shootDirection(0, 3);
-	//	launcher.shootBall(3);
+		launcher.shootBall(3);
 	}
 
 	private void setOdometryValues(double[] cornerValues) {
