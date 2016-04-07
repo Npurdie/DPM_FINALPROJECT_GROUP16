@@ -114,4 +114,31 @@ public class ParseWifi {
 		loc[1] = tile * lowerLocY + 11.43;
 		return loc;
 	}
+	
+	/**
+	 * The get goal width method returns the width of the goal
+	 * 
+	 * @return An integer that represents the width of the goal.
+	 */
+	public int getGoalWidth() {
+		return w1;
+	}
+	
+	/**
+	 * The get defender line method returns the location of the defender line
+	 * 
+	 * @return An integer that represents the location of the defender line.
+	 */
+	public int getDefenderLine()	{
+		return d1;
+	}
+	
+	/**
+	 * The get forward line method returns the location of the forward line
+	 * 
+	 * @return An integer that represents the location of the forward line
+	 */
+	public int getForwardLine()	{
+		return d2;
+	}
 }
