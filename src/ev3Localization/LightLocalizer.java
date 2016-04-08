@@ -176,7 +176,7 @@ public class LightLocalizer {
 	 *            The integer ID of a corner to avoid returning because an
 	 *            object covers it. (0 = ll, 1 = lr, 2 = ur, 3 = ul)
 	 */
-	public double[] pickCorner() {
+/*	public double[] pickCorner() {
 		double[][] corner = { new double[2], new double[2], new double[2], new double[2] };
 		double currX = odometer.getX();
 		double currY = odometer.getY();
@@ -200,7 +200,7 @@ public class LightLocalizer {
 			}
 		}
 		return corner[foo];
-	}
+	} */ 
 	
 	/**
 	 * localize in corner passed as int

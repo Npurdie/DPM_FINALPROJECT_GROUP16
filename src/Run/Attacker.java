@@ -105,15 +105,19 @@ public class Attacker {
 		// double[] corner = lsl.pickCorner();
 		// lsl.doLocalization(corner[0],corner[1]);
 		// navigator.travelTo(ballLoc[0],ballLoc[1],false);
-		navigator.travelTo(navigator.tile - 25, 23, false);
-		navigator.turnTo(0);
-		navigator.travelForwardDistance(17.5, 100);
-		launcher.lowerScooper();
+		navigator.travelTo(navigator.tile*0, navigator.tile*5, false);
+		navigator.travelTo(navigator.tile*5, navigator.tile*5, false);
+		navigator.travelTo(navigator.tile*5, navigator.tile*0, false);
+		navigator.travelTo(navigator.tile*2, navigator.tile*2, false);
+		lsl.doLocalization(navigator.tile*2, navigator.tile*2);
+//		navigator.turnTo(0);
+//		navigator.travelForwardDistance(17.5, 100);
+//		launcher.lowerScooper();
 //		navigator.travelForwardDistance(6, 50);
-		launcher.raiseScooper();
-		navigator.travelBackwardDistance(20,250);
-		navigator.shootDirection(0, 3);
-		launcher.shootBall(3);
+//		launcher.raiseScooper();
+//		navigator.travelBackwardDistance(20,250);
+//		navigator.shootDirection(0, 3);
+//		launcher.shootBall(3);
 	}
 
 	private void setOdometryValues(double[] cornerValues) {

@@ -17,7 +17,7 @@ import lejos.hardware.port.Port;
  */
 public class Navigation extends Thread {
 	// -------- user defined--------------
-	private final int FORWARDSPEED = 250;
+	private final int FORWARDSPEED = 400;
 	private final int TURNSPEED = 175;
 	private final int ACCELERATION = 4000;
 	private final double travelToError = 2.0;
@@ -108,6 +108,7 @@ public class Navigation extends Thread {
 				pickCorner(corner);
 				leftMotor.stop();
 				rightMotor.stop();
+				stopMotors();
 				lsl.doLocalization(corner[0],corner[1]);
 			}
 		}
@@ -411,38 +412,50 @@ public class Navigation extends Thread {
 		
 		if((x<tile*middleField+isItSafeError)&&(x>tile*middleField-isItSafeError)){
 			
-			odometer.setDistance(95);
+			odometer.setDistance(55);
 		}
 		
 		if((y<tile*middleField+isItSafeError)&&(y>tile*middleField-isItSafeError)){
 			
-			odometer.setDistance(95);
+			odometer.setDistance(55);
 		}
 		
 		
 	}
 	
 	public void pickCorner(double [] corner) {
+	
+		double[][] tempCorner = { new double[2], new double[2], new double[2], new double[2] };
 		double currX = odometer.getX();
+		double currY = odometer.getY();
+		tempCorner[0][0] = currX - currX % tile;
+		tempCorner[0][1] = currY - currY % tile;
+		tempCorner[1][0] = currX - currX % tile + tile;
+		tempCorner[1][1] = currY - currY % tile;
+		tempCorner[2][0] = currX - currX % tile + tile;
+		tempCorner[2][1] = currY - currY % tile + tile;
+		tempCorner[3][0] = currX - currX % tile;
+		tempCorner[3][1] = currY - currY % tile + tile;
+
+		double smallest = tile;
+		int foo = 0;
+		for (int i = 0; i < 4; i++) {
+			double temp = Math.sqrt(Math.pow((currX - tempCorner[i][0]), 2) + Math.pow(currY - tempCorner[i][1], 2));
+			if (temp < smallest) {
+				smallest = temp;
+				foo = i;
+			}
+		}
+		corner[0] = tempCorner[foo][0];
+		corner[1] = tempCorner[foo][1];
+	} 
+	/*//Simple pickCornerMethod
+ 		double currX = odometer.getX();
 		double currY = odometer.getY();
 		corner[0] = currX - currX % tile;
 		corner[1] = currY - currY % tile;
-		//return corner;
-		
-		/*double[][] corner = { new double[2], new double[2], new double[2], new double[2] };
-		double currX = odometer.getX();
-		double currY = odometer.getY();
-		double tile = navigator.tile;
-		corner[0][0] = currX - currX % tile;
-		corner[0][1] = currY - currY % tile;
-		corner[1][0] = currX - currX % tile + tile;
-		corner[1][1] = currY - currY % tile;
-		corner[2][0] = currX - currX % tile + tile;
-		corner[2][1] = currY - currY % tile + tile;
-		corner[3][0] = currX - currX % tile;
-		corner[3][1] = currY - currY % tile + tile;
-
-		return corner[localizeCorner];*/
 	}
+		//return corner;
+	 */
 
 }

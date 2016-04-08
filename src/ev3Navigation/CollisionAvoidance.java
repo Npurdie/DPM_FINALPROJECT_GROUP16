@@ -18,7 +18,7 @@ public class CollisionAvoidance {
 
 	// --------- User defined variables ------------
 	private double TURNSPEED = 100;
-	private double ACC = 1000;
+	private double ACC = 4000;
 	// ---------------------------------------------
 
 	private Odometer odometer;
