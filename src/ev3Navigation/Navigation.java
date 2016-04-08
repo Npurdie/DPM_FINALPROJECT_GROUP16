@@ -86,19 +86,23 @@ public class Navigation extends Thread {
 				rightMotor, wheelRadius, wheelBase);
 		while (Math.abs(x - odometer.getX()) > travelToError || Math.abs(y - odometer.getY()) > travelToError) {
 			if (avoidCollisions) {
-				/*if (collisionAvoidance.detectedObject(14)) {
+				if (collisionAvoidance.detectedObject(15)) {
 					double[] currLoc = { odometer.getX(), odometer.getY(), odometer.getTheta() };
-					double[] corner = lsl.pickCorner(0);
-					odometer.setDistance(0);
-					lsl.doLocalization(corner[0] + tile, corner[1]);
+					double [] corner = new double[2];
+					leftMotor.stop();
+					rightMotor.stop();
+					stopMotors();
+					travelBackwardDistance(15, FORWARDSPEED);
+					pickCorner(corner);
+					lsl.doLocalization(corner[0],corner[1]);
 					travelTo(currLoc[0], currLoc[1], false);
 					turnTo(currLoc[2] + Math.toRadians(90));
-					collisionAvoidance.avoidObject(22, 5);
-					odometer.setDistance(50);
+					collisionAvoidance.avoidObject(15, 3);
+					odometer.setDistance(85);
 
 					// corner = lsl.pickCorner();
 					// lsl.doLocalization(corner[0]+tile,corner[1]+tile);
-				}*/
+				}
 			}
 			navigateTo(x, y);
 			isItSafe();

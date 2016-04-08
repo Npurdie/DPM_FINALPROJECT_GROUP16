@@ -20,6 +20,8 @@ public class LightLocalizer {
 												// light sensor
 	private boolean gridLine = false;
 	private double finalAngleOffset = Math.toRadians(4);
+	
+	public boolean lslDONE = false;
 
 	/**
 	 * The LightLocalizer stores a reference to the Odometer, the Color sensor's
@@ -94,12 +96,6 @@ public class LightLocalizer {
 		// theta
 		navigator.travelTo(0, 0, false);
 		navigator.stopMotors();
-		navigator.turnTo(Math.toRadians(0), TURN_SPEED); // finished
-															// localization
-		navigator.stopMotors();
-		odometer.setTheta(0);
-		gridLine = false;
-
 		odometer.setX(x);
 		odometer.setY(y);
 		odometer.setDistance(0);
@@ -159,13 +155,13 @@ public class LightLocalizer {
 		// theta
 		navigator.travelTo(0, 0, false);
 		navigator.stopMotors();
-		navigator.turnTo(Math.toRadians(0), TURN_SPEED); // finished
-															// localization
-		navigator.stopMotors();
-		odometer.setTheta(0);
 		odometer.setDistance(0);
+		
+		navigator.turnTo(0);
 
 		Sound.twoBeeps();
+		
+		lslDONE = true;
 	}
 
 	/**

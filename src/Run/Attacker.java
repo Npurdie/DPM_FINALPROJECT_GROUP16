@@ -84,7 +84,11 @@ public class Attacker {
 	 * Initializes the attack sequence
 	 */
 	public void startAttack() {
-	
+		double x;
+		double y;
+		double theta;
+		
+		
 		odometer.start();
 		lightPoller.start();
 		navigator.setLSL(lsl);
@@ -97,19 +101,24 @@ public class Attacker {
 
 		// perform the light sensor localization
 		lsl.doLocalization();
-		setOdometryValues(new double[] { 0, 0, 0 });
+		while(!lsl.lslDONE){
+		}
+		setOdometryValues(new double[] { navigator.tile*6, 0, Math.toRadians(90) });
 		// setOdometryValues(pw.getCorner());
-
+		navigator.travelTo(navigator.tile*6, navigator.tile*5, true);
+		lsl.doLocalization(navigator.tile*6, navigator.tile*5);
+		
+		
 		// travel to location where the balls are held
 		// navigator.travelTo(ballLoc[0],ballLoc[1],true);
 		// double[] corner = lsl.pickCorner();
 		// lsl.doLocalization(corner[0],corner[1]);
 		// navigator.travelTo(ballLoc[0],ballLoc[1],false);
-		navigator.travelTo(navigator.tile*0, navigator.tile*5, false);
-		navigator.travelTo(navigator.tile*5, navigator.tile*5, false);
-		navigator.travelTo(navigator.tile*5, navigator.tile*0, false);
-		navigator.travelTo(navigator.tile*2, navigator.tile*2, false);
-		lsl.doLocalization(navigator.tile*2, navigator.tile*2);
+	//	navigator.travelTo(navigator.tile*0, navigator.tile*5, false);
+	//	navigator.travelTo(navigator.tile*5, navigator.tile*5, false);
+	//	navigator.travelTo(navigator.tile*5, navigator.tile*0, false);
+	//	navigator.travelTo(navigator.tile*2, navigator.tile*2, false);
+	//	lsl.doLocalization(navigator.tile*2, navigator.tile*2);
 //		navigator.turnTo(0);
 //		navigator.travelForwardDistance(17.5, 100);
 //		launcher.lowerScooper();

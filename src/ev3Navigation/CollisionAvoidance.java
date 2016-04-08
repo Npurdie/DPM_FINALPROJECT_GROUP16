@@ -127,9 +127,9 @@ public class CollisionAvoidance {
 	 */
 	public boolean stopWallFollow(double theta) {
 		if (theta >= Math.toRadians(180)) {
-			theta = theta - Math.toRadians(195);
+			theta = theta - Math.toRadians(120);
 		} else if (theta < Math.toRadians(180)) {
-			theta = theta + Math.toRadians(195);
+			theta = theta + Math.toRadians(120);
 		}
 		if ((odometer.getTheta() > (theta - Math.toRadians(5)))
 				&& (odometer.getTheta() < (theta + Math.toRadians(5)))) {
