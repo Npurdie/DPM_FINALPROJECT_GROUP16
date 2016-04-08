@@ -84,11 +84,7 @@ public class Attacker {
 	 * Initializes the attack sequence
 	 */
 	public void startAttack() {
-		double x;
-		double y;
-		double theta;
-		
-		
+			
 		odometer.start();
 		lightPoller.start();
 		navigator.setLSL(lsl);
@@ -107,7 +103,7 @@ public class Attacker {
 		// setOdometryValues(pw.getCorner());
 		navigator.travelTo(navigator.tile*6, navigator.tile*5, true);
 		lsl.doLocalization(navigator.tile*6, navigator.tile*5);
-		
+		navigator.turnTo(Math.toRadians(180));
 		
 		// travel to location where the balls are held
 		// navigator.travelTo(ballLoc[0],ballLoc[1],true);
@@ -119,14 +115,18 @@ public class Attacker {
 	//	navigator.travelTo(navigator.tile*5, navigator.tile*0, false);
 	//	navigator.travelTo(navigator.tile*2, navigator.tile*2, false);
 	//	lsl.doLocalization(navigator.tile*2, navigator.tile*2);
-//		navigator.turnTo(0);
-//		navigator.travelForwardDistance(17.5, 100);
-//		launcher.lowerScooper();
-//		navigator.travelForwardDistance(6, 50);
-//		launcher.raiseScooper();
-//		navigator.travelBackwardDistance(20,250);
-//		navigator.shootDirection(0, 3);
-//		launcher.shootBall(3);
+	
+		/*
+		navigator.travelTo(navigator.tile - 25, 23 , false);
+		navigator.turnTo(0);
+		navigator.travelForwardDistance(17.5, 100);
+		launcher.lowerScooper();
+		navigator.travelForwardDistance(5, 50);
+		launcher.raiseScooper();
+		navigator.travelBackwardDistance(20,250);
+		navigator.shootDirection(0, 3);
+	*/
+	//	launcher.shootBall(3);
 	}
 
 	private void setOdometryValues(double[] cornerValues) {

@@ -1,6 +1,10 @@
 package ev3Navigation;
 
 import ev3WallFollow.PController;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
 import ev3Odometer.Odometer;
 import ev3Utilities.UltrasonicPoller;
 import lejos.hardware.Sound;
@@ -70,7 +74,43 @@ public class CollisionAvoidance {
 	 *         detected
 	 */
 	public boolean detectedObject(int distance) {
-		if (ultraSonicPoller.getForwardUsDistance() < distance || ultraSonicPoller.getLeftUSDistance() < distance) {
+		ArrayList<Integer> detectedDistanceF = new ArrayList<Integer>();
+		int detectionF = 0;
+
+		ArrayList<Integer> detectedDistanceL = new ArrayList<Integer>();
+		int detectionL = 0;
+		
+		int distanceF;
+		int distanceL;
+		int medianF = 200;
+		int medianL = 200;
+		
+		for(int i=0;i<35;i++){
+			distanceF = ultraSonicPoller.getForwardUsDistance();
+			distanceL = ultraSonicPoller.getLeftUSDistance();
+			
+			if(distanceF > 200){
+				distanceF = medianF;
+			}
+			if(distanceL > 200){
+				distanceF = medianL;
+			}
+			
+			detectedDistanceF.add(distanceF);
+			detectionF = detectionF + detectedDistanceF.get(i);
+			
+			detectedDistanceL.add(distanceL);
+			detectionL = detectionL + detectedDistanceL.get(i);
+			
+			medianF = calculateMedian(detectedDistanceF);
+			medianL = calculateMedian(detectedDistanceL);
+		
+			}
+		
+		detectionF = detectionF/35;
+		detectionL = detectionL/35;
+		
+		if (detectionF < distance || detectionL < distance) {
 			return true;
 		}
 		return false;
@@ -127,14 +167,28 @@ public class CollisionAvoidance {
 	 */
 	public boolean stopWallFollow(double theta) {
 		if (theta >= Math.toRadians(180)) {
-			theta = theta - Math.toRadians(120);
+			theta = theta - Math.toRadians(95);
 		} else if (theta < Math.toRadians(180)) {
-			theta = theta + Math.toRadians(120);
+			theta = theta + Math.toRadians(95);
 		}
-		if ((odometer.getTheta() > (theta - Math.toRadians(5)))
-				&& (odometer.getTheta() < (theta + Math.toRadians(5)))) {
+		if ((odometer.getTheta() > (theta - Math.toRadians(8)))
+				&& (odometer.getTheta() < (theta + Math.toRadians(8)))) {
 			return true;
 		}
 		return false;
 	}
+	
+	public int calculateMedian(ArrayList<Integer> array){
+		ArrayList<Integer> tempArray= new ArrayList<Integer>(array);
+	
+		Collections.sort(tempArray);
+		int middle = (int)((Math.ceil((double)tempArray.size()/2.0))-1);
+		int median = tempArray.get(middle);
+		
+		return median;
+			
+		}
+		
+	
+	
 }

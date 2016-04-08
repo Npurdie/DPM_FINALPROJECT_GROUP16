@@ -82,11 +82,11 @@ public class Navigation extends Thread {
 	 */
 	public void travelTo(double x, double y, boolean avoidCollisions) {
 		this.isNavigating = true;
-		CollisionAvoidance collisionAvoidance = new CollisionAvoidance(odometer, ultraSonicPoller, leftMotor,
-				rightMotor, wheelRadius, wheelBase);
 		while (Math.abs(x - odometer.getX()) > travelToError || Math.abs(y - odometer.getY()) > travelToError) {
 			if (avoidCollisions) {
-				if (collisionAvoidance.detectedObject(15)) {
+				CollisionAvoidance collisionAvoidance = new CollisionAvoidance(odometer, ultraSonicPoller, leftMotor,
+						rightMotor, wheelRadius, wheelBase);
+				if (collisionAvoidance.detectedObject(12)) {
 					double[] currLoc = { odometer.getX(), odometer.getY(), odometer.getTheta() };
 					double [] corner = new double[2];
 					leftMotor.stop();
@@ -97,7 +97,7 @@ public class Navigation extends Thread {
 					lsl.doLocalization(corner[0],corner[1]);
 					travelTo(currLoc[0], currLoc[1], false);
 					turnTo(currLoc[2] + Math.toRadians(90));
-					collisionAvoidance.avoidObject(15, 3);
+					collisionAvoidance.avoidObject(18, 2);
 					odometer.setDistance(85);
 
 					// corner = lsl.pickCorner();
