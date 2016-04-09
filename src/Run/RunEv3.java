@@ -65,7 +65,7 @@ public class RunEv3 {
 		float[] usDataR = new float[usValueR.sampleSize()];
 		float[] usDataL = new float[usValueL.sampleSize()];
 		UltrasonicPoller usPoller = new UltrasonicPoller(usValueF, usValueR, usValueL, usDataF, usDataR, usDataL);
-		usPoller.start();
+  		usPoller.start();
 
 		// Setup color sensor
 		// 1. Create a port object attached to a physical port (done above)

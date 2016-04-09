@@ -99,11 +99,20 @@ public class Attacker {
 		lsl.doLocalization();
 		while(!lsl.lslDONE){
 		}
-		setOdometryValues(new double[] { navigator.tile*6, 0, Math.toRadians(90) });
+		setOdometryValues(new double[] { navigator.tile*0, navigator.tile*0, Math.toRadians(0) });
 		// setOdometryValues(pw.getCorner());
-		navigator.travelTo(navigator.tile*6, navigator.tile*5, true);
-		lsl.doLocalization(navigator.tile*6, navigator.tile*5);
-		navigator.turnTo(Math.toRadians(180));
+		navigator.travelTo(navigator.tile*5, navigator.tile*5, true);
+		lsl.doLocalization(navigator.tile*5, navigator.tile*5);
+		navigator.travelTo(navigator.tile*4, navigator.tile*0, false);
+		lsl.doLocalization(navigator.tile*4,navigator.tile*0);
+		navigator.travelTo(navigator.tile*5 - 25, navigator.tile*0 + 23 , false);
+		navigator.turnTo(0);
+		navigator.travelForwardDistance(17.5, 100);
+		launcher.lowerScooper();
+		navigator.travelForwardDistance(5, 50);
+		launcher.raiseScooper();
+		navigator.travelBackwardDistance(20,250);
+		navigator.shootDirection(3, 3);
 		
 		// travel to location where the balls are held
 		// navigator.travelTo(ballLoc[0],ballLoc[1],true);

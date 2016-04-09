@@ -86,7 +86,7 @@ public class Navigation extends Thread {
 			if (avoidCollisions) {
 				CollisionAvoidance collisionAvoidance = new CollisionAvoidance(odometer, ultraSonicPoller, leftMotor,
 						rightMotor, wheelRadius, wheelBase);
-				if (collisionAvoidance.detectedObject(12)) {
+				if (collisionAvoidance.detectedObject(9)) {
 					double[] currLoc = { odometer.getX(), odometer.getY(), odometer.getTheta() };
 					double [] corner = new double[2];
 					leftMotor.stop();
