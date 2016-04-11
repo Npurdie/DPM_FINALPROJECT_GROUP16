@@ -83,7 +83,7 @@ public class RunEv3 {
 		// setup the odometer, display and navigation
 		Odometer odo = new Odometer(leftMotor, rightMotor, WHEEL_RADIUS, TRACK);
 		Navigation navigator = new Navigation(leftMotor, rightMotor, WHEEL_RADIUS, TRACK, odo, usPoller);
-		USLocalizer usl = new USLocalizer(odo, usValueF, usDataF, navigator);
+		USLocalizer usl = new USLocalizer(odo, usValueL, usDataL, navigator);
 		LightPoller lightPoller = new LightPoller(colorValue, colorData);
 		LCDInfo lcd = new LCDInfo(odo, lightPoller);
 		LightLocalizer lsl = new LightLocalizer(odo, colorValue, colorData, navigator);
