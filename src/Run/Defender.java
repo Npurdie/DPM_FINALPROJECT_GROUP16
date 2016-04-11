@@ -6,6 +6,8 @@ import ev3Navigation.Navigation;
 import ev3Odometer.Odometer;
 import ev3Utilities.LightPoller;
 import ev3Utilities.LightSensorDerivative;
+import ev3Utilities.UltrasonicPoller;
+import lejos.hardware.Sound;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 /** This object coordinates the Defender case of the competition */
@@ -18,14 +20,15 @@ public class Defender {
 	private USLocalizer usl;
 	private LightLocalizer lsl;
 	private LightPoller lightPoller;
+	private UltrasonicPoller USPoller;
 
 	//Wifi variables
 	private int cornerID;
 	private double[] cornerLoc;
 	private double[] ballLoc;
-	private int goalWidth;
-	private int defLine;
-	private int forwLine;
+	private double goalWidth;
+	private double defLine;
+	private double forwLine;
 	/**
 	 * The Defender stores a reference to the left motor, right motor, the EV3's
 	 * width, wheel radius , odometer, light poller, navigator, us localizer and
@@ -53,7 +56,8 @@ public class Defender {
 	 */
 	public Defender(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor, double width,
 			double wheelRadius, Odometer odometer, LightPoller lightPoller, Navigation navigator,
-			USLocalizer uslocalizer, LightLocalizer lightlocalizer) {
+			USLocalizer uslocalizer, LightLocalizer lightlocalizer, int cornerID, double[] cornerLoc, double[] ballLoc, double goalWidth,
+			double defLine, double forwLine, UltrasonicPoller USPoller) {
 		this.leftMotor = leftMotor;
 		this.rightMotor = rightMotor;
 		this.width = width;
@@ -63,16 +67,37 @@ public class Defender {
 		this.usl = uslocalizer;
 		this.lsl = lightlocalizer;
 		this.lightPoller = lightPoller;
+		this.cornerID = cornerID;
+		this.cornerLoc = cornerLoc;
+		this.ballLoc = ballLoc;
+		this.goalWidth = goalWidth;
+		this.defLine = defLine;
+		this.forwLine = forwLine;
+		this.USPoller = USPoller;
 	}
 
 	/**
 	 * Initializes the defence sequence
 	 */
 	public void startDefense() {
+		
+		localize();
+		navigate();
+		stopUltraSonicSensors();
+		defend();
+	}
+
+	private void setOdometryValues(double[] cornerValues) {
+		odometer.setX(cornerValues[0]);
+		odometer.setY(cornerValues[1]);
+		odometer.setTheta(cornerValues[2]);
+
+	}
+	
+    private void localize(){
 		odometer.start();
 		lightPoller.start();
 		navigator.setLSL(lsl);
-
 		// perform the ultrasonic sensor localization
 		usl.doLocalization();
 
@@ -81,16 +106,96 @@ public class Defender {
 
 		// perform the light sensor localization
 		lsl.doLocalization();
-
-		// travel to location where the balls are held
-		navigator.travelTo(navigator.tile * 6, navigator.tile * 6, true);
-		lsl.doLocalization();
-		setOdometryValues(new double[] { navigator.tile*0, navigator.tile*0, Math.toRadians(0) });
-	}
-	private void setOdometryValues(double[] cornerValues) {
-		odometer.setX(cornerValues[0]);
-		odometer.setY(cornerValues[1]);
-		odometer.setTheta(cornerValues[2]);
-
-	}
-}
+		
+		while(!lsl.lslDONE){
+		}
+		//Initialize odometry readings to localized coordinates.
+		setOdometryValues(this.cornerLoc);
+    
+    }
+    
+    //Navigates from initial localization to the attacker's zone and finally towards the balls.
+    private void navigate(){
+    	    	
+    	switch(cornerID){
+    	case 1:
+     		navigator.travelTo(0*navigator.tile, 13*navigator.tile - defLine , true);
+     		lsl.doLocalization(0*navigator.tile, 13*navigator.tile - defLine);
+    
+     		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
+    		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
+     		
+     		Sound.beep();
+     		     
+    		break;
+    	case 2:
+    		
+      		navigator.travelTo(10*navigator.tile, 13*navigator.tile - defLine, true);
+     		lsl.doLocalization(10*navigator.tile, 13*navigator.tile - defLine);
+    
+     		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
+    		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
+     		
+     		Sound.beep();
+     		     
+    		break;
+    	case 3:
+    	   		
+    		navigator.travelTo(10*navigator.tile, 13*navigator.tile - defLine, true);
+     		lsl.doLocalization(10*navigator.tile, 13*navigator.tile - defLine);
+    
+     		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
+    		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
+     		
+     		Sound.beep();
+     		     
+    		break;
+    	case 4:
+     		navigator.travelTo(0*navigator.tile, 13*navigator.tile - defLine , true);
+     		lsl.doLocalization(0*navigator.tile, 13*navigator.tile - defLine);
+    
+     		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
+    		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
+     		
+     		Sound.beep();
+     		     
+    		break;
+    	
+    	}
+    }
+    
+    private void stopUltraSonicSensors(){
+    	USPoller.turnOffSensors();
+   
+    }
+    
+    private void defend(){
+    	navigator.travelTo(5*navigator.tile+goalWidth/2, 13*navigator.tile - defLine , false);
+    	navigator.turnTo(Math.toRadians(0));
+    	int i = 0;
+    	boolean accurate = true;
+    	while(accurate){
+    		
+    		if(i>10){
+    		i=0;
+    		fixDefense();
+    		}
+    		
+    		navigator.travelBackwardDistance(goalWidth, 100);
+    		navigator.travelForwardDistance(goalWidth, 100);
+    		
+    		i++;
+ 
+    	}
+    	
+    	
+    }
+    
+    private void fixDefense(){
+   		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
+		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
+    	
+    	navigator.travelTo(5*navigator.tile+goalWidth/2, 13*navigator.tile - defLine , false);
+    	navigator.turnTo(Math.toRadians(0));
+    }
+       }

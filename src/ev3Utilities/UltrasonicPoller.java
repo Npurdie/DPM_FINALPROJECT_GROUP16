@@ -95,5 +95,9 @@ public class UltrasonicPoller extends Thread {
 		}
 		return distance;
 	}
+	
+	public void turnOffSensors(){
+
+	}
 
 }

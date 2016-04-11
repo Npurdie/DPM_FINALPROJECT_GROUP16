@@ -126,8 +126,8 @@ public class ParseWifi {
 	 * 
 	 * @return An integer that represents the width of the goal.
 	 */
-	public int getGoalWidth() {
-		return w1;
+	public double getGoalWidth() {
+		return w1*tile;
 	}
 	
 	/**

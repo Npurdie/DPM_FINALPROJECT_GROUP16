@@ -57,7 +57,7 @@ public class RunEv3 {
   		SensorModes colorSensor = new EV3ColorSensor(colorPort);
 		SampleProvider colorValue = colorSensor.getMode("Red");
 		float[] colorData = new float[colorValue.sampleSize()]; 
-		
+	
 		usPoller.start();
 		Odometer odo = new Odometer(leftMotor, rightMotor, WHEEL_RADIUS, TRACK);
 		Navigation navigator = new Navigation(leftMotor, rightMotor, WHEEL_RADIUS, TRACK, odo, usPoller);
@@ -74,19 +74,20 @@ public class RunEv3 {
 		int cornerID = pw.getCornerID();
 		double[] cornerLoc= pw.getCorner();
 		double[] ballLoc = pw.getBallLoc();
-		int goalWidth = pw.getGoalWidth();
+		double goalWidth = pw.getGoalWidth();
 		double defLine = pw.getDefenderLine();
 		double forwLine = pw.getForwardLine();
 		
 		if(attacker){
-		Attacker attackerRun = new Attacker(leftMotor, rightMotor, clawMotor, launcherMotor, TRACK, WHEEL_RADIUS, odo,
-				lightPoller, navigator, usl, lsl, launcher, cornerID, cornerLoc, ballLoc, goalWidth, defLine, forwLine);
-		attackerRun.startAttack();
+				Attacker attackerRun = new Attacker(leftMotor, rightMotor, clawMotor, launcherMotor, TRACK, WHEEL_RADIUS, odo,
+						lightPoller, navigator, usl, lsl, launcher, cornerID, cornerLoc, ballLoc, goalWidth, defLine, forwLine);
+				attackerRun.startAttack();
 		 } else {
-//		 Defender defenderRun = new Defender(leftMotor, rightMotor, width, wheelRadius, odometer, lightPoller, navigator, uslocalizer, lightlocalizer)
-		 }
+			 	Defender defenderRun = new Defender(leftMotor, rightMotor, TRACK, WHEEL_RADIUS, odo, lightPoller, navigator,
+			 			usl, lsl, cornerID, cornerLoc, ballLoc, goalWidth, defLine, forwLine, usPoller);
+			 	defenderRun.startDefense();
 
-		// }
+		 }
 
 		while (Button.waitForAnyPress() != Button.ID_ESCAPE)
 			;

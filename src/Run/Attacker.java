@@ -32,7 +32,7 @@ public class Attacker {
 	private int cornerID;
 	private double[] cornerLoc;
 	private double[] ballLoc;
-	private int goalWidth;
+	private double goalWidth;
 	private double defLine;
 	private double forwLine;
 	/**
@@ -71,7 +71,7 @@ public class Attacker {
 	public Attacker(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
 			EV3LargeRegulatedMotor clawMotor, EV3LargeRegulatedMotor launcherMotor, double width, double wheelRadius,
 			Odometer odometer, LightPoller lightPoller, Navigation navigator, USLocalizer uslocalizer,
-			LightLocalizer lightlocalizer, Launcher launcher,int cornerID, double[] cornerLoc, double[] ballLoc, int goalWidth,
+			LightLocalizer lightlocalizer, Launcher launcher,int cornerID, double[] cornerLoc, double[] ballLoc, double goalWidth,
 			double defLine, double forwLine) {
 		this.leftMotor = leftMotor;
 		this.rightMotor = rightMotor;
