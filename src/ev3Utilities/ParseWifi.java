@@ -55,6 +55,12 @@ public class ParseWifi {
 			LCD.drawString("Connection failed", 0, 5);
 		}
 	}
+	public int getCornerID(){
+		int ID = this.corner;
+		return ID;
+		
+		
+	}
 
 	/**
 	 * Get corner returns the x,y and theta coordinate of the corner the EV3
@@ -71,18 +77,18 @@ public class ParseWifi {
 			result[2] = 0;
 		}
 		if (id == 2) {
-			result[0] = 11 * tile;
+			result[0] = 10 * tile;
 			result[1] = 0;
 			result[2] = Math.toRadians(90);
 		}
 		if (id == 3) {
-			result[0] = 11 * tile;
-			result[1] = 11 * tile;
+			result[0] = 10 * tile;
+			result[1] = 10 * tile;
 			result[2] = Math.toRadians(180);
 		}
 		if (id == 4) {
 			result[0] = 0;
-			result[1] = 11 * tile;
+			result[1] = 10 * tile;
 			result[2] = Math.toRadians(270);
 		}
 		return result;
@@ -111,7 +117,7 @@ public class ParseWifi {
 	public double[] getBallLoc() {
 		double[] loc = new double[2];
 		loc[0] = tile * lowerLocX;
-		loc[1] = tile * lowerLocY + 11.43;
+		loc[1] = tile * lowerLocY;
 		return loc;
 	}
 	
@@ -129,8 +135,8 @@ public class ParseWifi {
 	 * 
 	 * @return An integer that represents the location of the defender line.
 	 */
-	public int getDefenderLine()	{
-		return d1;
+	public double getDefenderLine()	{
+		return d1*tile;
 	}
 	
 	/**
@@ -138,7 +144,7 @@ public class ParseWifi {
 	 * 
 	 * @return An integer that represents the location of the forward line
 	 */
-	public int getForwardLine()	{
-		return d2;
+	public double getForwardLine()	{
+		return d2*tile;
 	}
 }

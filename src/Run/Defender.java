@@ -19,6 +19,13 @@ public class Defender {
 	private LightLocalizer lsl;
 	private LightPoller lightPoller;
 
+	//Wifi variables
+	private int cornerID;
+	private double[] cornerLoc;
+	private double[] ballLoc;
+	private int goalWidth;
+	private int defLine;
+	private int forwLine;
 	/**
 	 * The Defender stores a reference to the left motor, right motor, the EV3's
 	 * width, wheel radius , odometer, light poller, navigator, us localizer and

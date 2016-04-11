@@ -25,10 +25,16 @@ public class Attacker {
 	private USLocalizer usl;
 	private LightLocalizer lsl;
 	private LightPoller lightPoller;
-	private double[] ballLoc;
 	private Launcher launcher;
 	private ParseWifi pw;
 
+	//Wifi variables
+	private int cornerID;
+	private double[] cornerLoc;
+	private double[] ballLoc;
+	private int goalWidth;
+	private double defLine;
+	private double forwLine;
 	/**
 	 * The Attacker stores a reference to the left motor, right motor, claw
 	 * motor, launcher motor, the EV3's width, wheel radius , odometer, light
@@ -61,11 +67,12 @@ public class Attacker {
 	 * @param launcher
 	 *            The launcher class
 	 */
+
 	public Attacker(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
 			EV3LargeRegulatedMotor clawMotor, EV3LargeRegulatedMotor launcherMotor, double width, double wheelRadius,
 			Odometer odometer, LightPoller lightPoller, Navigation navigator, USLocalizer uslocalizer,
-			LightLocalizer lightlocalizer, Launcher launcher) {// , ParseWifi
-																// pw) {
+			LightLocalizer lightlocalizer, Launcher launcher,int cornerID, double[] cornerLoc, double[] ballLoc, int goalWidth,
+			double defLine, double forwLine) {
 		this.leftMotor = leftMotor;
 		this.rightMotor = rightMotor;
 		this.width = width;
@@ -76,68 +83,24 @@ public class Attacker {
 		this.lsl = lightlocalizer;
 		this.lightPoller = lightPoller;
 		this.launcher = launcher;
-		// this.pw = pw;
-		// this.ballLoc = ballLoc;
+		this.cornerID = cornerID;
+		this.cornerLoc = cornerLoc;
+		this.ballLoc = ballLoc;
+		this.goalWidth = goalWidth;
+		this.defLine = defLine;
+		this.forwLine = forwLine;
+		
 	}
 
 	/**
 	 * Initializes the attack sequence
 	 */
 	public void startAttack() {
-		Sound.beep();
-		Sound.beep();
-		Sound.beep();
-		odometer.start();
-		lightPoller.start();
-		navigator.setLSL(lsl);
-
-		// perform the ultrasonic sensor localization
-		usl.doLocalization();
-
-		LightSensorDerivative lsd = new LightSensorDerivative(odometer, lightPoller, lsl);
-		lsd.start();
-
-		// perform the light sensor localization
-		lsl.doLocalization();
-		while(!lsl.lslDONE){
-		}
-		setOdometryValues(new double[] { navigator.tile*0, navigator.tile*0, Math.toRadians(0) });
-		// setOdometryValues(pw.getCorner());
-		navigator.travelTo(navigator.tile*5, navigator.tile*5, true);
-		lsl.doLocalization(navigator.tile*5, navigator.tile*5);
-		navigator.travelTo(navigator.tile*4, navigator.tile*0, false);
-		lsl.doLocalization(navigator.tile*4,navigator.tile*0);
-		navigator.travelTo(navigator.tile*5 - 25, navigator.tile*0 + 23 , false);
-		navigator.turnTo(0);
-		navigator.travelForwardDistance(16, 100);
-		launcher.lowerScooper();
-		navigator.travelForwardDistance(5, 50);
-		launcher.raiseScooper();
-		navigator.travelBackwardDistance(20,250);
-		navigator.shootDirection(3, 3);
-		
-		// travel to location where the balls are held
-		// navigator.travelTo(ballLoc[0],ballLoc[1],true);
-		// double[] corner = lsl.pickCorner();
-		// lsl.doLocalization(corner[0],corner[1]);
-		// navigator.travelTo(ballLoc[0],ballLoc[1],false);
-	//	navigator.travelTo(navigator.tile*0, navigator.tile*5, false);
-	//	navigator.travelTo(navigator.tile*5, navigator.tile*5, false);
-	//	navigator.travelTo(navigator.tile*5, navigator.tile*0, false);
-	//	navigator.travelTo(navigator.tile*2, navigator.tile*2, false);
-	//	lsl.doLocalization(navigator.tile*2, navigator.tile*2);
 	
-		/*
-		navigator.travelTo(navigator.tile - 25, 23 , false);
-		navigator.turnTo(0);
-		navigator.travelForwardDistance(17.5, 100);
-		launcher.lowerScooper();
-		navigator.travelForwardDistance(5, 50);
-		launcher.raiseScooper();
-		navigator.travelBackwardDistance(20,250);
-		navigator.shootDirection(0, 3);
-	*/
-	//	launcher.shootBall(3);
+		localize();
+		navigate();
+		retrieveBall(ballLoc[0] - 1*navigator.tile, ballLoc[1]);
+		shootBalls();
 	}
 
 	private void setOdometryValues(double[] cornerValues) {
@@ -146,4 +109,105 @@ public class Attacker {
 		odometer.setTheta(cornerValues[2]);
 
 	}
+	
+    private void localize(){
+		odometer.start();
+		lightPoller.start();
+		navigator.setLSL(lsl);
+		// perform the ultrasonic sensor localization
+		usl.doLocalization();
+
+		LightSensorDerivative lsd = new LightSensorDerivative(odometer, lightPoller, lsl);
+		lsd.start();
+
+		// perform the light sensor localization
+		lsl.doLocalization();
+		
+		while(!lsl.lslDONE){
+		}
+		//Initialize odometry readings to localized coordinates.
+		setOdometryValues(this.cornerLoc);
+    
+    }
+    
+    //Navigates from initial localization to the attacker's zone and finally towards the balls.
+    private void navigate(){
+    	    	
+    	switch(cornerID){
+    	case 1:
+     		navigator.travelTo(6*navigator.tile, forwLine - 2*navigator.tile , true);
+     		lsl.doLocalization(6*navigator.tile, forwLine - 2*navigator.tile);
+    		
+     		Sound.beep();
+     		
+     		navigator.travelTo(10*navigator.tile, 0*navigator.tile, true);
+    		lsl.doLocalization(10*navigator.tile, 0*navigator.tile);
+    	
+    		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
+    		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
+    		break;
+    	case 2:
+    		navigator.travelTo(6*navigator.tile, forwLine - 2*navigator.tile , true);
+     		lsl.doLocalization(6*navigator.tile, forwLine - 2*navigator.tile);
+     		
+     		Sound.beep();
+     		
+    		navigator.travelTo(10*navigator.tile, 0*navigator.tile, true);
+    		lsl.doLocalization(10*navigator.tile, 0*navigator.tile);
+    		
+    		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
+    		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
+    		break;
+    	case 3:
+    		navigator.travelTo(10*navigator.tile, 0*navigator.tile, true);
+    		lsl.doLocalization(10*navigator.tile, 0*navigator.tile);
+    		
+    		navigator.travelTo(6*navigator.tile, forwLine - 2*navigator.tile , true);
+     		lsl.doLocalization(6*navigator.tile, forwLine - 2*navigator.tile);
+    		
+     		Sound.beep();
+     		
+     		navigator.travelTo(10*navigator.tile, 0*navigator.tile, true);
+    		lsl.doLocalization(10*navigator.tile, 0*navigator.tile);
+    			
+       		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
+    		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);    		
+    		break;
+    	case 4:
+    		navigator.travelTo(0*navigator.tile, 0*navigator.tile , true);
+    		lsl.doLocalization(0*navigator.tile, 0*navigator.tile);
+    		
+    		navigator.travelTo(6*navigator.tile, forwLine - 2*navigator.tile , true);
+     		lsl.doLocalization(6*navigator.tile, forwLine - 2*navigator.tile);
+     		
+     		Sound.beep();
+     		
+    		navigator.travelTo(10*navigator.tile, 0*navigator.tile, true);
+    		lsl.doLocalization(10*navigator.tile, 0*navigator.tile);
+    		
+    		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
+    		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
+    		break;
+    	
+    	}
+    }
+    //Retrieves balls
+    private void retrieveBall(double x, double y){
+		navigator.travelTo(navigator.tile*x - 25, navigator.tile*y + 23 , false);
+		navigator.turnTo(0);
+		navigator.travelForwardDistance(15.5, 100);
+		launcher.lowerScooper();
+		navigator.travelForwardDistance(5, 50);
+		launcher.raiseScooper();
+		navigator.travelBackwardDistance(20,250);
+    }
+        
+    private void shootBalls(){
+    	navigator.travelTo(10, defLine - 2*navigator.tile, true);
+		lsl.doLocalization(10, defLine - 2*navigator.tile);
+		navigator.travelTo(6, defLine - 2*navigator.tile, true);
+		lsl.doLocalization(6, defLine - 2*navigator.tile);
+		navigator.shootDirection(5*navigator.tile, 11*navigator.tile);
+		launcher.shootBall(3);
+    }
 }
