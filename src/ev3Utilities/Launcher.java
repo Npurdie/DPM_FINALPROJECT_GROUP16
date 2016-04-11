@@ -9,8 +9,10 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 public class Launcher {
 	private EV3LargeRegulatedMotor scooperMotor;
 	private EV3LargeRegulatedMotor launcherMotor;
-	private int ACCELERATION = 600;
-	private int SCOOPE_SPEED = 270;
+	private int ACCELERATION = 300;
+	private int LOWER_ACCELERATION = 1000;
+	private int LOWER_SCOOPE_SPEED = 300;
+	private int RAISE_SCOOPE_SPEED = 80;
 	private int SHOOT_SPEED = 200;
 
 	/**
@@ -26,7 +28,6 @@ public class Launcher {
 
 		scooperMotor.setAcceleration(ACCELERATION);
 		launcherMotor.setAcceleration(ACCELERATION);
-		scooperMotor.setSpeed(SCOOPE_SPEED);
 		launcherMotor.setSpeed(SHOOT_SPEED);
 		scooperMotor.rotate(-160);
 	}
@@ -38,7 +39,8 @@ public class Launcher {
 	 *            The angle in degrees by which to rotate the claw.
 	 */
 	public void lowerScooper(int angle) {
-		scooperMotor.setSpeed(SCOOPE_SPEED);
+		scooperMotor.setAcceleration(ACCELERATION);
+		scooperMotor.setSpeed(RAISE_SCOOPE_SPEED);
 		scooperMotor.rotate(angle);
 	}
 
@@ -49,6 +51,8 @@ public class Launcher {
 	 *            The angle in degrees by which to rotate the claw.
 	 */
 	public void raiseScooper(int angle) {
+		scooperMotor.setAcceleration(ACCELERATION);
+		scooperMotor.setSpeed(RAISE_SCOOPE_SPEED);
 		scooperMotor.rotate(-angle);
 	}
 
@@ -56,7 +60,8 @@ public class Launcher {
 	 * This method raises the claw by 160 degrees, it's full range of motion.
 	 */
 	public void lowerScooper() {
-		scooperMotor.setSpeed(SCOOPE_SPEED);
+		scooperMotor.setAcceleration(LOWER_ACCELERATION);
+		scooperMotor.setSpeed(LOWER_SCOOPE_SPEED);
 		scooperMotor.rotate(160);
 	}
 
@@ -64,10 +69,9 @@ public class Launcher {
 	 * This method raises the claw by 160 degrees, it's full range of motion.
 	 */
 	public void raiseScooper() {
-		scooperMotor.setSpeed(80);
-		scooperMotor.rotate(-70);
-		scooperMotor.setSpeed(100);
-		scooperMotor.rotate(-100);
+		scooperMotor.setAcceleration(ACCELERATION);
+		scooperMotor.setSpeed(RAISE_SCOOPE_SPEED);
+		scooperMotor.rotate(-160);
 	}
 
 	/**

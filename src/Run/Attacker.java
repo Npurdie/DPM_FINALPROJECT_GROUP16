@@ -109,9 +109,9 @@ public class Attacker {
 		lsl.doLocalization(navigator.tile*4,navigator.tile*0);
 		navigator.travelTo(navigator.tile*5 - 25, navigator.tile*0 + 23 , false);
 		navigator.turnTo(0);
-		navigator.travelForwardDistance(16, 100);
+		navigator.travelForwardDistance(15.5, 100);
 		launcher.lowerScooper();
-		navigator.travelForwardDistance(5, 50);
+		navigator.travelForwardDistance(4, 50);
 		launcher.raiseScooper();
 		navigator.travelBackwardDistance(20,250);
 		navigator.shootDirection(3, 3);

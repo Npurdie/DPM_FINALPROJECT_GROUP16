@@ -110,7 +110,7 @@ public class CollisionAvoidance {
 		detectionF = detectionF/50;
 		detectionL = detectionL/50;
 		
-		if (detectionF < distance || detectionL < distance) {
+		if (medianF < distance || medianL < distance) {
 			return true;
 		}
 		return false;
