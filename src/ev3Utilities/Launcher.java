@@ -57,7 +57,7 @@ public class Launcher {
 	 */
 	public void lowerScooper() {
 		scooperMotor.setSpeed(SCOOPE_SPEED);
-		scooperMotor.rotate(140);
+		scooperMotor.rotate(160);
 	}
 
 	/**
