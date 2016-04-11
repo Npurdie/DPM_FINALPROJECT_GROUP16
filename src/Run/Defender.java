@@ -119,8 +119,8 @@ public class Defender {
     	    	
     	switch(cornerID){
     	case 1:
-     		navigator.travelTo(0*navigator.tile, 13*navigator.tile - defLine , true);
-     		lsl.doLocalization(0*navigator.tile, 13*navigator.tile - defLine);
+     		navigator.travelTo(0*navigator.tile, 10*navigator.tile, true);
+     		lsl.doLocalization(0*navigator.tile, 10*navigator.tile);
     
      		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
     		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
@@ -130,8 +130,8 @@ public class Defender {
     		break;
     	case 2:
     		
-      		navigator.travelTo(10*navigator.tile, 13*navigator.tile - defLine, true);
-     		lsl.doLocalization(10*navigator.tile, 13*navigator.tile - defLine);
+      		navigator.travelTo(10*navigator.tile, 10*navigator.tile, true);
+     		lsl.doLocalization(10*navigator.tile, 10*navigator.tile);
     
      		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
     		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
@@ -140,20 +140,15 @@ public class Defender {
      		     
     		break;
     	case 3:
-    	   		
-    		navigator.travelTo(10*navigator.tile, 13*navigator.tile - defLine, true);
-     		lsl.doLocalization(10*navigator.tile, 13*navigator.tile - defLine);
-    
-     		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
+    	   
+    		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
     		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
      		
      		Sound.beep();
      		     
     		break;
     	case 4:
-     		navigator.travelTo(0*navigator.tile, 13*navigator.tile - defLine , true);
-     		lsl.doLocalization(0*navigator.tile, 13*navigator.tile - defLine);
-    
+     	    
      		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
     		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
      		
