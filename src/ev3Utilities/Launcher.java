@@ -9,8 +9,8 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 public class Launcher {
 	private EV3LargeRegulatedMotor scooperMotor;
 	private EV3LargeRegulatedMotor launcherMotor;
-	private int ACCELERATION = 400;
-	private int SCOOPE_SPEED = 250;
+	private int ACCELERATION = 600;
+	private int SCOOPE_SPEED = 270;
 	private int SHOOT_SPEED = 200;
 
 	/**
@@ -38,6 +38,7 @@ public class Launcher {
 	 *            The angle in degrees by which to rotate the claw.
 	 */
 	public void lowerScooper(int angle) {
+		scooperMotor.setSpeed(SCOOPE_SPEED);
 		scooperMotor.rotate(angle);
 	}
 

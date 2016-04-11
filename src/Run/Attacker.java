@@ -84,7 +84,9 @@ public class Attacker {
 	 * Initializes the attack sequence
 	 */
 	public void startAttack() {
-			
+		Sound.beep();
+		Sound.beep();
+		Sound.beep();
 		odometer.start();
 		lightPoller.start();
 		navigator.setLSL(lsl);
@@ -107,7 +109,7 @@ public class Attacker {
 		lsl.doLocalization(navigator.tile*4,navigator.tile*0);
 		navigator.travelTo(navigator.tile*5 - 25, navigator.tile*0 + 23 , false);
 		navigator.turnTo(0);
-		navigator.travelForwardDistance(17.5, 100);
+		navigator.travelForwardDistance(16, 100);
 		launcher.lowerScooper();
 		navigator.travelForwardDistance(5, 50);
 		launcher.raiseScooper();

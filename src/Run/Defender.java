@@ -78,5 +78,12 @@ public class Defender {
 		// travel to location where the balls are held
 		navigator.travelTo(navigator.tile * 6, navigator.tile * 6, true);
 		lsl.doLocalization();
+		setOdometryValues(new double[] { navigator.tile*0, navigator.tile*0, Math.toRadians(0) });
+	}
+	private void setOdometryValues(double[] cornerValues) {
+		odometer.setX(cornerValues[0]);
+		odometer.setY(cornerValues[1]);
+		odometer.setTheta(cornerValues[2]);
+
 	}
 }
