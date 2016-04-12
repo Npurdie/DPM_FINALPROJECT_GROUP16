@@ -171,16 +171,28 @@ public class Defender {
     	navigator.travelTo((largeCoord-1)/2*navigator.tile+goalWidth/2, (largeCoord+2)*navigator.tile - defLine , false);
     	navigator.turnTo(Math.toRadians(0));
     	int i = 0;
-    	boolean accurate = true;
-    	while(accurate){
+    	navigator.travelBackwardDistance(10, 200);
+    	
+    	while(true){
     		
-    		if(i>10){
+    		if(i>3){
     		i=0;
     		fixDefense();
     		}
-    		
-    		navigator.travelBackwardDistance(goalWidth, 100);
-    		navigator.travelForwardDistance(goalWidth, 100);
+    		try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		navigator.travelBackwardDistance(goalWidth-22, 200);
+    		try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		navigator.travelForwardDistance(goalWidth-22, 200);
     		
     		i++;
  
@@ -190,7 +202,7 @@ public class Defender {
     }
     
     private void fixDefense(){
-   		navigator.travelTo((largeCoord+1)/2*navigator.tile, (largeCoord+2)*navigator.tile - defLine, true);
+   		navigator.travelTo((largeCoord+1)/2*navigator.tile, (largeCoord+2)*navigator.tile - defLine, false);
 		lsl.doLocalization((largeCoord+1)/2*navigator.tile, (largeCoord+2)*navigator.tile - defLine);
     	
     	navigator.travelTo((largeCoord-1)/2*navigator.tile+goalWidth/2, (largeCoord+2)*navigator.tile - defLine , false);

@@ -72,7 +72,7 @@ public class RunEv3 {
 		
 		double tile = 30.48;
 		
-		boolean attacker = true;//pw.getRole();
+		boolean attacker = false;//pw.getRole();
 		int cornerID = 1;//pw.getCornerID();
 		double[] cornerLoc= new double[]{0,0,0};// pw.getCorner();
 		double[] ballLoc = new double[]{6*tile,5*tile};//pw.getBallLoc();

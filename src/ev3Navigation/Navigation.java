@@ -413,12 +413,12 @@ public class Navigation extends Thread {
 		
 		if((x<tile*middleField+isItSafeError)&&(x>tile*middleField-isItSafeError)){
 			
-			odometer.setDistance(55);
+			odometer.setDistance(95);
 		}
 		
 		if((y<tile*middleField+isItSafeError)&&(y>tile*middleField-isItSafeError)){
 			
-			odometer.setDistance(55);
+			odometer.setDistance(95);
 		}
 		
 		
