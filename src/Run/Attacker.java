@@ -103,18 +103,39 @@ public class Attacker {
 		}
 		setOdometryValues(new double[] { navigator.tile*0, navigator.tile*0, Math.toRadians(0) });
 		// setOdometryValues(pw.getCorner());
-		navigator.travelTo(navigator.tile*5, navigator.tile*5, true);
-		lsl.doLocalization(navigator.tile*5, navigator.tile*5);
-		navigator.travelTo(navigator.tile*4, navigator.tile*0, false);
-		lsl.doLocalization(navigator.tile*4,navigator.tile*0);
-		navigator.travelTo(navigator.tile*5 - 25, navigator.tile*0 + 23 , false);
+		
+		// ------------------------------
+		// DEMO CODE (for video)
+		navigator.travelTo(navigator.tile*4, navigator.tile*4, true);
+		lsl.doLocalization(navigator.tile*4, navigator.tile*4);
+		navigator.travelTo(navigator.tile*5 - 25, navigator.tile*4 + 22 , false);
 		navigator.turnTo(0);
 		navigator.travelForwardDistance(15.5, 100);
 		launcher.lowerScooper();
-		navigator.travelForwardDistance(4, 50);
+		navigator.travelForwardDistance(2.5, 50);
+		launcher.lowerScooper(2);
+		navigator.travelForwardDistance(2.5, 50);
+		launcher.lowerScooper(2);
 		launcher.raiseScooper();
 		navigator.travelBackwardDistance(20,250);
-		navigator.shootDirection(3, 3);
+		navigator.turnTo(Math.toRadians(245));
+		launcher.shootBall(3);
+		
+		
+		
+		
+//		navigator.travelTo(navigator.tile*5, navigator.tile*5, true);
+//		lsl.doLocalization(navigator.tile*5, navigator.tile*5);
+//		navigator.travelTo(navigator.tile*4, navigator.tile*0, false);
+//		lsl.doLocalization(navigator.tile*4,navigator.tile*0);
+//		navigator.travelTo(navigator.tile*5 - 25, navigator.tile*0 + 23 , false);
+//		navigator.turnTo(0);
+//		navigator.travelForwardDistance(15.5, 100);
+//		launcher.lowerScooper();
+//		navigator.travelForwardDistance(4, 50);
+//		launcher.raiseScooper();
+//		navigator.travelBackwardDistance(20,250);
+//		navigator.shootDirection(3, 3);
 		
 		// travel to location where the balls are held
 		// navigator.travelTo(ballLoc[0],ballLoc[1],true);

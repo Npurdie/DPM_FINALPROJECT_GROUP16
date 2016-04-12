@@ -10,9 +10,9 @@ public class Launcher {
 	private EV3LargeRegulatedMotor scooperMotor;
 	private EV3LargeRegulatedMotor launcherMotor;
 	private int ACCELERATION = 300;
-	private int LOWER_ACCELERATION = 1000;
-	private int LOWER_SCOOPE_SPEED = 300;
-	private int RAISE_SCOOPE_SPEED = 80;
+	private int LOWER_ACCELERATION = 1200;
+	private int LOWER_SCOOPE_SPEED = 360;
+	private int RAISE_SCOOPE_SPEED = 115;
 	private int SHOOT_SPEED = 200;
 
 	/**
@@ -83,9 +83,13 @@ public class Launcher {
 	 */
 	public void shootBall(int numberOfBalls) {
 		for (int i = 0; i < numberOfBalls; i++) {
-			lowerScooper();
+			lowerScooper(140);
 			launcherMotor.rotate(-1080);
-			raiseScooper(-140);
+			raiseScooper(140);
+			lowerScooper(5);
+			raiseScooper(5);
+			lowerScooper(5);
+			raiseScooper(5);
 		}
 	}
 }
