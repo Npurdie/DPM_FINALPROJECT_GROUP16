@@ -68,17 +68,17 @@ public class RunEv3 {
 		Launcher launcher = new Launcher(clawMotor, launcherMotor);
 
 		//Get wifi parameters
-		//ParseWifi pw = new ParseWifi();
+		ParseWifi pw = new ParseWifi();
 		
 		double tile = 30.48;
 		
-		boolean attacker = false;//pw.getRole();
-		int cornerID = 1;//pw.getCornerID();
-		double[] cornerLoc= new double[]{0,0,0};// pw.getCorner();
-		double[] ballLoc = new double[]{6*tile,5*tile};//pw.getBallLoc();
-		double goalWidth = 2*tile;//pw.getGoalWidth();
-		double defLine = 3*tile;//pw.getDefenderLine();
-		double forwLine = 3*tile;//pw.getForwardLine();
+		boolean attacker = pw.getRole();
+		int cornerID = pw.getCornerID();
+		double[] cornerLoc= pw.getCorner();
+		double[] ballLoc = pw.getBallLoc();
+		double goalWidth = pw.getGoalWidth();
+		double defLine = pw.getDefenderLine();
+		double forwLine = pw.getForwardLine();
 		
 		if(attacker){
 				Attacker attackerRun = new Attacker(leftMotor, rightMotor, clawMotor, launcherMotor, TRACK, WHEEL_RADIUS, odo,
