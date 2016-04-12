@@ -14,7 +14,7 @@ import ev3Utilities.LightSensorDerivative;
 public class LightLocalizer {
 	private Odometer odometer;
 	private Navigation navigator;
-	private static int TURN_SPEED = 200;
+	private static int TURN_SPEED = 180;
 	private static int FORWARDSPEED = 400;
 	private final double sensorPosition = 12.5; // distance from robot center to
 												// light sensor

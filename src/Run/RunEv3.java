@@ -74,7 +74,7 @@ public class RunEv3 {
 		
 		boolean attacker = true;//pw.getRole();
 		int cornerID = 1;//pw.getCornerID();
-		double[] cornerLoc= new double[]{0,0};// pw.getCorner();
+		double[] cornerLoc= new double[]{0,0,0};// pw.getCorner();
 		double[] ballLoc = new double[]{6*tile,5*tile};//pw.getBallLoc();
 		double goalWidth = 2*tile;//pw.getGoalWidth();
 		double defLine = 3*tile;//pw.getDefenderLine();

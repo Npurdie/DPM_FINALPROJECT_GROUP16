@@ -103,7 +103,7 @@ public class Attacker {
 	
 		localize();
 		navigate();
-		retrieveBall(ballLoc[0] - 1*navigator.tile, ballLoc[1]);
+		retrieveBall(ballLoc[0], ballLoc[1]);
 		shootBalls();
 	}
 
@@ -198,18 +198,20 @@ public class Attacker {
     }
     //Retrieves balls
     private void retrieveBall(double x, double y){
-		navigator.travelTo(navigator.tile*x - 25, navigator.tile*y + 23 , false);
+		navigator.travelTo(x - 25, y + 23 , false);
 		navigator.turnTo(0);
 		navigator.travelForwardDistance(15.5, 100);
 		launcher.lowerScooper();
 		navigator.travelForwardDistance(4, 50);
 		launcher.raiseScooper();
 		navigator.travelBackwardDistance(20,250);
+		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
+		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
     }
         
     private void shootBalls(){
-    	navigator.travelTo((largeCoord-1)*navigator.tile, defLine - 2*navigator.tile, true);
-		lsl.doLocalization((largeCoord-1)*navigator.tile, defLine - 2*navigator.tile);
+    	navigator.travelTo((largeCoord-1)*navigator.tile, 0*navigator.tile, true);
+		lsl.doLocalization((largeCoord-1)*navigator.tile, 0*navigator.tile);
 		navigator.travelTo((largeCoord+1)/2*navigator.tile, defLine - 2*navigator.tile, true);
 		lsl.doLocalization((largeCoord+1)/2*navigator.tile, defLine - 2*navigator.tile);
 		navigator.shootDirection((largeCoord-1)/2*navigator.tile, 11*navigator.tile);
