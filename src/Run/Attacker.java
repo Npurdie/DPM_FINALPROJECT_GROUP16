@@ -35,6 +35,10 @@ public class Attacker {
 	private double goalWidth;
 	private double defLine;
 	private double forwLine;
+	
+	
+	//Field Parameter  (7 = BETA DEMO 11 = FINAL DEMO)
+	public static final double largeCoord = 7;
 	/**
 	 * The Attacker stores a reference to the left motor, right motor, claw
 	 * motor, launcher motor, the EV3's width, wheel radius , odometer, light
@@ -135,40 +139,41 @@ public class Attacker {
     	    	
     	switch(cornerID){
     	case 1:
-     		navigator.travelTo(6*navigator.tile, forwLine - 2*navigator.tile , true);
-     		lsl.doLocalization(6*navigator.tile, forwLine - 2*navigator.tile);
+     		navigator.travelTo((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile , true);
+     		lsl.doLocalization((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile);
     		
      		Sound.beep();
      		
-     		navigator.travelTo(10*navigator.tile, 0*navigator.tile, true);
-    		lsl.doLocalization(10*navigator.tile, 0*navigator.tile);
+     		navigator.travelTo((largeCoord-1)*navigator.tile, 0*navigator.tile, true);
+    		lsl.doLocalization((largeCoord-1)*navigator.tile, 0*navigator.tile);
     	
     		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
     		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
     		break;
     	case 2:
-    		navigator.travelTo(6*navigator.tile, forwLine - 2*navigator.tile , true);
-     		lsl.doLocalization(6*navigator.tile, forwLine - 2*navigator.tile);
+    		navigator.travelTo((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile , true);
+     		lsl.doLocalization((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile);
      		
      		Sound.beep();
      		
-    		navigator.travelTo(10*navigator.tile, 0*navigator.tile, true);
-    		lsl.doLocalization(10*navigator.tile, 0*navigator.tile);
-    		
+     		navigator.travelTo((largeCoord-1)*navigator.tile, 0*navigator.tile, true);
+    		lsl.doLocalization((largeCoord-1)*navigator.tile, 0*navigator.tile);
+    	
     		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
     		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
     		break;
     	case 3:
-    		navigator.travelTo(10*navigator.tile, 0*navigator.tile, true);
-    		lsl.doLocalization(10*navigator.tile, 0*navigator.tile);
-    		
-    		navigator.travelTo(6*navigator.tile, forwLine - 2*navigator.tile , true);
-     		lsl.doLocalization(6*navigator.tile, forwLine - 2*navigator.tile);
-    		
+    		navigator.travelTo((largeCoord-1)*navigator.tile, 0*navigator.tile, true);
+    		lsl.doLocalization((largeCoord-1)*navigator.tile, 0*navigator.tile);
+    	
+    		navigator.travelTo((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile , true);
+     		lsl.doLocalization((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile);
+     		
      		Sound.beep();
      		
-     		navigator.travelTo(10*navigator.tile, 0*navigator.tile, true);
-    		lsl.doLocalization(10*navigator.tile, 0*navigator.tile);
+     		navigator.travelTo((largeCoord-1)*navigator.tile, 0*navigator.tile, true);
+    		lsl.doLocalization((largeCoord-1)*navigator.tile, 0*navigator.tile);
+    	
     			
        		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
     		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);    		
@@ -177,13 +182,13 @@ public class Attacker {
     		navigator.travelTo(0*navigator.tile, 0*navigator.tile , true);
     		lsl.doLocalization(0*navigator.tile, 0*navigator.tile);
     		
-    		navigator.travelTo(6*navigator.tile, forwLine - 2*navigator.tile , true);
-     		lsl.doLocalization(6*navigator.tile, forwLine - 2*navigator.tile);
+    		navigator.travelTo((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile , true);
+     		lsl.doLocalization((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile);
      		
      		Sound.beep();
      		
-    		navigator.travelTo(10*navigator.tile, 0*navigator.tile, true);
-    		lsl.doLocalization(10*navigator.tile, 0*navigator.tile);
+     		navigator.travelTo((largeCoord-1)*navigator.tile, 0*navigator.tile, true);
+    		lsl.doLocalization((largeCoord-1)*navigator.tile, 0*navigator.tile);
     		
     		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
     		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
@@ -203,11 +208,11 @@ public class Attacker {
     }
         
     private void shootBalls(){
-    	navigator.travelTo(10, defLine - 2*navigator.tile, true);
-		lsl.doLocalization(10, defLine - 2*navigator.tile);
-		navigator.travelTo(6, defLine - 2*navigator.tile, true);
-		lsl.doLocalization(6, defLine - 2*navigator.tile);
-		navigator.shootDirection(5*navigator.tile, 11*navigator.tile);
+    	navigator.travelTo((largeCoord-1)*navigator.tile, defLine - 2*navigator.tile, true);
+		lsl.doLocalization((largeCoord-1)*navigator.tile, defLine - 2*navigator.tile);
+		navigator.travelTo((largeCoord+1)/2*navigator.tile, defLine - 2*navigator.tile, true);
+		lsl.doLocalization((largeCoord+1)/2*navigator.tile, defLine - 2*navigator.tile);
+		navigator.shootDirection((largeCoord-1)/2*navigator.tile, 11*navigator.tile);
 		launcher.shootBall(3);
     }
 }

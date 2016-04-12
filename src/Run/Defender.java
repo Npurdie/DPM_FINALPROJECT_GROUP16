@@ -29,6 +29,10 @@ public class Defender {
 	private double goalWidth;
 	private double defLine;
 	private double forwLine;
+	
+	//Field Parameter  (7 = BETA DEMO 11 = FINAL DEMO)
+	public static final double largeCoord = 7;
+
 	/**
 	 * The Defender stores a reference to the left motor, right motor, the EV3's
 	 * width, wheel radius , odometer, light poller, navigator, us localizer and
@@ -119,39 +123,38 @@ public class Defender {
     	    	
     	switch(cornerID){
     	case 1:
-     		navigator.travelTo(0*navigator.tile, 10*navigator.tile, true);
-     		lsl.doLocalization(0*navigator.tile, 10*navigator.tile);
+     		navigator.travelTo(0*navigator.tile, (largeCoord-1)*navigator.tile, true);
+     		lsl.doLocalization(0*navigator.tile, (largeCoord-1)*navigator.tile);
     
-     		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
-    		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
+     		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, true);
+    		lsl.doLocalization((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine);
      		
      		Sound.beep();
      		     
     		break;
     	case 2:
     		
-      		navigator.travelTo(10*navigator.tile, 10*navigator.tile, true);
-     		lsl.doLocalization(10*navigator.tile, 10*navigator.tile);
+    		navigator.travelTo((largeCoord-1)*navigator.tile, (largeCoord-1)*navigator.tile, true);
+     		lsl.doLocalization((largeCoord-1)*navigator.tile, (largeCoord-1)*navigator.tile);
     
-     		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
-    		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
+     		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, true);
+    		lsl.doLocalization((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine);
      		
-     		Sound.beep();
+    		Sound.beep();
      		     
     		break;
     	case 3:
     	   
-    		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
-    		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
+    		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, true);
+    		lsl.doLocalization((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine);
      		
      		Sound.beep();
      		     
     		break;
     	case 4:
      	    
-     		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
-    		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
-     		
+    		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, true);
+    		lsl.doLocalization((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine);
      		Sound.beep();
      		     
     		break;
@@ -165,7 +168,7 @@ public class Defender {
     }
     
     private void defend(){
-    	navigator.travelTo(5*navigator.tile+goalWidth/2, 13*navigator.tile - defLine , false);
+    	navigator.travelTo((largeCoord-1)/2*navigator.tile+goalWidth/2, (largeCoord+2)*navigator.tile - defLine , false);
     	navigator.turnTo(Math.toRadians(0));
     	int i = 0;
     	boolean accurate = true;
@@ -187,10 +190,10 @@ public class Defender {
     }
     
     private void fixDefense(){
-   		navigator.travelTo(6*navigator.tile, 13*navigator.tile - defLine, true);
-		lsl.doLocalization(6*navigator.tile, 13*navigator.tile - defLine);
+   		navigator.travelTo((largeCoord+1)/2*navigator.tile, (largeCoord+2)*navigator.tile - defLine, true);
+		lsl.doLocalization((largeCoord+1)/2*navigator.tile, (largeCoord+2)*navigator.tile - defLine);
     	
-    	navigator.travelTo(5*navigator.tile+goalWidth/2, 13*navigator.tile - defLine , false);
+    	navigator.travelTo((largeCoord-1)/2*navigator.tile+goalWidth/2, (largeCoord+2)*navigator.tile - defLine , false);
     	navigator.turnTo(Math.toRadians(0));
     }
        }
