@@ -9,9 +9,12 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 public class Launcher {
 	private EV3LargeRegulatedMotor scooperMotor;
 	private EV3LargeRegulatedMotor launcherMotor;
-	private int ACCELERATION = 600;
-	private int SCOOPE_SPEED = 270;
-	private int SHOOT_SPEED = 200;
+	private int ACCELERATION = 300;
+	 private int LOWER_ACCELERATION = 1200;
+	 private int LOWER_SCOOPE_SPEED = 360;
+	 private int RAISE_SCOOPE_SPEED = 115;
+	 private int SHOOT_SPEED = 200;
+	
 
 	/**
 	 * The launcher object stores a reference to both the claw motor and the
@@ -26,7 +29,6 @@ public class Launcher {
 
 		scooperMotor.setAcceleration(ACCELERATION);
 		launcherMotor.setAcceleration(ACCELERATION);
-		scooperMotor.setSpeed(SCOOPE_SPEED);
 		launcherMotor.setSpeed(SHOOT_SPEED);
 		scooperMotor.rotate(-160);
 	}
@@ -38,7 +40,8 @@ public class Launcher {
 	 *            The angle in degrees by which to rotate the claw.
 	 */
 	public void lowerScooper(int angle) {
-		scooperMotor.setSpeed(SCOOPE_SPEED);
+		scooperMotor.setAcceleration(ACCELERATION);
+		scooperMotor.setSpeed(RAISE_SCOOPE_SPEED);
 		scooperMotor.rotate(angle);
 	}
 
@@ -49,6 +52,8 @@ public class Launcher {
 	 *            The angle in degrees by which to rotate the claw.
 	 */
 	public void raiseScooper(int angle) {
+		scooperMotor.setAcceleration(ACCELERATION);
+		scooperMotor.setSpeed(RAISE_SCOOPE_SPEED);
 		scooperMotor.rotate(-angle);
 	}
 
@@ -56,18 +61,18 @@ public class Launcher {
 	 * This method raises the claw by 160 degrees, it's full range of motion.
 	 */
 	public void lowerScooper() {
-		scooperMotor.setSpeed(SCOOPE_SPEED);
-		scooperMotor.rotate(140);
+		scooperMotor.setAcceleration(LOWER_ACCELERATION);
+		scooperMotor.setSpeed(LOWER_SCOOPE_SPEED);
+		scooperMotor.rotate(160);
 	}
 
 	/**
 	 * This method raises the claw by 160 degrees, it's full range of motion.
 	 */
 	public void raiseScooper() {
-		scooperMotor.setSpeed(80);
-		scooperMotor.rotate(-70);
-		scooperMotor.setSpeed(100);
-		scooperMotor.rotate(-100);
+		scooperMotor.setAcceleration(ACCELERATION);
+		scooperMotor.setSpeed(RAISE_SCOOPE_SPEED);
+		scooperMotor.rotate(-160);
 	}
 
 	/**
@@ -79,9 +84,13 @@ public class Launcher {
 	 */
 	public void shootBall(int numberOfBalls) {
 		for (int i = 0; i < numberOfBalls; i++) {
-			lowerScooper();
+			lowerScooper(140);
 			launcherMotor.rotate(-1080);
-			raiseScooper(-140);
+			raiseScooper(140);
+			lowerScooper(5);
+			raiseScooper(5);
+			lowerScooper(5);
+			raiseScooper(5);
 		}
 	}
 }

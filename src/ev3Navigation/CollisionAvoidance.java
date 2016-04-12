@@ -85,7 +85,7 @@ public class CollisionAvoidance {
 		int medianF = 200;
 		int medianL = 200;
 		
-		for(int i=0;i<50;i++){
+		for(int i=0;i<25;i++){
 			distanceF = ultraSonicPoller.getForwardUsDistance();
 			distanceL = ultraSonicPoller.getLeftUSDistance();
 			
@@ -97,20 +97,14 @@ public class CollisionAvoidance {
 			}
 			
 			detectedDistanceF.add(distanceF);
-			detectionF = detectionF + detectedDistanceF.get(i);
-			
 			detectedDistanceL.add(distanceL);
-			detectionL = detectionL + detectedDistanceL.get(i);
-			
+
 			medianF = calculateMedian(detectedDistanceF);
 			medianL = calculateMedian(detectedDistanceL);
 		
 			}
 		
-		detectionF = detectionF/50;
-		detectionL = detectionL/50;
-		
-		if (detectionF < distance || detectionL < distance) {
+		if (medianF < distance || medianL < distance) {
 			return true;
 		}
 		return false;

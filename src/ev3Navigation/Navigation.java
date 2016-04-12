@@ -86,22 +86,19 @@ public class Navigation extends Thread {
 			if (avoidCollisions) {
 				CollisionAvoidance collisionAvoidance = new CollisionAvoidance(odometer, ultraSonicPoller, leftMotor,
 						rightMotor, wheelRadius, wheelBase);
-				if (collisionAvoidance.detectedObject(9)) {
+				if (collisionAvoidance.detectedObject(14)) {
 					double[] currLoc = { odometer.getX(), odometer.getY(), odometer.getTheta() };
 					double [] corner = new double[2];
 					leftMotor.stop();
 					rightMotor.stop();
 					stopMotors();
-					travelBackwardDistance(15, FORWARDSPEED);
-					pickCorner(corner);
-					lsl.doLocalization(corner[0],corner[1]);
-					travelTo(currLoc[0], currLoc[1], false);
+				//	travelBackwardDistance(20, FORWARDSPEED);
+				//	pickCorner(corner);
+				//	lsl.doLocalization(corner[0],corner[1]);
+				//	travelTo(currLoc[0], currLoc[1], false);
 					turnTo(currLoc[2] + Math.toRadians(90));
 					collisionAvoidance.avoidObject(18, 2);
 					odometer.setDistance(85);
-
-					// corner = lsl.pickCorner();
-					// lsl.doLocalization(corner[0]+tile,corner[1]+tile);
 				}
 			}
 			navigateTo(x, y);

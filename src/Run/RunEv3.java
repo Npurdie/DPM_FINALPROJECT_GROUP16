@@ -61,22 +61,24 @@ public class RunEv3 {
 		usPoller.start();
 		Odometer odo = new Odometer(leftMotor, rightMotor, WHEEL_RADIUS, TRACK);
 		Navigation navigator = new Navigation(leftMotor, rightMotor, WHEEL_RADIUS, TRACK, odo, usPoller);
-		USLocalizer usl = new USLocalizer(odo, usValueF, usDataF, navigator);
+		USLocalizer usl = new USLocalizer(odo, usValueL, usDataL, navigator);
 		LightPoller lightPoller = new LightPoller(colorValue, colorData);
 		LCDInfo lcd = new LCDInfo(odo, lightPoller);
 		LightLocalizer lsl = new LightLocalizer(odo, colorValue, colorData, navigator);
 		Launcher launcher = new Launcher(clawMotor, launcherMotor);
 
 		//Get wifi parameters
-		ParseWifi pw = new ParseWifi();
+		//ParseWifi pw = new ParseWifi();
 		
-		boolean attacker = pw.getRole();
-		int cornerID = pw.getCornerID();
-		double[] cornerLoc= pw.getCorner();
-		double[] ballLoc = pw.getBallLoc();
-		double goalWidth = pw.getGoalWidth();
-		double defLine = pw.getDefenderLine();
-		double forwLine = pw.getForwardLine();
+		double tile = 30.48;
+		
+		boolean attacker = true;//pw.getRole();
+		int cornerID = 1;//pw.getCornerID();
+		double[] cornerLoc= new double[]{0,0};// pw.getCorner();
+		double[] ballLoc = new double[]{10*tile,9*tile};//pw.getBallLoc();
+		double goalWidth = 3*tile;//pw.getGoalWidth();
+		double defLine = 4*tile;//pw.getDefenderLine();
+		double forwLine = 4*tile;//pw.getForwardLine();
 		
 		if(attacker){
 				Attacker attackerRun = new Attacker(leftMotor, rightMotor, clawMotor, launcherMotor, TRACK, WHEEL_RADIUS, odo,

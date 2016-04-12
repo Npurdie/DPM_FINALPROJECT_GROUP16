@@ -197,7 +197,7 @@ public class Attacker {
 		navigator.turnTo(0);
 		navigator.travelForwardDistance(15.5, 100);
 		launcher.lowerScooper();
-		navigator.travelForwardDistance(5, 50);
+		navigator.travelForwardDistance(4, 50);
 		launcher.raiseScooper();
 		navigator.travelBackwardDistance(20,250);
     }
