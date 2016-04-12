@@ -126,7 +126,7 @@ public class Defender {
      		navigator.travelTo(0*navigator.tile, (largeCoord-1)*navigator.tile, true);
      		lsl.doLocalization(0*navigator.tile, (largeCoord-1)*navigator.tile);
     
-     		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, true);
+     		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, false);
     		lsl.doLocalization((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine);
      		
      		Sound.beep();
@@ -137,7 +137,7 @@ public class Defender {
     		navigator.travelTo((largeCoord-1)*navigator.tile, (largeCoord-1)*navigator.tile, true);
      		lsl.doLocalization((largeCoord-1)*navigator.tile, (largeCoord-1)*navigator.tile);
     
-     		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, true);
+     		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, false);
     		lsl.doLocalization((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine);
      		
     		Sound.beep();
@@ -145,7 +145,7 @@ public class Defender {
     		break;
     	case 3:
     	   
-    		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, true);
+    		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, false);
     		lsl.doLocalization((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine);
      		
      		Sound.beep();
@@ -153,7 +153,7 @@ public class Defender {
     		break;
     	case 4:
      	    
-    		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, true);
+    		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, false);
     		lsl.doLocalization((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine);
      		Sound.beep();
      		     

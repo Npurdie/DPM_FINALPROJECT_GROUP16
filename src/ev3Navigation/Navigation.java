@@ -24,7 +24,7 @@ public class Navigation extends Thread {
 	private final double travelAngleError = 5.0;
 	private final double correctDistThreshold = 15;
 	private final double correctAngleThreshold = 3;
-	private final double recolalizeThreshold = 130;
+	private final double recolalizeThreshold = 120;
 	private final int middleField = 3;  
 	private final int isItSafeError = 15;
 	// ----------------------------------
