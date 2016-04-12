@@ -420,6 +420,15 @@ public class Navigation extends Thread {
 			
 			odometer.setDistance(95);
 		}
+		if((x<tile*(middleField+4)+isItSafeError)&&(x>tile*(middleField+4)-isItSafeError)){
+			
+			odometer.setDistance(95);
+		}
+		
+		if((y<tile*(middleField+4)+isItSafeError)&&(y>tile*(middleField+4)-isItSafeError)){
+			
+			odometer.setDistance(95);
+		}
 		
 		
 	}

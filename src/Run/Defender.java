@@ -84,11 +84,11 @@ public class Defender {
 	 * Initializes the defence sequence
 	 */
 	public void startDefense() {
-		
-		localize();
-		navigate();
-		stopUltraSonicSensors();
-		defend();
+		test();
+	//	localize();
+	//	navigate();
+	//	stopUltraSonicSensors();
+	//	defend();
 	}
 
 	private void setOdometryValues(double[] cornerValues) {
@@ -207,5 +207,13 @@ public class Defender {
     	
     	navigator.travelTo((largeCoord-1)/2*navigator.tile+goalWidth/2, (largeCoord+2)*navigator.tile - defLine , false);
     	navigator.turnTo(Math.toRadians(0));
+    }
+    
+    private void test(){
+    	localize();
+    	for(int i=0; i<12; i++){
+    	navigator.travelForwardDistance(2*navigator.tile, 400);	
+    	navigator.turnTo(odometer.getTheta() + Math.toRadians(90));
+    	}
     }
        }

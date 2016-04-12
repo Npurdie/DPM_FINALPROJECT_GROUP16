@@ -19,7 +19,7 @@ public class LightLocalizer {
 	private final double sensorPosition = 12.5; // distance from robot center to
 												// light sensor
 	private boolean gridLine = false;
-	private double finalAngleOffset = Math.toRadians(4);
+	private double finalAngleOffset = Math.toRadians(6);
 	
 	public boolean lslDONE = false;
 
