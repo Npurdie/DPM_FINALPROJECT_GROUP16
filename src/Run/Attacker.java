@@ -145,11 +145,11 @@ public class Attacker {
 
 			Sound.beep();
 
-			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
+			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, false);
 			lsl.doLocalization((largeCoord - 1) * navigator.tile, 0 * navigator.tile);
 
-			navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
-			lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
+			navigator.travelTo(ballLoc[0] - 1*navigator.tile, ballLoc[1], true);
+			lsl.doLocalization(ballLoc[0] - 1*navigator.tile, ballLoc[1]);
 			break;
 		case 2:
 			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, 1 * navigator.tile, true);
@@ -157,11 +157,11 @@ public class Attacker {
 
 			Sound.beep();
 
-			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
+			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, false);
 			lsl.doLocalization((largeCoord - 1) * navigator.tile, 0 * navigator.tile);
 
-			navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
-			lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
+			navigator.travelTo(ballLoc[0] - 1*navigator.tile, ballLoc[1], true);
+			lsl.doLocalization(ballLoc[0] - 1*navigator.tile, ballLoc[1]);
 			break;
 		case 3:
 			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
@@ -172,7 +172,7 @@ public class Attacker {
 
 			Sound.beep();
 
-			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
+			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, false);
 			lsl.doLocalization((largeCoord - 1) * navigator.tile, 0 * navigator.tile);
 
 			navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
@@ -187,11 +187,11 @@ public class Attacker {
 
 			Sound.beep();
 
-			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
+			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, false);
 			lsl.doLocalization((largeCoord - 1) * navigator.tile, 0 * navigator.tile);
 
-			navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
-			lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
+			navigator.travelTo(ballLoc[0] - 1*navigator.tile, ballLoc[1], true);
+			lsl.doLocalization(ballLoc[0] - 1*navigator.tile, ballLoc[1]);
 			break;
 
 		}
@@ -206,15 +206,12 @@ public class Attacker {
 		navigator.travelForwardDistance(4, 50);
 		launcher.raiseScooper();
 		navigator.travelBackwardDistance(20, 250);
-		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
-		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
+		navigator.travelTo(ballLoc[0] - 1*navigator.tile, ballLoc[1], true);
+		lsl.doLocalization(ballLoc[0] - 1*navigator.tile, ballLoc[1]);
 	}
 
 	private void shootBalls() {
-		navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
-		lsl.doLocalization((largeCoord - 1) * navigator.tile, 0 * navigator.tile);
-		navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, defLine - 2 * navigator.tile, false);
-		lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, defLine - 2 * navigator.tile);
+		navigator.travelTo((largeCoord - 1)/2 * navigator.tile, largeCoord*navigator.tile - (defLine+1)*navigator.tile, false);
 		navigator.shootDirection((largeCoord - 1) / 2 * navigator.tile, largeCoord * navigator.tile);
 		launcher.shootBall(3);
 	}
