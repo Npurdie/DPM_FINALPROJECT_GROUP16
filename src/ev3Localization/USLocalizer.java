@@ -153,7 +153,7 @@ public class USLocalizer {
 			}
 			// Once it reaches initial position,
 			// turn right by 35 degrees to avoid picking up wall again
-			navigator.turnTo(odometer.getTheta() - Math.toRadians(35));
+			navigator.turnTo(odometer.getTheta() - Math.toRadians(50));
 		} else
 		// If the robot is initially not facing any wall.
 		{
@@ -162,7 +162,7 @@ public class USLocalizer {
 			}
 			// Once it reaches initial position,
 			// turn right by 35 degrees to avoid picking up wall again
-			navigator.turnTo(odometer.getTheta() - Math.toRadians(35));
+			navigator.turnTo(odometer.getTheta() - Math.toRadians(50));
 
 		}
 

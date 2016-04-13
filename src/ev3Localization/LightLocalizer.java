@@ -16,7 +16,7 @@ public class LightLocalizer {
 	private Navigation navigator;
 	private static int TURN_SPEED = 180;
 	private static int FORWARDSPEED = 400;
-	private final double sensorPosition = 17.5; // distance from robot center to
+	private final double sensorPosition = 15.8; // distance from robot center to
 												// light sensor (used to be
 												// 12.5)
 	private boolean gridLine = false;

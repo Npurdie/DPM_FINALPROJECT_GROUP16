@@ -34,7 +34,7 @@ public class RunEv3 {
 	private static final Port colorPort = LocalEV3.get().getPort("S1");
 	public static final double WHEEL_RADIUS = 2.05;
 	public static final double TRACK = 15.7;
-	public static final double LIGHTSENSOR_WIDTH = 17.5; // It was 12.5
+	public static final double LIGHTSENSOR_WIDTH = 15.8; // It was 12.5
 
 	/**
 	 * Main method

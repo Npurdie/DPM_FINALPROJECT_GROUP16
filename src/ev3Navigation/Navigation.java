@@ -97,7 +97,7 @@ public class Navigation extends Thread {
 				//	lsl.doLocalization(corner[0],corner[1]);
 				//	travelTo(currLoc[0], currLoc[1], false);
 					turnTo(currLoc[2] + Math.toRadians(90));
-					collisionAvoidance.avoidObject(18, 2);
+					collisionAvoidance.avoidObject(16, 2);
 					odometer.setDistance(85);
 				}
 			}

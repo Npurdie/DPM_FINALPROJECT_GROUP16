@@ -140,8 +140,8 @@ public class Attacker {
 
 		switch (cornerID) {
 		case 1:
-			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile, true);
-			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile);
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, 1 * navigator.tile, true);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, 1 * navigator.tile);
 
 			Sound.beep();
 
@@ -152,8 +152,8 @@ public class Attacker {
 			lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
 			break;
 		case 2:
-			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile, true);
-			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile);
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, 1 * navigator.tile, true);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, 1 * navigator.tile);
 
 			Sound.beep();
 
@@ -167,8 +167,8 @@ public class Attacker {
 			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
 			lsl.doLocalization((largeCoord - 1) * navigator.tile, 0 * navigator.tile);
 
-			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile, true);
-			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile);
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, 1 * navigator.tile, true);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, 1 * navigator.tile);
 
 			Sound.beep();
 
@@ -182,8 +182,8 @@ public class Attacker {
 			navigator.travelTo(0 * navigator.tile, 0 * navigator.tile, true);
 			lsl.doLocalization(0 * navigator.tile, 0 * navigator.tile);
 
-			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile, true);
-			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile);
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, 1 * navigator.tile, true);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, 1 * navigator.tile);
 
 			Sound.beep();
 

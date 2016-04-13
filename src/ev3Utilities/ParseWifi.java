@@ -13,12 +13,14 @@ import lejos.hardware.lcd.TextLCD;
  */
 public class ParseWifi {
 
-	private static final String SERVER_IP = "192.168.10.114"; // "localhost";
+	private static final String SERVER_IP = "192.168.10.104"; // "localhost";
 	private static final int TEAM_NUMBER = 16;
 	private static TextLCD LCD = LocalEV3.get().getTextLCD();
-	private int player, ballColor, corner, lowerLocX, lowerLocY, upperLocX, upperLocY, d1, d2, w1;
+	private int player, ballColor, lowerLocX, lowerLocY, upperLocX, upperLocY, d1, d2, w1;
 	private final double tile = 30.48;
 	private HashMap<String, Integer> t;
+	private int defCorner;
+	private int forwCorner;
 
 	/**
 	 * Parse wifi connects to the host computer and creates a hashmap of all the
@@ -40,10 +42,12 @@ public class ParseWifi {
 				LCD.drawString("Failed to read transmission", 0, 5);
 			} else {
 				this.player = t.get("DTN"); // OFFENCE DEFENSE ?
+				this.defCorner = t.get("DSC");
+				this.forwCorner = t.get("OSC");
 				this.ballColor = t.get("BC");
 				this.lowerLocX = t.get("ll-x"); // lower left location of row of
 											// balls
-				this.upperLocY = t.get("ll-y");
+				this.lowerLocY = t.get("ll-y");
 				this.upperLocX = t.get("ur-x");
 				this.upperLocY = t.get("ur-y");
 				this.w1 = t.get("w1");
@@ -56,7 +60,13 @@ public class ParseWifi {
 		}
 	}
 	public int getCornerID(){
-		int ID = this.corner;
+		int ID;
+		if(player == 16){
+		ID = defCorner;} else {
+		ID = forwCorner;
+		}
+		
+		
 		return ID;
 		
 		
@@ -69,7 +79,11 @@ public class ParseWifi {
 	 * @return An array of doubles where (x coord, y coord, theta)
 	 */
 	public double[] getCorner() {
-		int id = corner;
+		int id;
+		if(player == 16){
+		id = defCorner;} else {
+		id = forwCorner;
+		}
 		double[] result = new double[3];
 		if (id == 1) {
 			result[0] = 0;
@@ -77,18 +91,18 @@ public class ParseWifi {
 			result[2] = 0;
 		}
 		if (id == 2) {
-			result[0] = 6 * tile;
+			result[0] = 10 * tile;
 			result[1] = 0;
 			result[2] = Math.toRadians(90);
 		}
 		if (id == 3) {
-			result[0] = 6 * tile;
-			result[1] = 6 * tile;
+			result[0] = 10 * tile;
+			result[1] = 10 * tile;
 			result[2] = Math.toRadians(180);
 		}
 		if (id == 4) {
 			result[0] = 0;
-			result[1] = 6 * tile;
+			result[1] = 10 * tile;
 			result[2] = Math.toRadians(270);
 		}
 		return result;
@@ -101,10 +115,8 @@ public class ParseWifi {
 	 */
 	public boolean getRole() {
 		if (player == 16) {
-			this.corner = t.get("DSC");
 			return false;
 		} else {
-			this.corner = t.get("OSC");
 			return true;
 		}
 	}
