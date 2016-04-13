@@ -27,6 +27,7 @@ public class Attacker {
 	private LightPoller lightPoller;
 	private Launcher launcher;
 	private ParseWifi pw;
+	private boolean rightSide;
 
 	// Wifi variables
 	private int cornerID;
@@ -72,11 +73,15 @@ public class Attacker {
 	 *            The launcher class
 	 */
 
-	public Attacker(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
-			EV3LargeRegulatedMotor clawMotor, EV3LargeRegulatedMotor launcherMotor, double width, double wheelRadius,
-			Odometer odometer, LightPoller lightPoller, Navigation navigator, USLocalizer uslocalizer,
-			LightLocalizer lightlocalizer, Launcher launcher, int cornerID, double[] cornerLoc, double[] ballLoc,
-			double goalWidth, double defLine, double forwLine) {
+	public Attacker(EV3LargeRegulatedMotor leftMotor,
+			EV3LargeRegulatedMotor rightMotor,
+			EV3LargeRegulatedMotor clawMotor,
+			EV3LargeRegulatedMotor launcherMotor, double width,
+			double wheelRadius, Odometer odometer, LightPoller lightPoller,
+			Navigation navigator, USLocalizer uslocalizer,
+			LightLocalizer lightlocalizer, Launcher launcher, int cornerID,
+			double[] cornerLoc, double[] ballLoc, double goalWidth,
+			double defLine, double forwLine) {
 		this.leftMotor = leftMotor;
 		this.rightMotor = rightMotor;
 		this.width = width;
@@ -103,7 +108,14 @@ public class Attacker {
 
 		localize();
 		navigate();
-		retrieveBall(ballLoc[0], ballLoc[1]);
+		if (ballLoc[0] > 5) {
+			rightSide = false;
+		}
+		else {
+			rightSide = true;
+		}
+		retrieveBall(ballLoc[0], ballLoc[1], rightSide);
+		
 		shootBalls();
 	}
 
@@ -121,7 +133,8 @@ public class Attacker {
 		// perform the ultrasonic sensor localization
 		usl.doLocalization();
 
-		LightSensorDerivative lsd = new LightSensorDerivative(odometer, lightPoller, lsl);
+		LightSensorDerivative lsd = new LightSensorDerivative(odometer,
+				lightPoller, lsl);
 		lsd.start();
 
 		// perform the light sensor localization
@@ -140,89 +153,111 @@ public class Attacker {
 
 		switch (cornerID) {
 		case 1:
-			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, 2 * navigator.tile, true);
-			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, 2 * navigator.tile);
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile,
+					2 * navigator.tile, true);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile,
+					2 * navigator.tile);
 
 			Sound.beep();
+			
+			goToBalls();
 
-			navigator.travelTo( 0 * navigator.tile, 0 * navigator.tile, false);
-			lsl.doLocalization( 0 * navigator.tile, 0 * navigator.tile);
-
-			navigator.travelTo(ballLoc[0] + 1*navigator.tile, ballLoc[1], false);
-			lsl.doLocalization(ballLoc[0] + 1*navigator.tile, ballLoc[1]);
 			break;
 		case 2:
-			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, 2 * navigator.tile, true);
-			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, 2 * navigator.tile);
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile,
+					2 * navigator.tile, true);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile,
+					2 * navigator.tile);
 
 			Sound.beep();
+			
+			goToBalls();
 
-			navigator.travelTo( 0 * navigator.tile, 0 * navigator.tile, false);
-			lsl.doLocalization( 0 * navigator.tile, 0 * navigator.tile);
-
-			navigator.travelTo(ballLoc[0] + 1*navigator.tile, ballLoc[1], false);
-			lsl.doLocalization(ballLoc[0] + 1*navigator.tile, ballLoc[1]);
 			break;
 		case 3:
-			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
-			lsl.doLocalization((largeCoord - 1) * navigator.tile, 0 * navigator.tile);
+			navigator.travelTo((largeCoord - 1) * navigator.tile,
+					0 * navigator.tile, true);
+			lsl.doLocalization((largeCoord - 1) * navigator.tile,
+					0 * navigator.tile);
 
-			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, 2 * navigator.tile, true);
-			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, 2 * navigator.tile);
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile,
+					2 * navigator.tile, true);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile,
+					2 * navigator.tile);
 
 			Sound.beep();
-
-			navigator.travelTo( 0 * navigator.tile, 0 * navigator.tile, false);
-			lsl.doLocalization( 0 * navigator.tile, 0 * navigator.tile);
-
-			navigator.travelTo(ballLoc[0] + navigator.tile, ballLoc[1], false);
-			lsl.doLocalization(ballLoc[0] + navigator.tile, ballLoc[1]);
+			
+			goToBalls();
+			
 			break;
 		case 4:
 			navigator.travelTo(0 * navigator.tile, 0 * navigator.tile, true);
 			lsl.doLocalization(0 * navigator.tile, 0 * navigator.tile);
 
-			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, 2 * navigator.tile, true);
-			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, 2 * navigator.tile);
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile,
+					2 * navigator.tile, true);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile,
+					2 * navigator.tile);
 
 			Sound.beep();
+			
+			goToBalls();
 
-			navigator.travelTo( 0 * navigator.tile, 0 * navigator.tile, false);
-			lsl.doLocalization( 0 * navigator.tile, 0 * navigator.tile);
-
-			navigator.travelTo(ballLoc[0] + 1*navigator.tile, ballLoc[1], false);
-			lsl.doLocalization(ballLoc[0] + 1*navigator.tile, ballLoc[1]);
 			break;
 
 		}
 	}
 
+	public void goToBalls() {
+		if (ballLoc[0] < 5 * navigator.tile) {
+			navigator.travelTo(0 * navigator.tile, 0 * navigator.tile, false);
+			lsl.doLocalization(0 * navigator.tile, 0 * navigator.tile);
+
+			navigator.travelTo(ballLoc[0] + 2 * navigator.tile, ballLoc[1],
+					true);
+			lsl.doLocalization(ballLoc[0] + 2 * navigator.tile, ballLoc[1]);
+		} else {
+			navigator.travelTo(10 * navigator.tile, 0 * navigator.tile, true);
+			lsl.doLocalization(10 * navigator.tile, 0 * navigator.tile);
+
+			navigator.travelTo(ballLoc[0] - 1 * navigator.tile, ballLoc[1],
+					false);
+			lsl.doLocalization(ballLoc[0] - 1 * navigator.tile, ballLoc[1]);
+		}
+	}
+
 	// Retrieves balls
-	private void retrieveBall(double x, double y) {
-		navigator.travelTo(x - 5, y + 23, false);
-		navigator.turnTo(180);
-		navigator.travelForwardDistance(15.5, 100);
-		launcher.lowerScooper();
-		navigator.travelForwardDistance(4, 50);
-		launcher.raiseScooper();
-		navigator.travelBackwardDistance(20, 250);
-		navigator.travelTo(ballLoc[0] + 1*navigator.tile, ballLoc[1], true);
-		lsl.doLocalization(ballLoc[0] + 1*navigator.tile, ballLoc[1]);
-		
-//		navigator.travelTo(x - 25, y + 23, false);
-//		navigator.turnTo(0);
-//		navigator.travelForwardDistance(15.5, 100);
-//		launcher.lowerScooper();
-//		navigator.travelForwardDistance(4, 50);
-//		launcher.raiseScooper();
-//		navigator.travelBackwardDistance(20, 250);
-//		navigator.travelTo(ballLoc[0] - 1*navigator.tile, ballLoc[1], true);
-//		lsl.doLocalization(ballLoc[0] - 1*navigator.tile, ballLoc[1]);
+	private void retrieveBall(double x, double y, boolean rightSide) {
+		if (!rightSide) {
+			navigator.travelTo(x + (2 * navigator.tile) - 5, y + 23, false);
+			navigator.turnTo(180);
+			navigator.travelForwardDistance(15.5, 100);
+			launcher.lowerScooper();
+			navigator.travelForwardDistance(4, 50);
+			launcher.raiseScooper();
+			navigator.travelBackwardDistance(20, 250);
+			navigator.travelTo(ballLoc[0] + 2 * navigator.tile, ballLoc[1],
+					true);
+			lsl.doLocalization(ballLoc[0] + 2 * navigator.tile, ballLoc[1]);
+		} else {
+			navigator.travelTo(x - 25, y + 23, false);
+			navigator.turnTo(0);
+			navigator.travelForwardDistance(15.5, 100);
+			launcher.lowerScooper();
+			navigator.travelForwardDistance(4, 50);
+			launcher.raiseScooper();
+			navigator.travelBackwardDistance(20, 250);
+			navigator.travelTo(ballLoc[0] - 1 * navigator.tile, ballLoc[1],
+					true);
+			lsl.doLocalization(ballLoc[0] - 1 * navigator.tile, ballLoc[1]);
+		}
 	}
 
 	private void shootBalls() {
-		navigator.travelTo((largeCoord - 1)/2 * navigator.tile, largeCoord*navigator.tile - (defLine+1)*navigator.tile, false);
-		navigator.shootDirection((largeCoord - 1) / 2 * navigator.tile, largeCoord * navigator.tile);
+		navigator.travelTo((largeCoord - 1) / 2 * navigator.tile, largeCoord
+				* navigator.tile - (defLine + 1) * navigator.tile, false);
+		navigator.shootDirection((largeCoord - 1) / 2 * navigator.tile,
+				largeCoord * navigator.tile);
 		launcher.shootBall(3);
 	}
 }
