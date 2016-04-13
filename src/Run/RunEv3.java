@@ -40,7 +40,11 @@ public class RunEv3 {
 	 * Main method
 	 */
 	public static void main(String[] args) {
-
+		
+		leftMotor.setAcceleration(0);
+		rightMotor.setAcceleration(0);
+		clawMotor.setAcceleration(0);
+		launcherMotor.setAcceleration(0);
 	
 		@SuppressWarnings("resource") // Because we don't bother to close this
 										// resource
@@ -70,8 +74,8 @@ public class RunEv3 {
 		//Get wifi parameters
 		ParseWifi pw = new ParseWifi();
 		
-		boolean attacker = false;//pw.getRole();
-		int cornerID = 1;//pw.getCornerID();
+		boolean attacker = pw.getRole();
+		int cornerID = pw.getCornerID();
 		double[] cornerLoc= pw.getCorner();
 		double[] ballLoc = pw.getBallLoc();
 		double goalWidth = pw.getGoalWidth();
