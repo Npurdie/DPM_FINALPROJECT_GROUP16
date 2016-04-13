@@ -49,8 +49,11 @@ public class BallPlatformCompatibilityTest {
 		Navigation navigator = new Navigation(leftMotor, rightMotor, WHEEL_RADIUS, TRACK, odo, usPoller);
 
 		Launcher launcher = new Launcher(clawMotor, launcherMotor);
-
-		odo.start();
+		launcher.lowerScooper();
+		navigator.travelForwardDistance(4, 50);
+		launcher.raiseScooper();
+		launcher.shootBall(3);
+	/*	odo.start();
 
 		odo.setTheta(0);
 		navigator.turnTo(Math.toRadians(90));
@@ -61,7 +64,9 @@ public class BallPlatformCompatibilityTest {
 		navigator.stopMotors();
 		launcher.lowerScooper();
 		navigator.travelForwardDistance(25, 80);
-		launcher.raiseScooper();
+		launcher.raiseScooper();*/
+		
+		
 
 		// COMMMENTING SO I CAN COMMNIT...DSLKJG;SAJDG;LSAJGALKJDS
 

@@ -13,7 +13,7 @@ import lejos.hardware.lcd.TextLCD;
  */
 public class ParseWifi {
 
-	private static final String SERVER_IP = "192.168.10.104"; // "localhost";
+	private static final String SERVER_IP = "192.168.10.200"; // "localhost";
 	private static final int TEAM_NUMBER = 16;
 	private static TextLCD LCD = LocalEV3.get().getTextLCD();
 	private int player, ballColor, lowerLocX, lowerLocY, upperLocX, upperLocY, d1, d2, w1;
