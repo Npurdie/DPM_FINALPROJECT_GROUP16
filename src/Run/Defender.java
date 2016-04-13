@@ -213,7 +213,7 @@ public class Defender {
     	localize();
     	for(int i=0; i<12; i++){
     	navigator.travelForwardDistance(2*navigator.tile, 400);	
-    	navigator.turnTo(odometer.getTheta() + Math.toRadians(90));
+       	navigator.turnTo(odometer.getTheta() + Math.toRadians(90));
     	}
     }
        }

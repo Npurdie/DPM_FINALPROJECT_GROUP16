@@ -15,11 +15,11 @@ public class LightLocalizer {
 	private Odometer odometer;
 	private Navigation navigator;
 	private static int TURN_SPEED = 180;
-	private static int FORWARDSPEED = 250;
+	private static int FORWARDSPEED = 400;
 	private final double sensorPosition = 12.5; // distance from robot center to
 												// light sensor
 	private boolean gridLine = false;
-	private double finalAngleOffset = Math.toRadians(6);
+	private double finalAngleOffset = Math.toRadians(4);
 	
 	public boolean lslDONE = false;
 
