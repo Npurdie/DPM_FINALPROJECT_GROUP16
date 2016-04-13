@@ -160,6 +160,8 @@ public class Attacker {
 			navigator.travelTo( 0 * navigator.tile, 0 * navigator.tile, false);
 			lsl.doLocalization( 0 * navigator.tile, 0 * navigator.tile);
 
+			navigator.travelTo(ballLoc[0] + 1*navigator.tile, ballLoc[1], false);
+			lsl.doLocalization(ballLoc[0] + 1*navigator.tile, ballLoc[1]);
 			break;
 		case 3:
 			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
@@ -204,7 +206,6 @@ public class Attacker {
 		navigator.travelForwardDistance(4, 50);
 		launcher.raiseScooper();
 		navigator.travelBackwardDistance(20, 250);
-
 		navigator.travelTo(ballLoc[0] + 1*navigator.tile, ballLoc[1], true);
 		lsl.doLocalization(ballLoc[0] + 1*navigator.tile, ballLoc[1]);
 		
@@ -217,7 +218,6 @@ public class Attacker {
 //		navigator.travelBackwardDistance(20, 250);
 //		navigator.travelTo(ballLoc[0] - 1*navigator.tile, ballLoc[1], true);
 //		lsl.doLocalization(ballLoc[0] - 1*navigator.tile, ballLoc[1]);
-
 	}
 
 	private void shootBalls() {
