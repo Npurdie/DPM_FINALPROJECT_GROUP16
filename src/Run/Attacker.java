@@ -38,7 +38,7 @@ public class Attacker {
 	
 	
 	//Field Parameter  (7 = BETA DEMO 11 = FINAL DEMO)
-	public static final double largeCoord = 7;
+	public static final double largeCoord = 11;
 	/**
 	 * The Attacker stores a reference to the left motor, right motor, claw
 	 * motor, launcher motor, the EV3's width, wheel radius , odometer, light
@@ -214,7 +214,7 @@ public class Attacker {
 		lsl.doLocalization((largeCoord-1)*navigator.tile, 0*navigator.tile);
 		navigator.travelTo((largeCoord+1)/2*navigator.tile, defLine - 2*navigator.tile, true);
 		lsl.doLocalization((largeCoord+1)/2*navigator.tile, defLine - 2*navigator.tile);
-		navigator.shootDirection((largeCoord-1)/2*navigator.tile, 11*navigator.tile);
+		navigator.shootDirection((largeCoord-1)/2*navigator.tile, largeCoord*navigator.tile);
 		launcher.shootBall(3);
     }
 }

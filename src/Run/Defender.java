@@ -31,7 +31,7 @@ public class Defender {
 	private double forwLine;
 	
 	//Field Parameter  (7 = BETA DEMO 11 = FINAL DEMO)
-	public static final double largeCoord = 7;
+	public static final double largeCoord = 11;
 
 	/**
 	 * The Defender stores a reference to the left motor, right motor, the EV3's
