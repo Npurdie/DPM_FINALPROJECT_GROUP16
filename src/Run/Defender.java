@@ -22,15 +22,15 @@ public class Defender {
 	private LightPoller lightPoller;
 	private UltrasonicPoller USPoller;
 
-	//Wifi variables
+	// Wifi variables
 	private int cornerID;
 	private double[] cornerLoc;
 	private double[] ballLoc;
 	private double goalWidth;
 	private double defLine;
 	private double forwLine;
-	
-	//Field Parameter  (7 = BETA DEMO 11 = FINAL DEMO)
+
+	// Field Parameter (7 = BETA DEMO 11 = FINAL DEMO)
 	public static final double largeCoord = 11;
 
 	/**
@@ -60,8 +60,8 @@ public class Defender {
 	 */
 	public Defender(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor, double width,
 			double wheelRadius, Odometer odometer, LightPoller lightPoller, Navigation navigator,
-			USLocalizer uslocalizer, LightLocalizer lightlocalizer, int cornerID, double[] cornerLoc, double[] ballLoc, double goalWidth,
-			double defLine, double forwLine, UltrasonicPoller USPoller) {
+			USLocalizer uslocalizer, LightLocalizer lightlocalizer, int cornerID, double[] cornerLoc, double[] ballLoc,
+			double goalWidth, double defLine, double forwLine, UltrasonicPoller USPoller) {
 		this.leftMotor = leftMotor;
 		this.rightMotor = rightMotor;
 		this.width = width;
@@ -84,11 +84,10 @@ public class Defender {
 	 * Initializes the defence sequence
 	 */
 	public void startDefense() {
-		test();
-	//	localize();
-	//	navigate();
-	//	stopUltraSonicSensors();
-	//	defend();
+		localize();
+		navigate();
+		stopUltraSonicSensors();
+		defend();
 	}
 
 	private void setOdometryValues(double[] cornerValues) {
@@ -97,8 +96,8 @@ public class Defender {
 		odometer.setTheta(cornerValues[2]);
 
 	}
-	
-    private void localize(){
+
+	private void localize() {
 		odometer.start();
 		lightPoller.start();
 		navigator.setLSL(lsl);
@@ -110,110 +109,105 @@ public class Defender {
 
 		// perform the light sensor localization
 		lsl.doLocalization();
-		
-		while(!lsl.lslDONE){
+
+		while (!lsl.lslDONE) {
 		}
-		//Initialize odometry readings to localized coordinates.
+		// Initialize odometry readings to localized coordinates.
 		setOdometryValues(this.cornerLoc);
-    
-    }
-    
-    //Navigates from initial localization to the attacker's zone and finally towards the balls.
-    private void navigate(){
-    	    	
-    	switch(cornerID){
-    	case 1:
-     		navigator.travelTo(0*navigator.tile, (largeCoord-1)*navigator.tile, true);
-     		lsl.doLocalization(0*navigator.tile, (largeCoord-1)*navigator.tile);
-    
-     		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, false);
-    		lsl.doLocalization((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine);
-     		
-     		Sound.beep();
-     		     
-    		break;
-    	case 2:
-    		
-    		navigator.travelTo((largeCoord-1)*navigator.tile, (largeCoord-1)*navigator.tile, true);
-     		lsl.doLocalization((largeCoord-1)*navigator.tile, (largeCoord-1)*navigator.tile);
-    
-     		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, false);
-    		lsl.doLocalization((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine);
-     		
-    		Sound.beep();
-     		     
-    		break;
-    	case 3:
-    	   
-    		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, false);
-    		lsl.doLocalization((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine);
-     		
-     		Sound.beep();
-     		     
-    		break;
-    	case 4:
-     	    
-    		navigator.travelTo((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine, false);
-    		lsl.doLocalization((largeCoord+1)/2*navigator.tile,(largeCoord+2)*navigator.tile - defLine);
-     		Sound.beep();
-     		     
-    		break;
-    	
-    	}
-    }
-    
-    private void stopUltraSonicSensors(){
-    	USPoller.turnOffSensors();
-   
-    }
-    
-    private void defend(){
-    	navigator.travelTo((largeCoord-1)/2*navigator.tile+goalWidth/2, (largeCoord+2)*navigator.tile - defLine , false);
-    	navigator.turnTo(Math.toRadians(0));
-    	int i = 0;
-    	navigator.travelBackwardDistance(10, 200);
-    	
-    	while(true){
-    		
-    		if(i>3){
-    		i=0;
-    		fixDefense();
-    		}
-    		try {
+
+	}
+
+	// Navigates from initial localization to the attacker's zone and finally
+	// towards the balls.
+	private void navigate() {
+
+		switch (cornerID) {
+		case 1:
+			navigator.travelTo(0 * navigator.tile, (largeCoord - 1) * navigator.tile, true);
+			lsl.doLocalization(0 * navigator.tile, (largeCoord - 1) * navigator.tile);
+
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile, false);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile);
+
+			Sound.beep();
+
+			break;
+		case 2:
+
+			navigator.travelTo((largeCoord - 1) * navigator.tile, (largeCoord - 1) * navigator.tile, true);
+			lsl.doLocalization((largeCoord - 1) * navigator.tile, (largeCoord - 1) * navigator.tile);
+
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile, false);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile);
+
+			Sound.beep();
+
+			break;
+		case 3:
+
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile, false);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile);
+
+			Sound.beep();
+
+			break;
+		case 4:
+
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile, false);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile);
+			Sound.beep();
+
+			break;
+
+		}
+	}
+
+	private void stopUltraSonicSensors() {
+		USPoller.turnOffSensors();
+
+	}
+
+	private void defend() {
+		navigator.travelTo((largeCoord - 1) / 2 * navigator.tile + goalWidth / 2, (largeCoord - 3) * navigator.tile,
+				false);
+		navigator.turnTo(Math.toRadians(0));
+		int i = 0;
+		navigator.travelBackwardDistance(10, 200);
+
+		while (true) {
+
+			if (i > 3) {
+				i = 0;
+				fixDefense();
+			}
+			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    		navigator.travelBackwardDistance(goalWidth-22, 200);
-    		try {
+			navigator.travelBackwardDistance(goalWidth - 22, 200);
+			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    		navigator.travelForwardDistance(goalWidth-22, 200);
-    		
-    		i++;
- 
-    	}
-    	
-    	
-    }
-    
-    private void fixDefense(){
-   		navigator.travelTo((largeCoord+1)/2*navigator.tile, (largeCoord+2)*navigator.tile - defLine, false);
-		lsl.doLocalization((largeCoord+1)/2*navigator.tile, (largeCoord+2)*navigator.tile - defLine);
-    	
-    	navigator.travelTo((largeCoord-1)/2*navigator.tile+goalWidth/2, (largeCoord+2)*navigator.tile - defLine , false);
-    	navigator.turnTo(Math.toRadians(0));
-    }
-    
-    private void test(){
-    	localize();
-    	for(int i=0; i<12; i++){
-    	navigator.travelForwardDistance(2*navigator.tile, 400);	
-       	navigator.turnTo(odometer.getTheta() + Math.toRadians(90));
-    	}
-    }
-       }
+			navigator.travelForwardDistance(goalWidth - 22, 200);
+
+			i++;
+
+		}
+
+	}
+
+	private void fixDefense() {
+		navigator.travelTo((largeCoord - 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile, false);
+		lsl.doLocalization((largeCoord - 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile);
+
+		navigator.travelTo((largeCoord - 1) / 2 * navigator.tile + goalWidth / 2, (largeCoord - 3) * navigator.tile,
+				false);
+		navigator.turnTo(Math.toRadians(0));
+	}
+
+}

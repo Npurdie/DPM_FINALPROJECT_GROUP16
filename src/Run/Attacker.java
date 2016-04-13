@@ -28,17 +28,17 @@ public class Attacker {
 	private Launcher launcher;
 	private ParseWifi pw;
 
-	//Wifi variables
+	// Wifi variables
 	private int cornerID;
 	private double[] cornerLoc;
 	private double[] ballLoc;
 	private double goalWidth;
 	private double defLine;
 	private double forwLine;
-	
-	
-	//Field Parameter  (7 = BETA DEMO 11 = FINAL DEMO)
+
+	// Field Parameter (7 = BETA DEMO 11 = FINAL DEMO)
 	public static final double largeCoord = 11;
+
 	/**
 	 * The Attacker stores a reference to the left motor, right motor, claw
 	 * motor, launcher motor, the EV3's width, wheel radius , odometer, light
@@ -75,8 +75,8 @@ public class Attacker {
 	public Attacker(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
 			EV3LargeRegulatedMotor clawMotor, EV3LargeRegulatedMotor launcherMotor, double width, double wheelRadius,
 			Odometer odometer, LightPoller lightPoller, Navigation navigator, USLocalizer uslocalizer,
-			LightLocalizer lightlocalizer, Launcher launcher,int cornerID, double[] cornerLoc, double[] ballLoc, double goalWidth,
-			double defLine, double forwLine) {
+			LightLocalizer lightlocalizer, Launcher launcher, int cornerID, double[] cornerLoc, double[] ballLoc,
+			double goalWidth, double defLine, double forwLine) {
 		this.leftMotor = leftMotor;
 		this.rightMotor = rightMotor;
 		this.width = width;
@@ -93,14 +93,14 @@ public class Attacker {
 		this.goalWidth = goalWidth;
 		this.defLine = defLine;
 		this.forwLine = forwLine;
-		
+
 	}
 
 	/**
 	 * Initializes the attack sequence
 	 */
 	public void startAttack() {
-	
+
 		localize();
 		navigate();
 		retrieveBall(ballLoc[0], ballLoc[1]);
@@ -113,8 +113,8 @@ public class Attacker {
 		odometer.setTheta(cornerValues[2]);
 
 	}
-	
-    private void localize(){
+
+	private void localize() {
 		odometer.start();
 		lightPoller.start();
 		navigator.setLSL(lsl);
@@ -126,95 +126,96 @@ public class Attacker {
 
 		// perform the light sensor localization
 		lsl.doLocalization();
-		
-		while(!lsl.lslDONE){
+
+		while (!lsl.lslDONE) {
 		}
-		//Initialize odometry readings to localized coordinates.
+		// Initialize odometry readings to localized coordinates.
 		setOdometryValues(this.cornerLoc);
-    
-    }
-    
-    //Navigates from initial localization to the attacker's zone and finally towards the balls.
-    private void navigate(){
-    	    	
-    	switch(cornerID){
-    	case 1:
-     		navigator.travelTo((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile , true);
-     		lsl.doLocalization((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile);
-    		
-     		Sound.beep();
-     		
-     		navigator.travelTo((largeCoord-1)*navigator.tile, 0*navigator.tile, true);
-    		lsl.doLocalization((largeCoord-1)*navigator.tile, 0*navigator.tile);
-    	
-    		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
-    		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
-    		break;
-    	case 2:
-    		navigator.travelTo((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile , true);
-     		lsl.doLocalization((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile);
-     		
-     		Sound.beep();
-     		
-     		navigator.travelTo((largeCoord-1)*navigator.tile, 0*navigator.tile, true);
-    		lsl.doLocalization((largeCoord-1)*navigator.tile, 0*navigator.tile);
-    	
-    		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
-    		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
-    		break;
-    	case 3:
-    		navigator.travelTo((largeCoord-1)*navigator.tile, 0*navigator.tile, true);
-    		lsl.doLocalization((largeCoord-1)*navigator.tile, 0*navigator.tile);
-    	
-    		navigator.travelTo((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile , true);
-     		lsl.doLocalization((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile);
-     		
-     		Sound.beep();
-     		
-     		navigator.travelTo((largeCoord-1)*navigator.tile, 0*navigator.tile, true);
-    		lsl.doLocalization((largeCoord-1)*navigator.tile, 0*navigator.tile);
-    	
-    			
-       		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
-    		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);    		
-    		break;
-    	case 4:
-    		navigator.travelTo(0*navigator.tile, 0*navigator.tile , true);
-    		lsl.doLocalization(0*navigator.tile, 0*navigator.tile);
-    		
-    		navigator.travelTo((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile , true);
-     		lsl.doLocalization((largeCoord+1)/2*navigator.tile, forwLine - 2*navigator.tile);
-     		
-     		Sound.beep();
-     		
-     		navigator.travelTo((largeCoord-1)*navigator.tile, 0*navigator.tile, true);
-    		lsl.doLocalization((largeCoord-1)*navigator.tile, 0*navigator.tile);
-    		
-    		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
-    		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
-    		break;
-    	
-    	}
-    }
-    //Retrieves balls
-    private void retrieveBall(double x, double y){
-		navigator.travelTo(x - 25, y + 23 , false);
+
+	}
+
+	// Navigates from initial localization to the attacker's zone and finally
+	// towards the balls.
+	private void navigate() {
+
+		switch (cornerID) {
+		case 1:
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile, true);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile);
+
+			Sound.beep();
+
+			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
+			lsl.doLocalization((largeCoord - 1) * navigator.tile, 0 * navigator.tile);
+
+			navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
+			lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
+			break;
+		case 2:
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile, true);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile);
+
+			Sound.beep();
+
+			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
+			lsl.doLocalization((largeCoord - 1) * navigator.tile, 0 * navigator.tile);
+
+			navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
+			lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
+			break;
+		case 3:
+			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
+			lsl.doLocalization((largeCoord - 1) * navigator.tile, 0 * navigator.tile);
+
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile, true);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile);
+
+			Sound.beep();
+
+			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
+			lsl.doLocalization((largeCoord - 1) * navigator.tile, 0 * navigator.tile);
+
+			navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
+			lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
+			break;
+		case 4:
+			navigator.travelTo(0 * navigator.tile, 0 * navigator.tile, true);
+			lsl.doLocalization(0 * navigator.tile, 0 * navigator.tile);
+
+			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile, true);
+			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, forwLine - 2 * navigator.tile);
+
+			Sound.beep();
+
+			navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
+			lsl.doLocalization((largeCoord - 1) * navigator.tile, 0 * navigator.tile);
+
+			navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
+			lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
+			break;
+
+		}
+	}
+
+	// Retrieves balls
+	private void retrieveBall(double x, double y) {
+		navigator.travelTo(x - 25, y + 23, false);
 		navigator.turnTo(0);
 		navigator.travelForwardDistance(15.5, 100);
 		launcher.lowerScooper();
 		navigator.travelForwardDistance(4, 50);
 		launcher.raiseScooper();
-		navigator.travelBackwardDistance(20,250);
+		navigator.travelBackwardDistance(20, 250);
 		navigator.travelTo(ballLoc[0] - navigator.tile, ballLoc[1], true);
 		lsl.doLocalization(ballLoc[0] - navigator.tile, ballLoc[1]);
-    }
-        
-    private void shootBalls(){
-    	navigator.travelTo((largeCoord-1)*navigator.tile, 0*navigator.tile, true);
-		lsl.doLocalization((largeCoord-1)*navigator.tile, 0*navigator.tile);
-		navigator.travelTo((largeCoord+1)/2*navigator.tile, defLine - 2*navigator.tile, true);
-		lsl.doLocalization((largeCoord+1)/2*navigator.tile, defLine - 2*navigator.tile);
-		navigator.shootDirection((largeCoord-1)/2*navigator.tile, largeCoord*navigator.tile);
+	}
+
+	private void shootBalls() {
+		navigator.travelTo((largeCoord - 1) * navigator.tile, 0 * navigator.tile, true);
+		lsl.doLocalization((largeCoord - 1) * navigator.tile, 0 * navigator.tile);
+		navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, defLine - 2 * navigator.tile, false);
+		lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, defLine - 2 * navigator.tile);
+		navigator.shootDirection((largeCoord - 1) / 2 * navigator.tile, largeCoord * navigator.tile);
 		launcher.shootBall(3);
-    }
+	}
 }

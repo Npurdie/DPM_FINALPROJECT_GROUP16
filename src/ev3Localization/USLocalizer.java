@@ -55,7 +55,7 @@ public class USLocalizer {
 	public void doLocalization() {
 
 		Sound.twoBeeps();
-		
+
 		initializeRobot();
 
 		double latchA, latchB; // angle of wall A and Wall B

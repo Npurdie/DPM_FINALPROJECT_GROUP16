@@ -16,11 +16,12 @@ public class LightLocalizer {
 	private Navigation navigator;
 	private static int TURN_SPEED = 180;
 	private static int FORWARDSPEED = 400;
-	private final double sensorPosition = 12.5; // distance from robot center to
-												// light sensor
+	private final double sensorPosition = 17.5; // distance from robot center to
+												// light sensor (used to be
+												// 12.5)
 	private boolean gridLine = false;
 	private double finalAngleOffset = Math.toRadians(4);
-	
+
 	public boolean lslDONE = false;
 
 	/**
@@ -54,9 +55,9 @@ public class LightLocalizer {
 	 *            The y location of where to perform the localization.
 	 */
 	public void doLocalization(double x, double y) {
-		
+
 		Sound.beep();
-				
+
 		double gridLines[] = new double[4]; // stores the angles of all 4 lines
 		double dx = 0;
 		double dy = 0;
@@ -74,7 +75,7 @@ public class LightLocalizer {
 			// next iteration
 			Sound.beep();
 			navigator.turnBy(10, TURN_SPEED);
-			
+
 			gridLine = false;
 		}
 		if (gridLines[0] < Math.PI) { // wrap-around angle
@@ -109,9 +110,9 @@ public class LightLocalizer {
 	 * method performs the localization in place.
 	 */
 	public void doLocalization() {
-		
+
 		Sound.beep();
-		
+
 		double gridLines[] = new double[4]; // stores the angles of all 4 lines
 		double dx = 0;
 		double dy = 0;
@@ -120,7 +121,7 @@ public class LightLocalizer {
 			navigator.travelForwards(FORWARDSPEED);
 		}
 
-		navigator.travelBackwardDistance(sensorPosition,FORWARDSPEED);
+		navigator.travelBackwardDistance(sensorPosition, FORWARDSPEED);
 
 		navigator.turnTo(Math.toRadians(45), TURN_SPEED);
 		gridLine = false;
@@ -156,11 +157,11 @@ public class LightLocalizer {
 		navigator.travelTo(0, 0, false);
 		navigator.stopMotors();
 		odometer.setDistance(0);
-		
+
 		navigator.turnTo(0);
 
 		Sound.twoBeeps();
-		
+
 		lslDONE = true;
 	}
 
@@ -172,61 +173,46 @@ public class LightLocalizer {
 	 *            The integer ID of a corner to avoid returning because an
 	 *            object covers it. (0 = ll, 1 = lr, 2 = ur, 3 = ul)
 	 */
-/*	public double[] pickCorner() {
-		double[][] corner = { new double[2], new double[2], new double[2], new double[2] };
-		double currX = odometer.getX();
-		double currY = odometer.getY();
-		double tile = navigator.tile;
-		corner[0][0] = currX - currX % tile;
-		corner[0][1] = currY - currY % tile;
-		corner[1][0] = currX - currX % tile + tile;
-		corner[1][1] = currY - currY % tile;
-		corner[2][0] = currX - currX % tile + tile;
-		corner[2][1] = currY - currY % tile + tile;
-		corner[3][0] = currX - currX % tile;
-		corner[3][1] = currY - currY % tile + tile;
+	/*
+	 * public double[] pickCorner() { double[][] corner = { new double[2], new
+	 * double[2], new double[2], new double[2] }; double currX =
+	 * odometer.getX(); double currY = odometer.getY(); double tile =
+	 * navigator.tile; corner[0][0] = currX - currX % tile; corner[0][1] = currY
+	 * - currY % tile; corner[1][0] = currX - currX % tile + tile; corner[1][1]
+	 * = currY - currY % tile; corner[2][0] = currX - currX % tile + tile;
+	 * corner[2][1] = currY - currY % tile + tile; corner[3][0] = currX - currX
+	 * % tile; corner[3][1] = currY - currY % tile + tile;
+	 * 
+	 * double smallest = tile; int foo = 0; for (int i = 0; i < 4; i++) { double
+	 * temp = Math.sqrt(Math.pow((currX - corner[i][0]), 2) + Math.pow(currY -
+	 * corner[i][1], 2)); if (temp < smallest) { smallest = temp; foo = i; } }
+	 * return corner[foo]; }
+	 */
 
-		double smallest = tile;
-		int foo = 0;
-		for (int i = 0; i < 4; i++) {
-			double temp = Math.sqrt(Math.pow((currX - corner[i][0]), 2) + Math.pow(currY - corner[i][1], 2));
-			if (temp < smallest) {
-				smallest = temp;
-				foo = i;
-			}
-		}
-		return corner[foo];
-	} */ 
-	
 	/**
 	 * localize in corner passed as int
 	 *
 	 * @param obstacleCorner
-	 *            The integer ID of a corner to localize in  (0 = ll, 1 = lr, 2 = ur, 3 = ul)
+	 *            The integer ID of a corner to localize in (0 = ll, 1 = lr, 2 =
+	 *            ur, 3 = ul)
 	 */
-/*	public void pickCorner(double [] corner) {
-		double currX = odometer.getX();
-		double currY = odometer.getY();
-		double tile = navigator.tile;
-		corner[0] = currX - currX % tile;
-		corner[1] = currY - currY % tile;
-		//return corner;
-		
-		double[][] corner = { new double[2], new double[2], new double[2], new double[2] };
-		double currX = odometer.getX();
-		double currY = odometer.getY();
-		double tile = navigator.tile;
-		corner[0][0] = currX - currX % tile;
-		corner[0][1] = currY - currY % tile;
-		corner[1][0] = currX - currX % tile + tile;
-		corner[1][1] = currY - currY % tile;
-		corner[2][0] = currX - currX % tile + tile;
-		corner[2][1] = currY - currY % tile + tile;
-		corner[3][0] = currX - currX % tile;
-		corner[3][1] = currY - currY % tile + tile;
-
-		return corner[localizeCorner];
-	}*/
+	/*
+	 * public void pickCorner(double [] corner) { double currX =
+	 * odometer.getX(); double currY = odometer.getY(); double tile =
+	 * navigator.tile; corner[0] = currX - currX % tile; corner[1] = currY -
+	 * currY % tile; //return corner;
+	 * 
+	 * double[][] corner = { new double[2], new double[2], new double[2], new
+	 * double[2] }; double currX = odometer.getX(); double currY =
+	 * odometer.getY(); double tile = navigator.tile; corner[0][0] = currX -
+	 * currX % tile; corner[0][1] = currY - currY % tile; corner[1][0] = currX -
+	 * currX % tile + tile; corner[1][1] = currY - currY % tile; corner[2][0] =
+	 * currX - currX % tile + tile; corner[2][1] = currY - currY % tile + tile;
+	 * corner[3][0] = currX - currX % tile; corner[3][1] = currY - currY % tile
+	 * + tile;
+	 * 
+	 * return corner[localizeCorner]; }
+	 */
 
 	/**
 	 * foundGridLine sets the gridLine field to true when called
