@@ -53,22 +53,6 @@ public class BallPlatformCompatibilityTest {
 		navigator.travelForwardDistance(4, 50);
 		launcher.raiseScooper();
 		launcher.shootBall(3);
-	/*	odo.start();
-
-		odo.setTheta(0);
-		navigator.turnTo(Math.toRadians(90));
-		navigator.stopMotors();
-		navigator.turnTo(Math.toRadians(-90));
-		navigator.stopMotors();
-		navigator.turnTo(0);
-		navigator.stopMotors();
-		launcher.lowerScooper();
-		navigator.travelForwardDistance(25, 80);
-		launcher.raiseScooper();*/
-		
-		
-
-		// COMMMENTING SO I CAN COMMNIT...DSLKJG;SAJDG;LSAJGALKJDS
 
 	}
 

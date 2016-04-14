@@ -12,25 +12,14 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 /** This object coordinates the Defender case of the competition */
 public class Defender {
-	private EV3LargeRegulatedMotor leftMotor, rightMotor;
-	private double width;
-	private double wheelRadius;
 	private Odometer odometer;
 	private Navigation navigator;
 	private USLocalizer usl;
 	private LightLocalizer lsl;
 	private LightPoller lightPoller;
-	private UltrasonicPoller USPoller;
-
-	// Wifi variables
 	private int cornerID;
 	private double[] cornerLoc;
-	private double[] ballLoc;
 	private double goalWidth;
-	private double defLine;
-	private double forwLine;
-
-	// Field Parameter (7 = BETA DEMO 11 = FINAL DEMO)
 	public static final double largeCoord = 11;
 
 	/**
@@ -62,10 +51,6 @@ public class Defender {
 			double wheelRadius, Odometer odometer, LightPoller lightPoller, Navigation navigator,
 			USLocalizer uslocalizer, LightLocalizer lightlocalizer, int cornerID, double[] cornerLoc, double[] ballLoc,
 			double goalWidth, double defLine, double forwLine, UltrasonicPoller USPoller) {
-		this.leftMotor = leftMotor;
-		this.rightMotor = rightMotor;
-		this.width = width;
-		this.wheelRadius = wheelRadius;
 		this.odometer = odometer;
 		this.navigator = navigator;
 		this.usl = uslocalizer;
@@ -73,11 +58,7 @@ public class Defender {
 		this.lightPoller = lightPoller;
 		this.cornerID = cornerID;
 		this.cornerLoc = cornerLoc;
-		this.ballLoc = ballLoc;
 		this.goalWidth = goalWidth;
-		this.defLine = defLine;
-		this.forwLine = forwLine;
-		this.USPoller = USPoller;
 	}
 
 	/**
@@ -86,10 +67,13 @@ public class Defender {
 	public void startDefense() {
 		localize();
 		navigate();
-		stopUltraSonicSensors();
 		defend();
 	}
 
+	/**
+	 * Sets the odometer to the appropriate values depending on the corner it starts in.
+	 * @param cornerValues The x,y and theta values of the corner the ev3 is starting in.
+	 */
 	private void setOdometryValues(double[] cornerValues) {
 		odometer.setX(cornerValues[0]);
 		odometer.setY(cornerValues[1]);
@@ -97,6 +81,9 @@ public class Defender {
 
 	}
 
+	/**
+	 * Inities the ev3's localizing sequence.
+	 */
 	private void localize() {
 		odometer.start();
 		lightPoller.start();
@@ -117,14 +104,16 @@ public class Defender {
 
 	}
 
-	// Navigates from initial localization to the attacker's zone and finally
-	// towards the balls.
+	/**
+	 * Navigates from initial localization to the attacker's zone and finally
+	 * towards the balls.
+	 */
 	private void navigate() {
 
 		switch (cornerID) {
 		case 1:
-			navigator.travelTo(0 * navigator.tile, (largeCoord - 1) * navigator.tile, true);
-			lsl.doLocalization(0 * navigator.tile, (largeCoord - 1) * navigator.tile);
+			navigator.travelTo(2 * navigator.tile, (largeCoord - 2) * navigator.tile, true);
+			lsl.doLocalization(2 * navigator.tile, (largeCoord - 2) * navigator.tile);
 
 			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile, false);
 			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile);
@@ -134,8 +123,8 @@ public class Defender {
 			break;
 		case 2:
 
-			navigator.travelTo((largeCoord - 1) * navigator.tile, (largeCoord - 1) * navigator.tile, true);
-			lsl.doLocalization((largeCoord - 1) * navigator.tile, (largeCoord - 1) * navigator.tile);
+			navigator.travelTo((largeCoord - 3) * navigator.tile, (largeCoord - 2) * navigator.tile, true);
+			lsl.doLocalization((largeCoord - 3) * navigator.tile, (largeCoord - 2) * navigator.tile);
 
 			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile, false);
 			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile);
@@ -162,11 +151,10 @@ public class Defender {
 		}
 	}
 
-	private void stopUltraSonicSensors() {
-		USPoller.turnOffSensors();
-
-	}
-
+	/**
+	 * Initializes the defend algorithm. This effectively consists of going back and forth
+	 * in front of the goal area.
+	 */
 	private void defend() {
 		navigator.travelTo((largeCoord - 1) / 2 * navigator.tile + goalWidth / 2, (largeCoord - 3) * navigator.tile,
 				false);

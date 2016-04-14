@@ -14,10 +14,6 @@ public class USLocalizer {
 	private static int TURN_SPEED = 400;
 	private static int maxDist = 40; // sensor max dist
 	private static int dist = 30; // distance from wall for angle calculation
-	private final double tile = 30.48; // final variable that keeps track of
-										// tile size
-	private final double sensorPosition = 3; // distance between sensor and the
-												// center of robot
 
 	private Odometer odometer;
 	private SampleProvider usSensor;
@@ -143,7 +139,10 @@ public class USLocalizer {
 
 		return (float) median;
 	}
-
+	
+	/**
+	 * Initialize the robots position to allow it to then localize without problem.
+	 */
 	public void initializeRobot() {
 		// If robot starts off facing wall, rotate clockwise until it no longer
 		// sees a wall.

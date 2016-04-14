@@ -4,17 +4,12 @@ import java.util.Stack;
 
 import ev3Localization.LightLocalizer;
 import ev3Odometer.Odometer;
-import lejos.hardware.Sound;
-import lejos.hardware.port.SensorPort;
-import lejos.robotics.SampleProvider;
-import lejos.hardware.sensor.EV3ColorSensor;
 
 /**
  * The light sensor derivative provides method that allow the EV3 to detect grid
  * lines in different lighting conditions.
  */
 public class LightSensorDerivative extends Thread {
-	private Odometer odometer;
 	private LightPoller lightPoller;
 	private boolean foundLine = false;
 	private LightLocalizer lsl;
@@ -26,7 +21,6 @@ public class LightSensorDerivative extends Thread {
 	 *            The Odometer
 	 */
 	public LightSensorDerivative(Odometer odometer, LightPoller lightPoller, LightLocalizer lsl) {
-		this.odometer = odometer;
 		this.lightPoller = lightPoller;
 		this.lsl = lsl;
 
@@ -63,7 +57,10 @@ public class LightSensorDerivative extends Thread {
 
 		}
 	}
-
+	/**
+	 * Method returns true if a grid line has been detected
+	 * @return True = grid line detected, False = no grid line detected
+	 */
 	public boolean lineDetected() {
 		if (foundLine) {
 			foundLine = false;

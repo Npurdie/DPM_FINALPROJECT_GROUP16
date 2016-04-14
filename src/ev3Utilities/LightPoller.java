@@ -2,6 +2,9 @@ package ev3Utilities;
 
 import lejos.robotics.SampleProvider;
 
+/**
+ * The class provides the methods to access data from the light sensor
+ */
 public class LightPoller extends Thread {
 	private SampleProvider ls;
 	private float[] lsData;
@@ -20,7 +23,6 @@ public class LightPoller extends Thread {
 		lock = new Object();
 	}
 
-	// Sensors now return floats using a uniform protocol.
 	/**
 	 * Run method
 	 */

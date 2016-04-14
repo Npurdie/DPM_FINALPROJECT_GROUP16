@@ -88,6 +88,11 @@ public class UltrasonicPoller extends Thread {
 		return distance;
 	}
 
+	/**
+	 * Return the left ultrasonic distance when polled
+	 *
+	 * @return An integer representing the distance polled
+	 */
 	public int getLeftUSDistance() {
 		int distance;
 		synchronized (lock) {
@@ -95,9 +100,4 @@ public class UltrasonicPoller extends Thread {
 		}
 		return distance;
 	}
-	
-	public void turnOffSensors(){
-
-	}
-
 }

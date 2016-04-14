@@ -7,9 +7,7 @@ import java.util.Collections;
 
 import ev3Odometer.Odometer;
 import ev3Utilities.UltrasonicPoller;
-import lejos.hardware.Sound;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.robotics.SampleProvider;
 
 /**
  * This object detects unexpected objects to help the EV3 avoid collisions
@@ -20,22 +18,12 @@ import lejos.robotics.SampleProvider;
  */
 public class CollisionAvoidance {
 
-	// --------- User defined variables ------------
-	private double TURNSPEED = 100;
-	private double ACC = 4000;
-	// ---------------------------------------------
-
 	private Odometer odometer;
-	private SampleProvider colorValue;
 	private UltrasonicPoller ultraSonicPoller;
 	private EV3LargeRegulatedMotor leftMotor;
 	private EV3LargeRegulatedMotor rightMotor;
-
-	private double wheelRadius;
-	private double wheelBase;
-
-	private Object lock = new Object();
-
+	
+	
 	/**
 	 * collision avoidance stores a reference to the odometer, ultrasonic
 	 * poller, left motor, right motor, the EV3's wheel radius and chassis
@@ -58,8 +46,6 @@ public class CollisionAvoidance {
 			EV3LargeRegulatedMotor rightMotor, double wheelRadius, double wheelBase) {
 		this.odometer = odometer;
 		this.ultraSonicPoller = ultraSonicPoller;
-		this.wheelBase = wheelBase;
-		this.wheelRadius = wheelRadius;
 		this.leftMotor = leftMotor;
 		this.rightMotor = rightMotor;
 	}
@@ -75,10 +61,7 @@ public class CollisionAvoidance {
 	 */
 	public boolean detectedObject(int distance) {
 		ArrayList<Integer> detectedDistanceF = new ArrayList<Integer>();
-		int detectionF = 0;
-
 		ArrayList<Integer> detectedDistanceL = new ArrayList<Integer>();
-		int detectionL = 0;
 		
 		int distanceF;
 		int distanceL;

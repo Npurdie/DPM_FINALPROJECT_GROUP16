@@ -6,36 +6,25 @@ import ev3Navigation.Navigation;
 import ev3Odometer.Odometer;
 import ev3Utilities.LightPoller;
 import ev3Utilities.LightSensorDerivative;
-import ev3Utilities.ParseWifi;
 import lejos.hardware.Sound;
-import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.port.Port;
 import ev3Utilities.Launcher;
 
 /** This object coordinates the Attacker case of the competition */
 public class Attacker {
-
-	private EV3LargeRegulatedMotor leftMotor, rightMotor;
-	private EV3LargeRegulatedMotor clawMotor, launcherMotor;
-	private double width;
-	private double wheelRadius;
 	private Odometer odometer;
 	private Navigation navigator;
 	private USLocalizer usl;
 	private LightLocalizer lsl;
 	private LightPoller lightPoller;
 	private Launcher launcher;
-	private ParseWifi pw;
 	private boolean rightSide;
 
 	// Wifi variables
 	private int cornerID;
 	private double[] cornerLoc;
 	private double[] ballLoc;
-	private double goalWidth;
 	private double defLine;
-	private double forwLine;
 
 	// Field Parameter (7 = BETA DEMO 11 = FINAL DEMO)
 	public static final double largeCoord = 11;
@@ -72,7 +61,6 @@ public class Attacker {
 	 * @param launcher
 	 *            The launcher class
 	 */
-
 	public Attacker(EV3LargeRegulatedMotor leftMotor,
 			EV3LargeRegulatedMotor rightMotor,
 			EV3LargeRegulatedMotor clawMotor,
@@ -82,10 +70,6 @@ public class Attacker {
 			LightLocalizer lightlocalizer, Launcher launcher, int cornerID,
 			double[] cornerLoc, double[] ballLoc, double goalWidth,
 			double defLine, double forwLine) {
-		this.leftMotor = leftMotor;
-		this.rightMotor = rightMotor;
-		this.width = width;
-		this.wheelRadius = wheelRadius;
 		this.odometer = odometer;
 		this.navigator = navigator;
 		this.usl = uslocalizer;
@@ -95,9 +79,7 @@ public class Attacker {
 		this.cornerID = cornerID;
 		this.cornerLoc = cornerLoc;
 		this.ballLoc = ballLoc;
-		this.goalWidth = goalWidth;
 		this.defLine = defLine;
-		this.forwLine = forwLine;
 
 	}
 
@@ -109,12 +91,12 @@ public class Attacker {
 		localize();
 		navigate();
 		if (ballLoc[0] > 5) {
-			rightSide = false;
-		}
-		else {
 			rightSide = true;
 		}
-		retrieveBall(ballLoc[0], ballLoc[1], rightSide);
+		else {
+			rightSide = false;
+		}
+		retrieveBall(rightSide);
 		
 		shootBalls();
 	}
@@ -125,7 +107,10 @@ public class Attacker {
 		odometer.setTheta(cornerValues[2]);
 
 	}
-
+	
+	/**
+	 * Starts the ev3 localizing
+	 */
 	private void localize() {
 		odometer.start();
 		lightPoller.start();
@@ -147,8 +132,10 @@ public class Attacker {
 
 	}
 
-	// Navigates from initial localization to the attacker's zone and finally
-	// towards the balls.
+	/**
+	 * Starts the ev3 navigating.
+	 * Contains a case that deals specifically with all four different start corners.
+	 */
 	private void navigate() {
 
 		switch (cornerID) {
@@ -175,9 +162,9 @@ public class Attacker {
 
 			break;
 		case 3:
-			navigator.travelTo((largeCoord - 1) * navigator.tile,
+			navigator.travelTo((largeCoord - 2) * navigator.tile,
 					0 * navigator.tile, true);
-			lsl.doLocalization((largeCoord - 1) * navigator.tile,
+			lsl.doLocalization((largeCoord - 2) * navigator.tile,
 					0 * navigator.tile);
 
 			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile,
@@ -191,8 +178,8 @@ public class Attacker {
 			
 			break;
 		case 4:
-			navigator.travelTo(0 * navigator.tile, 0 * navigator.tile, true);
-			lsl.doLocalization(0 * navigator.tile, 0 * navigator.tile);
+			navigator.travelTo(1 * navigator.tile, 0 * navigator.tile, true);
+			lsl.doLocalization(1 * navigator.tile, 0 * navigator.tile);
 
 			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile,
 					2 * navigator.tile, true);
@@ -208,6 +195,9 @@ public class Attacker {
 		}
 	}
 
+	/**
+	 * Navigates the ev3 to the location of the balls.
+	 */
 	public void goToBalls() {
 		if (ballLoc[0] < 5 * navigator.tile) {
 			navigator.travelTo(0 * navigator.tile, 0 * navigator.tile, false);
@@ -226,10 +216,14 @@ public class Attacker {
 		}
 	}
 
-	// Retrieves balls
-	private void retrieveBall(double x, double y, boolean rightSide) {
+	/**
+	 * triggers the sequence that picks up the balls.
+	 * @param rightSide This boolean indicates to the robot which side of the field the
+	 * balls are located.
+	 */
+	private void retrieveBall(boolean rightSide) {
 		if (!rightSide) {
-			navigator.travelTo(x + (2 * navigator.tile) - 5, y + 23, false);
+			navigator.travelTo(ballLoc[0] + (2 * navigator.tile) - 5, ballLoc[1] + 23, false);
 			navigator.turnTo(180);
 			navigator.travelForwardDistance(15.5, 100);
 			launcher.lowerScooper();
@@ -240,7 +234,7 @@ public class Attacker {
 					true);
 			lsl.doLocalization(ballLoc[0] + 2 * navigator.tile, ballLoc[1]);
 		} else {
-			navigator.travelTo(x - 25, y + 23, false);
+			navigator.travelTo(ballLoc[0] - 25, ballLoc[1] + 23, false);
 			navigator.turnTo(0);
 			navigator.travelForwardDistance(15.5, 100);
 			launcher.lowerScooper();
@@ -253,6 +247,9 @@ public class Attacker {
 		}
 	}
 
+	/**
+	 * Navigates the ev3 to the appropriate location and orientation for shooting the balls.
+	 */
 	private void shootBalls() {
 		navigator.travelTo((largeCoord - 1) / 2 * navigator.tile, largeCoord
 				* navigator.tile - (defLine + 1) * navigator.tile, false);

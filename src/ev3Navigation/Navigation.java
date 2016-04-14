@@ -3,13 +3,8 @@ package ev3Navigation;
 import ev3Odometer.Odometer;
 import ev3Utilities.UltrasonicPoller;
 import ev3Localization.LightLocalizer;
-import lejos.hardware.Button;
-import lejos.hardware.Sound;
-import lejos.hardware.ev3.LocalEV3;
-import lejos.hardware.lcd.TextLCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.port.MotorPort;
-import lejos.hardware.port.Port;
+
 
 /**
  * This object contains all methods necessary for the EV3 to travel to
@@ -88,7 +83,6 @@ public class Navigation extends Thread {
 						rightMotor, wheelRadius, wheelBase);
 				if (collisionAvoidance.detectedObject(12)) {
 					double[] currLoc = { odometer.getX(), odometer.getY(), odometer.getTheta() };
-					double [] corner = new double[2];
 					leftMotor.stop();
 					rightMotor.stop();
 					stopMotors();
@@ -204,6 +198,12 @@ public class Navigation extends Thread {
 		rightMotor.rotate(convertAngle(wheelRadius, wheelBase, Math.toDegrees(correction)), false);
 	}
 	
+	/**
+	 * This method turns by the angle passed to it at the speed passed to it.
+	 * 
+	 * @param theta The double theta represents the angle to turn by. (positive = counter clockwise, negative = clockwise)
+	 * @param speed
+	 */
 	public void turnBy(double theta, int speed){
 		
 		leftMotor.setSpeed(speed);
@@ -362,6 +362,11 @@ public class Navigation extends Thread {
 		rightMotor.forward();
 	}
 
+	/**
+	 * This method makes the EV3 travel forward by distance at speed.
+	 * @param distance The distance the ev3 should travel forward in centimeters.
+	 * @param speed The speed the ev3 should travel at in deg/sec.
+	 */
 	public void travelBackwardDistance(double distance,int speed) {
 		leftMotor.setSpeed(speed);
 		rightMotor.setSpeed(speed);
@@ -371,6 +376,11 @@ public class Navigation extends Thread {
 		stopMotors();
 	}
 
+	/**
+	 * This method makes the EV3 travel forward by distance at speed.
+	 * @param distance The distance the ev3 should travel forward in centimeters.
+	 * @param SPEED The speed the ev3 should travel at in deg/sec.
+	 */
 	public void travelForwardDistance(double distance, int SPEED) {
 		leftMotor.setSpeed(SPEED);
 		rightMotor.setSpeed(SPEED);
@@ -395,6 +405,7 @@ public class Navigation extends Thread {
 		return (int) ((180.0 * Math.PI * width * angle / 360.0) / (Math.PI * radius));
 	}
 
+	
 	private static int convertDistance(double radius, double distance) {
 		return (int) ((180.0 * distance) / (Math.PI * radius));
 	}
@@ -403,10 +414,19 @@ public class Navigation extends Thread {
 		this.lsl = lsl;
 	}
 
+	/**
+	 * Turns the robot to face the coordinate desired
+	 * @param x X coordinate to shoot towards
+	 * @param y Y coordinate to shoot towards
+	 */
 	public void shootDirection(double x, double y) {
 		turnTo(Math.atan((odometer.getY() - y) / (odometer.getX() - x)) + Math.toRadians(180));
 	}
 	
+	/**
+	 * This method determines weather the EV3 should re-localize. This happens after avoiding
+	 * an obstacle or after crossing the line that joins 2 platforms.
+	 */
 	public void isItSafe(){
 		double x = odometer.getX();
 		double y = odometer.getY();
@@ -433,6 +453,11 @@ public class Navigation extends Thread {
 		
 	}
 	
+	/**
+	 * Chooses the most optimal corner to localize in
+	 * 
+	 * @param corner The corner parameter is passed to avoid the EV3 localizing on it for any reason.
+	 */
 	public void pickCorner(double [] corner) {
 	
 		double[][] tempCorner = { new double[2], new double[2], new double[2], new double[2] };
@@ -459,13 +484,4 @@ public class Navigation extends Thread {
 		corner[0] = tempCorner[foo][0];
 		corner[1] = tempCorner[foo][1];
 	} 
-	/*//Simple pickCornerMethod
- 		double currX = odometer.getX();
-		double currY = odometer.getY();
-		corner[0] = currX - currX % tile;
-		corner[1] = currY - currY % tile;
-	}
-		//return corner;
-	 */
-
 }

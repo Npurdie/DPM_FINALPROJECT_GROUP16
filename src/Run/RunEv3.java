@@ -6,16 +6,12 @@ import ev3Odometer.*;
 import ev3Utilities.*;
 import lejos.hardware.*;
 import lejos.hardware.ev3.LocalEV3;
-import lejos.hardware.lcd.TextLCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.sensor.SensorModes;
 import lejos.robotics.SampleProvider;
-import java.io.IOException;
-import java.util.HashMap;
-import ev3Utilities.WifiConnection;
 
 /**
  * This class is used to start the EV3. It is responsible for initializing all
@@ -81,6 +77,10 @@ public class RunEv3 {
 		double goalWidth = pw.getGoalWidth();
 		double defLine = pw.getDefenderLine();
 		double forwLine = pw.getForwardLine();
+		
+		Sound.beep();
+		Sound.beep();
+		Sound.beep();
 
 		if (attacker) {
 			Attacker attackerRun = new Attacker(leftMotor, rightMotor, clawMotor, launcherMotor, TRACK, WHEEL_RADIUS,

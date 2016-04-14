@@ -66,7 +66,7 @@ public class Odometer extends Thread {
 		lastTachoR = leftMotor.getTachoCount();
 
 		while (true) {
-			double rwDist, lwDist, deltaD, deltaT, dx, dy = 0; // initialize
+			double rwDist, lwDist, deltaD, deltaT = 0; // initialize
 																// necessary
 																// variables
 			updateStart = System.currentTimeMillis();
