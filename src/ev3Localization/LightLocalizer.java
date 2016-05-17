@@ -72,7 +72,7 @@ public class LightLocalizer {
 			// turn 10 degrees to make sure the same line is not picked up on
 			// next iteration
 			Sound.beep();
-			navigator.turnBy(10, TURN_SPEED);
+			//navigator.turnBy(10, TURN_SPEED);
 
 			gridLine = false;
 		}
@@ -132,7 +132,7 @@ public class LightLocalizer {
 			// turn 10 degrees to make sure the same line is not picked up on
 			// next iteration
 			Sound.beep();
-			navigator.turnBy(10, TURN_SPEED);
+			//navigator.turnBy(10, TURN_SPEED);
 			gridLine = false;
 		}
 		if (gridLines[0] < Math.PI) { // wrap-around angle
