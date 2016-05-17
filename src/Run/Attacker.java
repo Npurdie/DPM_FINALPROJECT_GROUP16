@@ -90,7 +90,7 @@ public class Attacker {
 
 		localize();
 		navigate();
-		if (ballLoc[0] > 5) {
+		if (ballLoc[0] > (largeCoord-1)/2) {
 			rightSide = true;
 		}
 		else {
@@ -199,7 +199,7 @@ public class Attacker {
 	 * Navigates the ev3 to the location of the balls.
 	 */
 	public void goToBalls() {
-		if (ballLoc[0] < 5 * navigator.tile) {
+		if (ballLoc[0] < ((largeCoord-1)/2) * navigator.tile) {
 			navigator.travelTo(0 * navigator.tile, 0 * navigator.tile, false);
 			lsl.doLocalization(0 * navigator.tile, 0 * navigator.tile);
 
@@ -207,14 +207,15 @@ public class Attacker {
 					true);
 			lsl.doLocalization(ballLoc[0] + 2 * navigator.tile, ballLoc[1]);
 		} else {
-			navigator.travelTo(10 * navigator.tile, 0 * navigator.tile, true);
-			lsl.doLocalization(10 * navigator.tile, 0 * navigator.tile);
+			navigator.travelTo((largeCoord-1) * navigator.tile, 0 * navigator.tile, true);
+			lsl.doLocalization((largeCoord-1) * navigator.tile, 0 * navigator.tile);
 
 			navigator.travelTo(ballLoc[0] - 1 * navigator.tile, ballLoc[1],
 					false);
 			lsl.doLocalization(ballLoc[0] - 1 * navigator.tile, ballLoc[1]);
 		}
 	}
+
 
 	/**
 	 * triggers the sequence that picks up the balls.
@@ -252,7 +253,7 @@ public class Attacker {
 	 */
 	private void shootBalls() {
 		navigator.travelTo((largeCoord - 1) / 2 * navigator.tile, largeCoord
-				* navigator.tile - (defLine + 1) * navigator.tile, false);
+				* navigator.tile - (defLine + navigator.tile), false);
 		navigator.shootDirection((largeCoord - 1) / 2 * navigator.tile,
 				largeCoord * navigator.tile);
 		launcher.shootBall(3);
