@@ -133,7 +133,8 @@ public class Defender {
 
 			break;
 		case 3:
-
+			navigator.travelTo(8*navigator.tile, 9*navigator.tile, false);
+			lsl.doLocalization(8*navigator.tile, 9*navigator.tile);
 			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile, false);
 			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile, (largeCoord - 3) * navigator.tile);
 
@@ -156,12 +157,14 @@ public class Defender {
 	 * in front of the goal area.
 	 */
 	private void defend() {
+		odometer.setDistance(0);
 		navigator.travelTo((largeCoord - 1) / 2 * navigator.tile + goalWidth / 2, (largeCoord - 3) * navigator.tile,
 				false);
+		odometer.setDistance(0);
 		navigator.turnTo(Math.toRadians(0));
 		int i = 0;
 		navigator.travelBackwardDistance(10, 200);
-
+		odometer.setDistance(0);
 		while (true) {
 
 			if (i > 3) {
@@ -175,6 +178,7 @@ public class Defender {
 				e.printStackTrace();
 			}
 			navigator.travelBackwardDistance(goalWidth - 22, 200);
+			odometer.setDistance(0);
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -182,7 +186,7 @@ public class Defender {
 				e.printStackTrace();
 			}
 			navigator.travelForwardDistance(goalWidth - 22, 200);
-
+			odometer.setDistance(0);
 			i++;
 
 		}

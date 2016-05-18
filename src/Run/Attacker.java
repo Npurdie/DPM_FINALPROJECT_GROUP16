@@ -99,6 +99,7 @@ public class Attacker {
 		retrieveBall(rightSide);
 		
 		shootBalls();
+		navigator.travelTo(0, largeCoord*navigator.tile, false);
 	}
 
 	private void setOdometryValues(double[] cornerValues) {
@@ -163,12 +164,12 @@ public class Attacker {
 			break;
 		case 3:
 			navigator.travelTo((largeCoord - 2) * navigator.tile,
-					0 * navigator.tile, true);
+					0 * navigator.tile, false);
 			lsl.doLocalization((largeCoord - 2) * navigator.tile,
 					0 * navigator.tile);
 
 			navigator.travelTo((largeCoord + 1) / 2 * navigator.tile,
-					2 * navigator.tile, true);
+					2 * navigator.tile, false);
 			lsl.doLocalization((largeCoord + 1) / 2 * navigator.tile,
 					2 * navigator.tile);
 
@@ -226,7 +227,7 @@ public class Attacker {
 		if (!rightSide) {
 			navigator.travelTo(ballLoc[0] + (2 * navigator.tile) - 5, ballLoc[1] + 23, false);
 			navigator.turnTo(180);
-			navigator.travelForwardDistance(15.5, 100);
+			navigator.travelForwardDistance(14, 100);
 			launcher.lowerScooper();
 			navigator.travelForwardDistance(4, 50);
 			launcher.raiseScooper();
@@ -237,7 +238,7 @@ public class Attacker {
 		} else {
 			navigator.travelTo(ballLoc[0] - 25, ballLoc[1] + 23, false);
 			navigator.turnTo(0);
-			navigator.travelForwardDistance(15.5, 100);
+			navigator.travelForwardDistance(14, 100);
 			launcher.lowerScooper();
 			navigator.travelForwardDistance(4, 50);
 			launcher.raiseScooper();
@@ -253,7 +254,7 @@ public class Attacker {
 	 */
 	private void shootBalls() {
 		navigator.travelTo((largeCoord - 1) / 2 * navigator.tile, largeCoord
-				* navigator.tile - (defLine + navigator.tile), false);
+				* navigator.tile - (defLine+2*navigator.tile), false);
 		navigator.shootDirection((largeCoord - 1) / 2 * navigator.tile,
 				largeCoord * navigator.tile);
 		launcher.shootBall(3);

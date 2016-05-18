@@ -68,43 +68,50 @@ public class RunEv3 {
 		Launcher launcher = new Launcher(clawMotor, launcherMotor);
 
 		// Get wifi parameters
-//		ParseWifi pw = new ParseWifi();
-//
-//		boolean attacker = pw.getRole();
-//		int cornerID = pw.getCornerID();
-//		double[] cornerLoc = pw.getCorner();
-//		double[] ballLoc = pw.getBallLoc();
-//		double goalWidth = pw.getGoalWidth();
-//		double defLine = pw.getDefenderLine();
-//		double forwLine = pw.getForwardLine();
-		
-		boolean attacker = true;
-		int cornerID = 1;
-		double[] cornerLoc = {0,0,0};
-		double[] ballLoc = {30.48*6, 30.48*4};
-		double goalWidth = 2*30.48;
-		double defLine = 4*30.48;
-		double forwLine = 2*30.48;
-		
+		// ParseWifi pw = new ParseWifi();
+		//
+		// boolean attacker = pw.getRole();
+		// int cornerID = pw.getCornerID();
+		// double[] cornerLoc = pw.getCorner();
+		// double[] ballLoc = pw.getBallLoc();
+		// double goalWidth = pw.getGoalWidth();
+		// double defLine = pw.getDefenderLine();
+		// double forwLine = pw.getForwardLine();
+
 		Sound.beep();
 		Sound.beep();
 		Sound.beep();
 
-		if (attacker) {
-			Attacker attackerRun = new Attacker(leftMotor, rightMotor, clawMotor, launcherMotor, TRACK, WHEEL_RADIUS,
-					odo, lightPoller, navigator, usl, lsl, launcher, cornerID, cornerLoc, ballLoc, goalWidth, defLine,
-					forwLine);
-			attackerRun.startAttack();
-		} else {
-			Defender defenderRun = new Defender(leftMotor, rightMotor, TRACK, WHEEL_RADIUS, odo, lightPoller, navigator,
-					usl, lsl, cornerID, cornerLoc, ballLoc, goalWidth, defLine, forwLine, usPoller);
-			defenderRun.startDefense();
+		while (true) {
+			int buttonChoice = Button.waitForAnyPress();
 
+			if (buttonChoice == Button.ID_DOWN) {
+				int cornerID = 1;
+				double[] cornerLoc = { 0, 0, 0 };
+				double[] ballLoc = { 30.48 * 10, 30.48 * 3 };
+				double goalWidth = 3 * 30.48;
+				double defLine = 3 * 30.48;
+				double forwLine = 3 * 30.48;
+				Attacker attackerRun = new Attacker(leftMotor, rightMotor, clawMotor, launcherMotor, TRACK,
+						WHEEL_RADIUS, odo, lightPoller, navigator, usl, lsl, launcher, cornerID, cornerLoc, ballLoc,
+						goalWidth, defLine, forwLine);
+				attackerRun.startAttack();
+			} else if (buttonChoice == Button.ID_LEFT) {
+				int cornerID = 3;
+				double[] cornerLoc = { 10 * 30.48, 10 * 30.48, Math.toRadians(180) };
+				double[] ballLoc = { 30.48 * 10, 30.48 * 3 };
+				double goalWidth = 3 * 30.48;
+				double defLine = 3 * 30.48;
+				double forwLine = 3 * 30.48;
+				Defender defenderRun = new Defender(leftMotor, rightMotor, TRACK, WHEEL_RADIUS, odo, lightPoller,
+						navigator, usl, lsl, cornerID, cornerLoc, ballLoc, goalWidth, defLine, forwLine, usPoller);
+				defenderRun.startDefense();
+			}
+			
+
+			while (Button.waitForAnyPress() != Button.ID_ESCAPE)
+				;
+			System.exit(0);
 		}
-
-		while (Button.waitForAnyPress() != Button.ID_ESCAPE)
-			;
-		System.exit(0);
 	}
-
 }
